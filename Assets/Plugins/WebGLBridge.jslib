@@ -5,7 +5,7 @@ mergeInto(LibraryManager.library, {
   
   // Log a message to the browser console
   WebGLLogToConsole: function(message) {
-    console.log(UTF8ToString(message));
+    console.log('[Unity WebGL] ' + UTF8ToString(message));
   },
   
   // Get current browser information

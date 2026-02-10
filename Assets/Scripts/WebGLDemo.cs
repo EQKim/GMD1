@@ -25,8 +25,13 @@ public class WebGLDemo : MonoBehaviour
     public Text platformText;
     public Button testButton;
 
+    private Camera mainCamera;
+
     private void Start()
     {
+        // Cache camera reference for performance
+        mainCamera = Camera.main;
+        
         // Detect if running on WebGL platform
         bool isWebGL = Application.platform == RuntimePlatform.WebGLPlayer;
         
@@ -69,22 +74,22 @@ public class WebGLDemo : MonoBehaviour
         
         if (statusText != null)
         {
-            statusText.text = "Button Clicked at " + Time.time.ToString("F2") + "s";
+            statusText.text = $"Button Clicked at {Time.time:F2}s";
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         // WebGL-specific code that only runs in WebGL builds
         // Using safe jslib plugin for JavaScript interaction
-        WebGLLogToConsole("Button clicked from Unity WebGL at " + Time.time.ToString("F2") + "s");
+        WebGLLogToConsole($"Button clicked from Unity WebGL at {Time.time:F2}s");
 #endif
     }
 
     private void Update()
     {
         // Example: Rotate the camera slightly for visual effect
-        if (Camera.main != null)
+        if (mainCamera != null)
         {
-            Camera.main.transform.Rotate(0, Time.deltaTime * 5, 0);
+            mainCamera.transform.Rotate(0, Time.deltaTime * 5, 0);
         }
     }
 }
