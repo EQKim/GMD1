@@ -72,15 +72,16 @@ GMD1/
 ### Included Features
 - Basic 3D scene with camera and lighting
 - WebGL platform detection
-- Browser console integration
+- Safe browser console integration using jslib plugin
 - Sample interactive script (WebGLDemo.cs)
+- JavaScript bridge (WebGLBridge.jslib) for secure Unity-browser communication
 
 ### WebGL-Specific Considerations
 1. **File Size**: WebGL builds are compressed using Gzip for optimal loading
 2. **Memory**: Configured with 256MB memory size (adjustable in ProjectSettings)
 3. **Threading**: WebGL doesn't support multithreading
 4. **Platform Detection**: Use `Application.platform == RuntimePlatform.WebGLPlayer`
-5. **Browser Communication**: Use `Application.ExternalEval()` for JavaScript interaction
+5. **Browser Communication**: Use jslib plugins (see Assets/Plugins/WebGLBridge.jslib) for secure JavaScript interaction instead of deprecated methods
 
 ## Scripts
 
@@ -88,8 +89,15 @@ GMD1/
 A demonstration script showing:
 - Platform detection
 - WebGL-specific conditional compilation
-- Browser console logging
+- Browser console logging using safe jslib plugin
 - Basic Unity-WebGL interaction
+- DllImport for JavaScript bridge functions
+
+### WebGLBridge.jslib
+JavaScript plugin providing safe methods for Unity-browser communication:
+- `WebGLLogToConsole()` - Log messages to browser console
+- `WebGLGetBrowserInfo()` - Retrieve browser user agent information
+- `WebGLCheckSupport()` - Verify WebGL support in browser
 
 ## Development
 

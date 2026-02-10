@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// WebGL Demo Script - Demonstrates basic WebGL functionality
@@ -7,6 +8,18 @@ using UnityEngine.UI;
 /// </summary>
 public class WebGLDemo : MonoBehaviour
 {
+#if UNITY_WEBGL && !UNITY_EDITOR
+    // Import JavaScript functions from WebGLBridge.jslib
+    [DllImport("__Internal")]
+    private static extern void WebGLLogToConsole(string message);
+    
+    [DllImport("__Internal")]
+    private static extern string WebGLGetBrowserInfo();
+    
+    [DllImport("__Internal")]
+    private static extern bool WebGLCheckSupport();
+#endif
+
     [Header("UI Elements")]
     public Text statusText;
     public Text platformText;
@@ -28,6 +41,11 @@ public class WebGLDemo : MonoBehaviour
             {
                 statusText.text = "Running on WebGL!";
                 statusText.color = Color.green;
+                
+#if UNITY_WEBGL && !UNITY_EDITOR
+                // Log to browser console using safe jslib plugin
+                WebGLLogToConsole("GMD1 Unity WebGL Project initialized successfully");
+#endif
             }
             else
             {
@@ -56,7 +74,8 @@ public class WebGLDemo : MonoBehaviour
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         // WebGL-specific code that only runs in WebGL builds
-        Application.ExternalEval("console.log('Button clicked from Unity WebGL!');");
+        // Using safe jslib plugin for JavaScript interaction
+        WebGLLogToConsole("Button clicked from Unity WebGL at " + Time.time.ToString("F2") + "s");
 #endif
     }
 
