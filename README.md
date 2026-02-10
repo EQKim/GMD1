@@ -18,7 +18,7 @@ This project is configured with:
 - WebGL as a supported build target
 - IL2CPP scripting backend for WebGL
 - Optimized settings for web deployment
-- Memory size: 16MB
+- Memory size: 256MB
 - Exception support enabled
 - Data caching enabled
 
