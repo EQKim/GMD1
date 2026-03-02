@@ -464,7 +464,7 @@ MonoBehaviour:
   moveSpeed: 6
   jumpForce: 16
   groundCheck: {fileID: 726702508}
-  groundCheckRadius: 0.12
+  groundCheckRadius: 0.3
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -508,6 +508,9 @@ MonoBehaviour:
   scrollSpeed: 1.5
   randomize: 1
   verticalOverlap: 0.05
+  wrapBuffer: 0.15
+  pixelSnapY: 0
+  pixelsPerUnit: 16
 --- !u!4 &665516667
 Transform:
   m_ObjectHideFlags: 0
@@ -549,8 +552,8 @@ Transform:
   m_GameObject: {fileID: 726702507}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.99, y: -2.549, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 2.99, y: -2.592, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 647366002}
@@ -777,7 +780,7 @@ Transform:
   m_GameObject: {fileID: 822747833}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -4.8876, z: 0}
+  m_LocalPosition: {x: 0.01, y: -4.9976, z: 0}
   m_LocalScale: {x: 0.6779078, y: 0.26625067, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
