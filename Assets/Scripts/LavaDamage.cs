@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class LavaDamage : MonoBehaviour
 {
     [Header("Damage Settings")]
@@ -10,7 +11,21 @@ public class LavaDamage : MonoBehaviour
     [Header("Launch Settings")]
     [SerializeField] private float launchUpVelocity = 12f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip lavaHissSfx;
+    [Range(0f, 1f)]
+    [SerializeField] private float lavaVolume = 1f;
+
     private float nextDamageTime;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+        audioSource.spatialBlend = 0f; // 2D sound
+    }
 
     private void Reset()
     {
@@ -36,10 +51,16 @@ public class LavaDamage : MonoBehaviour
 
         nextDamageTime = Time.time + damageCooldown;
 
+        // Play lava hiss
+        if (lavaHissSfx != null)
+        {
+            audioSource.PlayOneShot(lavaHissSfx, lavaVolume);
+        }
+
         // Damage player
         health.TakeDamage(damage);
 
-        // Shoot player upward
+        // Launch player upward
         Rigidbody2D rb = other.attachedRigidbody;
         if (rb != null)
         {
