@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(AudioSource))]
@@ -16,7 +17,9 @@ public class LavaDamage : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float lavaVolume = 1f;
 
-    private float nextDamageTime;
+    // Per-target cooldown so multiple players can be damaged/launched independently.
+    private readonly Dictionary<PlayerHealth, float> nextDamageTimeByTarget = new Dictionary<PlayerHealth, float>();
+
     private AudioSource audioSource;
 
     private void Awake()
@@ -32,6 +35,12 @@ public class LavaDamage : MonoBehaviour
         GetComponent<Collider2D>().isTrigger = true;
     }
 
+    private void OnDisable()
+    {
+        // Avoid holding references after scene/objects are disabled.
+        nextDamageTimeByTarget.Clear();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         TryDamage(other);
@@ -42,14 +51,26 @@ public class LavaDamage : MonoBehaviour
         TryDamage(other);
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // Cleanup to prevent the dictionary from growing over time.
+        var health = other.GetComponent<PlayerHealth>();
+        if (health != null)
+        {
+            nextDamageTimeByTarget.Remove(health);
+        }
+    }
+
     private void TryDamage(Collider2D other)
     {
-        if (Time.time < nextDamageTime) return;
-
         PlayerHealth health = other.GetComponent<PlayerHealth>();
         if (health == null) return;
 
-        nextDamageTime = Time.time + damageCooldown;
+        float nextTime;
+        if (nextDamageTimeByTarget.TryGetValue(health, out nextTime) && Time.time < nextTime)
+            return;
+
+        nextDamageTimeByTarget[health] = Time.time + damageCooldown;
 
         // Play lava hiss
         if (lavaHissSfx != null)
