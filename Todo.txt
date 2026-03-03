@@ -1,6 +1,11 @@
 *To add
  - Punch animations
-   --- Sound effects
-     -- landing on lava
-      -- When he gets hurt 50/50
+   --- Sound effects  *Taking damage* 
+     -- landing on lava *Lava Hissing*
+      -- When he gets hurt 50/50 *Custom Recording*
  - Another player 
+
+
+
+Now
+  - Spawning mechanic 

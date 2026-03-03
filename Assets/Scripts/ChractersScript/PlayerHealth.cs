@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
 public class PlayerHealth : MonoBehaviour
@@ -11,6 +12,10 @@ public class PlayerHealth : MonoBehaviour
     public int CurrentHealth { get; private set; }
 
     public System.Action<int, int> OnHealthChanged;
+
+    [Header("Respawn")]
+    [SerializeField] private SpawnPlatform respawnPlatform;
+    [SerializeField] private float respawnDelay = 0.1f;
 
     [Header("Audio Clips (drag & drop)")]
     [SerializeField] private AudioClip hurtSfx;
@@ -31,6 +36,8 @@ public class PlayerHealth : MonoBehaviour
 
     // Cached global volume (0..1)
     private float globalSfxVolume = 1f;
+
+    private bool isRespawning;
 
     private void Awake()
     {
@@ -58,6 +65,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (amount <= 0) return;
         if (CurrentHealth <= 0) return;
+        if (isRespawning) return;
 
         int prev = CurrentHealth;
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
@@ -67,12 +75,18 @@ public class PlayerHealth : MonoBehaviour
         {
             PlaySfx(hurtSfx);
         }
+
+        if (CurrentHealth == 0)
+        {
+            StartCoroutine(RespawnRoutine());
+        }
     }
 
     public void Heal(int amount)
     {
         if (amount <= 0) return;
         if (CurrentHealth <= 0) return;
+        if (isRespawning) return;
 
         int prev = CurrentHealth;
         CurrentHealth = Mathf.Min(maxHealth, CurrentHealth + amount);
@@ -82,6 +96,30 @@ public class PlayerHealth : MonoBehaviour
         {
             PlaySfx(healSfx);
         }
+    }
+
+    private IEnumerator RespawnRoutine()
+    {
+        isRespawning = true;
+
+        if (respawnDelay > 0f)
+            yield return new WaitForSeconds(respawnDelay);
+
+        // Restore health + update UI
+        CurrentHealth = maxHealth;
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+
+        // Respawn on platform (platform will re-enable + fade again)
+        if (respawnPlatform != null)
+        {
+            respawnPlatform.RespawnPlayer();
+        }
+        else
+        {
+            Debug.LogError("PlayerHealth: respawnPlatform not assigned.");
+        }
+
+        isRespawning = false;
     }
 
     private void PlaySfx(AudioClip clip)
