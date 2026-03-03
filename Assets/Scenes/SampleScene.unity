@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 465671101}
   - component: {fileID: 465671100}
   m_Layer: 5
-  m_Name: HealthFill
+  m_Name: HealthFillRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -696,7 +696,7 @@ GameObject:
   - component: {fileID: 537286419}
   - component: {fileID: 537286421}
   m_Layer: 5
-  m_Name: Health_Left
+  m_Name: HealthLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -897,7 +897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bbcceb413ac20741acb31eeed83b740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  isMainCharacter: 0
+  isMainCharacter: 1
   moveSpeed: 6
   jumpForce: 16
   groundCheck: {fileID: 726702508}
@@ -1532,7 +1532,7 @@ GameObject:
   - component: {fileID: 869694576}
   - component: {fileID: 869694575}
   m_Layer: 5
-  m_Name: HealthFill
+  m_Name: HealthFillLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1607,7 +1607,7 @@ GameObject:
   - component: {fileID: 896020700}
   - component: {fileID: 896020699}
   m_Layer: 5
-  m_Name: Portrait_Right
+  m_Name: PortraitRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1954,7 +1954,7 @@ GameObject:
   - component: {fileID: 1512714671}
   - component: {fileID: 1512714673}
   m_Layer: 5
-  m_Name: Health_Right
+  m_Name: HealthRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2449,7 +2449,7 @@ GameObject:
   - component: {fileID: 2105781430}
   - component: {fileID: 2105781429}
   m_Layer: 5
-  m_Name: Portrait_Left
+  m_Name: PortraitLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
