@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: 11caebe339842cb4eb5f66acec0ba148
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6762486428661213110
+    second: LavaSplashRefined_0
+  - first:
+      213: 5640205076246287888
+    second: LavaSplashRefined_1
+  - first:
+      213: 2342315160750372470
+    second: LavaSplashRefined_2
+  - first:
+      213: 6887768522887424237
+    second: LavaSplashRefined_3
+  - first:
+      213: 4796830979709111030
+    second: LavaSplashRefined_4
+  - first:
+      213: 4548053854694461688
+    second: LavaSplashRefined_5
+  - first:
+      213: 7440047464455299133
+    second: LavaSplashRefined_6
+  - first:
+      213: -5944913110258352818
+    second: LavaSplashRefined_7
+  - first:
+      213: -6199628584846773377
+    second: LavaSplashRefined_8
+  - first:
+      213: -581463561091264201
+    second: LavaSplashRefined_9
+  - first:
+      213: 6303948701739814201
+    second: LavaSplashRefined_10
+  - first:
+      213: 8312272431250201097
+    second: LavaSplashRefined_11
+  - first:
+      213: -7600615245966077572
+    second: LavaSplashRefined_12
+  - first:
+      213: 6461675616950968730
+    second: LavaSplashRefined_13
+  - first:
+      213: -9153322164944742870
+    second: LavaSplashRefined_14
+  - first:
+      213: -367185493708105890
+    second: LavaSplashRefined_15
+  - first:
+      213: -1593356581383503637
+    second: LavaSplashRefined_16
+  - first:
+      213: -7145931762577419157
+    second: LavaSplashRefined_17
+  - first:
+      213: -2594563409223495014
+    second: LavaSplashRefined_18
+  - first:
+      213: 7877895572371119672
+    second: LavaSplashRefined_19
+  - first:
+      213: -2977100255538050898
+    second: LavaSplashRefined_20
+  - first:
+      213: 1621043882940784768
+    second: LavaSplashRefined_21
+  - first:
+      213: -6940878083218458111
+    second: LavaSplashRefined_22
+  - first:
+      213: -3695424420764234180
+    second: LavaSplashRefined_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LavaSplashRefined_0
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 1026
+        width: 273
+        height: 560
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b760c2e39d29dd50800000000000000
+      internalID: 6762486428661213110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_1
+      rect:
+        serializedVersion: 2
+        x: 1513
+        y: 1026
+        width: 353
+        height: 562
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 016d30e32a8064e40800000000000000
+      internalID: 5640205076246287888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_2
+      rect:
+        serializedVersion: 2
+        x: 2156
+        y: 1020
+        width: 375
+        height: 609
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 676b9848a33918020800000000000000
+      internalID: 2342315160750372470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_3
+      rect:
+        serializedVersion: 2
+        x: 2508
+        y: 1441
+        width: 45
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de862d58af4469f50800000000000000
+      internalID: 6887768522887424237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 1100
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fa86218c54c19240800000000000000
+      internalID: 4796830979709111030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_5
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 1028
+        width: 246
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f0d86c52eeed1f30800000000000000
+      internalID: 4548053854694461688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_6
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 86
+        width: 408
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3067e6ffbb504760800000000000000
+      internalID: 7440047464455299133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_7
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 94
+        width: 429
+        height: 595
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4dfc72160d6f7da0800000000000000
+      internalID: -5944913110258352818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_8
+      rect:
+        serializedVersion: 2
+        x: 1575
+        y: 361
+        width: 357
+        height: 340
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f73b9dc26ae76f9a0800000000000000
+      internalID: -6199628584846773377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_9
+      rect:
+        serializedVersion: 2
+        x: 2234
+        y: 677
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 731525fc8f93ee7f0800000000000000
+      internalID: -581463561091264201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_10
+      rect:
+        serializedVersion: 2
+        x: 2282
+        y: 461
+        width: 254
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93d8c79c1ff1c7750800000000000000
+      internalID: 6303948701739814201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_11
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 577
+        width: 49
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90ad0f46cbf1b5370800000000000000
+      internalID: 8312272431250201097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_12
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 615
+        width: 44
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7116cd14b0358690800000000000000
+      internalID: -7600615245966077572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_13
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 532
+        width: 30
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a916a2afcbb7ca950800000000000000
+      internalID: 6461675616950968730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_14
+      rect:
+        serializedVersion: 2
+        x: 1490
+        y: 479
+        width: 56
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2652c3ccfdd8f080800000000000000
+      internalID: -9153322164944742870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_15
+      rect:
+        serializedVersion: 2
+        x: 2170
+        y: 429
+        width: 90
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e571ad82dbe77eaf0800000000000000
+      internalID: -367185493708105890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_16
+      rect:
+        serializedVersion: 2
+        x: 1492
+        y: 413
+        width: 96
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be00b1691a243e9e0800000000000000
+      internalID: -1593356581383503637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_17
+      rect:
+        serializedVersion: 2
+        x: 1595
+        y: 244
+        width: 151
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6454663cec84dc90800000000000000
+      internalID: -7145931762577419157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_18
+      rect:
+        serializedVersion: 2
+        x: 2226
+        y: 405
+        width: 77
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a92d10e63524efbd0800000000000000
+      internalID: -2594563409223495014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_19
+      rect:
+        serializedVersion: 2
+        x: 2380
+        y: 372
+        width: 56
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83e9dc0c848e35d60800000000000000
+      internalID: 7877895572371119672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_20
+      rect:
+        serializedVersion: 2
+        x: 2477
+        y: 351
+        width: 136
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea80ee747173fa6d0800000000000000
+      internalID: -2977100255538050898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_21
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 240
+        width: 127
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0806108a2da1f7610800000000000000
+      internalID: 1621043882940784768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_22
+      rect:
+        serializedVersion: 2
+        x: 1612
+        y: 120
+        width: 86
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10a387c582c0daf90800000000000000
+      internalID: -6940878083218458111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LavaSplashRefined_23
+      rect:
+        serializedVersion: 2
+        x: 2296
+        y: 134
+        width: 84
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3e4b0a811737bcc0800000000000000
+      internalID: -3695424420764234180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LavaSplashRefined_0: 6762486428661213110
+      LavaSplashRefined_1: 5640205076246287888
+      LavaSplashRefined_10: 6303948701739814201
+      LavaSplashRefined_11: 8312272431250201097
+      LavaSplashRefined_12: -7600615245966077572
+      LavaSplashRefined_13: 6461675616950968730
+      LavaSplashRefined_14: -9153322164944742870
+      LavaSplashRefined_15: -367185493708105890
+      LavaSplashRefined_16: -1593356581383503637
+      LavaSplashRefined_17: -7145931762577419157
+      LavaSplashRefined_18: -2594563409223495014
+      LavaSplashRefined_19: 7877895572371119672
+      LavaSplashRefined_2: 2342315160750372470
+      LavaSplashRefined_20: -2977100255538050898
+      LavaSplashRefined_21: 1621043882940784768
+      LavaSplashRefined_22: -6940878083218458111
+      LavaSplashRefined_23: -3695424420764234180
+      LavaSplashRefined_3: 6887768522887424237
+      LavaSplashRefined_4: 4796830979709111030
+      LavaSplashRefined_5: 4548053854694461688
+      LavaSplashRefined_6: 7440047464455299133
+      LavaSplashRefined_7: -5944913110258352818
+      LavaSplashRefined_8: -6199628584846773377
+      LavaSplashRefined_9: -581463561091264201
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

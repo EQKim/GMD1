@@ -891,8 +891,9 @@ GameObject:
   - component: {fileID: 822747838}
   - component: {fileID: 822747837}
   - component: {fileID: 822747839}
+  - component: {fileID: 822747840}
   m_Layer: 0
-  m_Name: LavaAnimation
+  m_Name: LavaBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -967,7 +968,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 90
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: ee728234f44f17740acae36ae2b6f215, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1154,6 +1155,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &822747840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822747833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40abbe3cdc901c64ab085a9d077ca5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  splashPrefab: {fileID: 2093267005869952294, guid: 012b81debfda97642ad27bf4d5879861, type: 3}
+  yOffset: 0.85
+  spawnCooldown: 0.15
 --- !u!1 &869694573
 GameObject:
   m_ObjectHideFlags: 0
