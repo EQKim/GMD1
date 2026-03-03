@@ -1,11 +1,12 @@
-*To add
- - Punch animations
-   --- Sound effects  *Taking damage* 
-     -- landing on lava *Lava Hissing*
-      -- When he gets hurt 50/50 *Custom Recording*
+ 
+*Done*
+   --- Sound effects  *Taking damage*  
+   --- landing on lava *Lava Hissing* + Splash Effect
+   --- Spawning/Respawning mechanic
+-------------------------------------------------
+TODO
+ - When he gets hurt 50/50 *Custom Recording*
  - Another player 
+ - Punch animations
+ - Some platforms can only be stepped on "1" time
 
-
-
-Now
-  - Spawning mechanic  *Done*

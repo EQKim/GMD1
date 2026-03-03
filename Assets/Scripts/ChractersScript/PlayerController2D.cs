@@ -1,9 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController2D : MonoBehaviour
 {
+    [Header("Control")]
+    [SerializeField] private bool isMainCharacter = true;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 6f;
     [SerializeField] private float jumpForce = 12f;
@@ -14,8 +17,11 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("References")]
-    [SerializeField] private Animator animator;   // Animator on Visual
-    [SerializeField] private Transform visual;    // Visual transform (for flipping)
+    [SerializeField] private Animator animator;
+    [SerializeField] private Transform visual;
+
+    [Header("Flip Character")]
+    [SerializeField] private bool startFacingRight = true;
 
     private Rigidbody2D rb;
     private bool grounded;
@@ -24,7 +30,6 @@ public class PlayerController2D : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // Optional auto-wire if you forgot to drag refs
         if (visual == null)
         {
             var t = transform.Find("Visual");
@@ -35,9 +40,29 @@ public class PlayerController2D : MonoBehaviour
             animator = visual.GetComponent<Animator>();
     }
 
+
+    private void Start()
+    {
+        if (visual != null)
+        {
+            Vector3 s = visual.localScale;
+            s.x = Mathf.Abs(s.x) * (startFacingRight ? 1f : -1f);
+            visual.localScale = s;
+        }
+    }
+
     private void Update()
     {
-        // Horizontal input (A/D or Left/Right)
+        // 🚫 If not main character, do nothing
+        if (!isMainCharacter)
+        {
+            if (animator != null)
+            {
+                animator.SetFloat("Speed", 0f);
+            }
+            return;
+        }
+
         float moveX = 0f;
 
         if (Keyboard.current != null)
@@ -46,22 +71,18 @@ public class PlayerController2D : MonoBehaviour
             if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed) moveX += 1f;
         }
 
-        // Ground check
         grounded = false;
         if (groundCheck != null)
             grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // Jump (Space)
         bool jumpPressed = Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame;
         if (jumpPressed && grounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
-        // Apply horizontal movement (keep current Y velocity)
         rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
 
-        // Flip sprite
         if (visual != null && moveX != 0f)
         {
             Vector3 s = visual.localScale;
@@ -69,7 +90,6 @@ public class PlayerController2D : MonoBehaviour
             visual.localScale = s;
         }
 
-        // Animator params
         if (animator != null)
         {
             animator.SetFloat("Speed", Mathf.Abs(moveX));
