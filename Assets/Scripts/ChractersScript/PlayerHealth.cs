@@ -18,8 +18,11 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float respawnDelay = 0.1f;
 
     [Header("Audio Clips (drag & drop)")]
-    [SerializeField] private AudioClip hurtSfx;
-    [SerializeField] private AudioClip healSfx;
+    [Tooltip("List of hurt SFX. One will be chosen at random.")]
+    [SerializeField] private AudioClip[] hurtSfxClips;
+
+    [Tooltip("List of heal SFX. One will be chosen at random.")]
+    [SerializeField] private AudioClip[] healSfxClips;
 
     [Tooltip("Extra multiplier just for this character (0..1).")]
     [Range(0f, 1f)]
@@ -73,7 +76,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (CurrentHealth < prev)
         {
-            PlaySfx(hurtSfx);
+            PlaySfx(GetRandomClip(hurtSfxClips));
         }
 
         if (CurrentHealth == 0)
@@ -94,7 +97,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (CurrentHealth > prev)
         {
-            PlaySfx(healSfx);
+            PlaySfx(GetRandomClip(healSfxClips));
         }
     }
 
@@ -130,6 +133,22 @@ public class PlayerHealth : MonoBehaviour
         if (volume <= 0f) return;
 
         audioSource.PlayOneShot(clip, volume);
+    }
+
+    private static AudioClip GetRandomClip(AudioClip[] clips)
+    {
+        if (clips == null || clips.Length == 0)
+            return null;
+
+        // Filter out null entries without allocating; pick a random non-null if possible.
+        int attempts = clips.Length;
+        while (attempts-- > 0)
+        {
+            var c = clips[Random.Range(0, clips.Length)];
+            if (c != null) return c;
+        }
+
+        return null;
     }
 
     private void LoadGlobalSfxVolume()
