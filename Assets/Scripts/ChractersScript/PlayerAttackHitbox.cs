@@ -11,6 +11,10 @@ public class PlayerAttackHitbox : MonoBehaviour
     [Header("Target Filtering")]
     [SerializeField] private LayerMask targetLayers;
 
+    [Header("Hit FX")]
+    [SerializeField] private ParticleSystem bloodEffectPrefab;
+    [SerializeField] private Vector3 bloodSpawnOffset = Vector3.zero;
+
     private Collider2D hitboxCollider;
     private PlayerHealth ownerHealth;
     private int currentDamage;
@@ -81,5 +85,18 @@ public class PlayerAttackHitbox : MonoBehaviour
 
         hitTargets.Add(targetHealth);
         targetHealth.TakeDamage(currentDamage);
+
+        SpawnBloodEffect(other);
+    }
+
+    private void SpawnBloodEffect(Collider2D other)
+    {
+        if (bloodEffectPrefab == null)
+            return;
+
+        Vector3 spawnPos = other.bounds.center + bloodSpawnOffset;
+
+        ParticleSystem fx = Instantiate(bloodEffectPrefab, spawnPos, Quaternion.identity);
+        fx.Play();
     }
 }

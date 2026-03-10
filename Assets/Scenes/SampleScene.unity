@@ -1509,6 +1509,8 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 1
+  bloodEffectPrefab: {fileID: 9203768844593803654, guid: 0654a82feadeb3a4db98a188162ffebb, type: 3}
+  bloodSpawnOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &726702507
 GameObject:
   m_ObjectHideFlags: 0
@@ -3637,6 +3639,8 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 1
+  bloodEffectPrefab: {fileID: 9203768844593803654, guid: 0654a82feadeb3a4db98a188162ffebb, type: 3}
+  bloodSpawnOffset: {x: 0, y: 0, z: 0}
 --- !u!61 &2139550325
 BoxCollider2D:
   m_ObjectHideFlags: 0
