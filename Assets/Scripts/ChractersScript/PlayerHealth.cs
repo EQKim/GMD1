@@ -12,9 +12,21 @@ public class PlayerHealth : MonoBehaviour
 
     public System.Action<int, int> OnHealthChanged;
 
+    [Header("Lives")]
+    [SerializeField] private int maxLives = 3;
+    public int MaxLives => maxLives;
+
+    public int CurrentLives { get; private set; }
+
+    public System.Action<int, int> OnLivesChanged;
+    [SerializeField] private PlayerLivesUI livesUI;
+
     [Header("Respawn")]
     [SerializeField] private SpawnPlatform respawnPlatform;
     [SerializeField] private float respawnDelay = 0.1f;
+
+    [Header("Game")]
+    [SerializeField] private GameManager gameManager;
 
     [Header("Audio Source")]
     [Tooltip("Drag the AudioSource you want this health script to use.")]
@@ -38,7 +50,6 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("PlayerPrefs key used to save the global SFX volume.")]
     [SerializeField] private string sfxVolumePrefKey = "SFX_VOLUME";
 
-    // Cached global volume (0..1)
     private float globalSfxVolume = 1f;
 
     private bool isRespawning;
@@ -46,7 +57,15 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         CurrentHealth = maxHealth;
+        CurrentLives = maxLives;
+
         OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+        OnLivesChanged?.Invoke(CurrentLives, maxLives);
+
+        if (livesUI != null)
+        {
+            livesUI.UpdateLives(CurrentLives);
+        }
 
         if (audioSource == null)
         {
@@ -57,7 +76,7 @@ public class PlayerHealth : MonoBehaviour
         {
             audioSource.playOnAwake = false;
             audioSource.loop = false;
-            audioSource.spatialBlend = 0f; // 2D sound by default
+            audioSource.spatialBlend = 0f;
         }
         else
         {
@@ -81,6 +100,7 @@ public class PlayerHealth : MonoBehaviour
         if (amount <= 0) return;
         if (CurrentHealth <= 0) return;
         if (isRespawning) return;
+        if (CurrentLives <= 0) return;
 
         int prev = CurrentHealth;
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
@@ -102,6 +122,7 @@ public class PlayerHealth : MonoBehaviour
         if (amount <= 0) return;
         if (CurrentHealth <= 0) return;
         if (isRespawning) return;
+        if (CurrentLives <= 0) return;
 
         int prev = CurrentHealth;
         CurrentHealth = Mathf.Min(maxHealth, CurrentHealth + amount);
@@ -116,6 +137,20 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator RespawnRoutine()
     {
         isRespawning = true;
+
+        LoseLife();
+
+        if (CurrentLives <= 0)
+        {
+            if (gameManager != null)
+            {
+                gameManager.HandlePlayerDefeated(this);
+            }
+
+            gameObject.SetActive(false);
+            isRespawning = false;
+            yield break;
+        }
 
         if (respawnDelay > 0f)
             yield return new WaitForSeconds(respawnDelay);
@@ -133,6 +168,17 @@ public class PlayerHealth : MonoBehaviour
         }
 
         isRespawning = false;
+    }
+
+    private void LoseLife()
+    {
+        CurrentLives = Mathf.Max(0, CurrentLives - 1);
+        OnLivesChanged?.Invoke(CurrentLives, maxLives);
+
+        if (livesUI != null)
+        {
+            livesUI.UpdateLives(CurrentLives);
+        }
     }
 
     private void PlaySfx(AudioClip clip)
@@ -205,5 +251,25 @@ public class PlayerHealth : MonoBehaviour
     public float GetGlobalSfxVolume()
     {
         return globalSfxVolume;
+    }
+
+    public void ResetPlayer()
+    {
+        StopAllCoroutines();
+        isRespawning = false;
+
+        CurrentLives = maxLives;
+        CurrentHealth = maxHealth;
+
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+        OnLivesChanged?.Invoke(CurrentLives, maxLives);
+
+        if (livesUI != null)
+            livesUI.UpdateLives(CurrentLives);
+
+        if (respawnPlatform != null)
+            respawnPlatform.RespawnPlayer();
+
+        gameObject.SetActive(true);
     }
 }

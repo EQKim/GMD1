@@ -26,8 +26,6 @@ public class SpawnPlatform : MonoBehaviour
 
     private void Start()
     {
-        // Do not auto-start here anymore.
-        // The GameStartScreen / GameManager will decide when the round begins.
         SetPlatformVisible(true);
     }
 
@@ -83,6 +81,17 @@ public class SpawnPlatform : MonoBehaviour
         BeginFade();
     }
 
+    public void ResetPlatform()
+    {
+        if (fadeRoutine != null)
+        {
+            StopCoroutine(fadeRoutine);
+            fadeRoutine = null;
+        }
+
+        SetPlatformVisible(true);
+    }
+
     private void BeginFade()
     {
         if (fadeRoutine != null) StopCoroutine(fadeRoutine);
@@ -105,6 +114,7 @@ public class SpawnPlatform : MonoBehaviour
             yield return null;
         }
 
+        fadeRoutine = null;
         SetPlatformVisible(false);
     }
 
