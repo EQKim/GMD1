@@ -26,15 +26,24 @@ public class SpawnPlatform : MonoBehaviour
 
     private void Start()
     {
-        SetPlatformVisible(true);
+        ResetPlatform();
+
+        if (spawnPlayerOnStart)
+        {
+            RespawnPlayer();
+        }
     }
 
     public void StartPlatformSequence()
     {
-        if (spawnPlayerOnStart)
-            RespawnPlayer();
-        else
-            BeginFade();
+        if (fadeRoutine != null)
+        {
+            StopCoroutine(fadeRoutine);
+            fadeRoutine = null;
+        }
+
+        SetPlatformVisible(true);
+        fadeRoutine = StartCoroutine(FadeAndDisable());
     }
 
     public void RespawnPlayer()
@@ -46,12 +55,14 @@ public class SpawnPlatform : MonoBehaviour
         }
 
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-        if (rb == null) rb = player.GetComponentInParent<Rigidbody2D>();
+        if (rb == null)
+            rb = player.GetComponentInParent<Rigidbody2D>();
 
         Transform target = rb != null ? rb.transform : player;
 
         Collider2D playerCol = target.GetComponent<Collider2D>();
-        if (playerCol == null) playerCol = target.GetComponentInChildren<Collider2D>();
+        if (playerCol == null)
+            playerCol = target.GetComponentInChildren<Collider2D>();
 
         if (playerCol == null)
         {
@@ -69,6 +80,13 @@ public class SpawnPlatform : MonoBehaviour
         float deltaY = (platformB.max.y + skin) - playerB.min.y;
         float deltaX = transform.position.x - playerB.center.x;
 
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.simulated = false;
+        }
+
         Vector3 newPos = target.position + new Vector3(deltaX, deltaY, 0f);
         target.position = newPos;
 
@@ -76,9 +94,9 @@ public class SpawnPlatform : MonoBehaviour
         {
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
+            rb.simulated = true;
+            rb.Sleep();
         }
-
-        BeginFade();
     }
 
     public void ResetPlatform()
@@ -89,13 +107,20 @@ public class SpawnPlatform : MonoBehaviour
             fadeRoutine = null;
         }
 
+        StopAllCoroutines();
         SetPlatformVisible(true);
-    }
 
-    private void BeginFade()
-    {
-        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
-        fadeRoutine = StartCoroutine(FadeAndDisable());
+        if (sr != null)
+        {
+            Color c = sr.color;
+            c.a = 1f;
+            sr.color = c;
+        }
+
+        if (col != null)
+        {
+            col.enabled = true;
+        }
     }
 
     private IEnumerator FadeAndDisable()
@@ -124,7 +149,8 @@ public class SpawnPlatform : MonoBehaviour
         {
             sr.enabled = true;
             col.enabled = true;
-            var c = sr.color;
+
+            Color c = sr.color;
             sr.color = new Color(c.r, c.g, c.b, 1f);
         }
         else
