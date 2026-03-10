@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.LowLevel;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController2D : MonoBehaviour
@@ -25,11 +26,24 @@ public class PlayerController2D : MonoBehaviour
     [Header("Flip Character")]
     [SerializeField] private bool startFacingRight = true;
 
-    [Header("Input Keys")]
+    [Header("Keyboard Input Keys")]
+    [SerializeField] private bool useKeyboard = true;
     [SerializeField] private Key moveLeftKey = Key.A;
     [SerializeField] private Key moveRightKey = Key.D;
-    [SerializeField] private Key jumpKey = Key.Space;
-    [SerializeField] private Key attackKey = Key.J;
+    [SerializeField] private Key jumpKey = Key.Q;
+    [SerializeField] private Key attackKey = Key.E;
+
+    [Header("Gamepad Input")]
+    [SerializeField] private bool useGamepad = true;
+    [SerializeField] private int gamepadIndex = 0;
+
+    [Tooltip("Xbox B / east button by default")]
+    [SerializeField] private GamepadButton jumpButton = GamepadButton.East;
+
+    [Tooltip("Xbox X / west button by default")]
+    [SerializeField] private GamepadButton attackButton = GamepadButton.West;
+
+    [SerializeField] private float stickDeadzone = 0.2f;
 
     [Header("Attack")]
     [SerializeField] private float heavyAttackHoldTime = 0.35f;
@@ -87,17 +101,6 @@ public class PlayerController2D : MonoBehaviour
             return;
         }
 
-        float moveX = 0f;
-
-        if (Keyboard.current != null)
-        {
-            if (Keyboard.current[moveLeftKey].isPressed)
-                moveX -= 1f;
-
-            if (Keyboard.current[moveRightKey].isPressed)
-                moveX += 1f;
-        }
-
         grounded = false;
         if (groundCheck != null)
         {
@@ -107,6 +110,8 @@ public class PlayerController2D : MonoBehaviour
                 groundLayer
             );
         }
+
+        float moveX = ReadMoveInput();
 
         HandleJump();
         HandleAttack();
@@ -127,12 +132,57 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
+    private Gamepad GetAssignedGamepad()
+    {
+        if (!useGamepad)
+            return null;
+
+        if (Gamepad.all.Count <= gamepadIndex)
+            return null;
+
+        return Gamepad.all[gamepadIndex];
+    }
+
+    private float ReadMoveInput()
+    {
+        float moveX = 0f;
+
+        if (useKeyboard && Keyboard.current != null)
+        {
+            if (Keyboard.current[moveLeftKey].isPressed)
+                moveX -= 1f;
+
+            if (Keyboard.current[moveRightKey].isPressed)
+                moveX += 1f;
+        }
+
+        Gamepad pad = GetAssignedGamepad();
+        if (pad != null)
+        {
+            float stickX = pad.leftStick.ReadValue().x;
+
+            if (Mathf.Abs(stickX) > stickDeadzone)
+                moveX = stickX;
+
+            if (pad.dpad.left.isPressed)
+                moveX = -1f;
+            else if (pad.dpad.right.isPressed)
+                moveX = 1f;
+        }
+
+        return Mathf.Clamp(moveX, -1f, 1f);
+    }
+
     private void HandleJump()
     {
-        if (Keyboard.current == null)
-            return;
+        bool jumpPressed = false;
 
-        bool jumpPressed = Keyboard.current[jumpKey].wasPressedThisFrame;
+        if (useKeyboard && Keyboard.current != null && Keyboard.current[jumpKey].wasPressedThisFrame)
+            jumpPressed = true;
+
+        Gamepad pad = GetAssignedGamepad();
+        if (pad != null && pad[jumpButton].wasPressedThisFrame)
+            jumpPressed = true;
 
         if (jumpPressed && grounded)
         {
@@ -142,36 +192,55 @@ public class PlayerController2D : MonoBehaviour
 
     private void HandleAttack()
     {
-        if (Keyboard.current == null || animator == null)
-            return;
+        bool pressedThisFrame = false;
+        bool releasedThisFrame = false;
+        bool isPressed = false;
 
-        KeyControl attackControl = Keyboard.current[attackKey];
-        if (attackControl == null)
-            return;
+        if (useKeyboard && Keyboard.current != null)
+        {
+            KeyControl attackControl = Keyboard.current[attackKey];
+            if (attackControl != null)
+            {
+                if (attackControl.wasPressedThisFrame) pressedThisFrame = true;
+                if (attackControl.wasReleasedThisFrame) releasedThisFrame = true;
+                if (attackControl.isPressed) isPressed = true;
+            }
+        }
 
-        if (attackControl.wasPressedThisFrame)
+        Gamepad pad = GetAssignedGamepad();
+        if (pad != null)
+        {
+            ButtonControl button = pad[attackButton];
+            if (button != null)
+            {
+                if (button.wasPressedThisFrame) pressedThisFrame = true;
+                if (button.wasReleasedThisFrame) releasedThisFrame = true;
+                if (button.isPressed) isPressed = true;
+            }
+        }
+
+        if (pressedThisFrame)
         {
             attackHeld = true;
             attackStartTime = Time.time;
             attackHeldTime = 0f;
         }
 
-        if (attackHeld && attackControl.isPressed)
+        if (attackHeld && isPressed)
         {
             attackHeldTime = Time.time - attackStartTime;
         }
 
-        if (attackHeld && attackControl.wasReleasedThisFrame)
+        if (attackHeld && releasedThisFrame)
         {
             attackHeld = false;
 
-            if (attackHeldTime >= heavyAttackHoldTime)
+            if (animator != null)
             {
-                animator.SetTrigger(heavyAttackTriggerName);
-            }
-            else
-            {
-                animator.SetTrigger(quickAttackTriggerName);
+                if (attackHeldTime >= heavyAttackHoldTime)
+                    animator.SetTrigger(heavyAttackTriggerName);
+                else
+                    animator.SetTrigger(quickAttackTriggerName);
             }
 
             attackHeldTime = 0f;

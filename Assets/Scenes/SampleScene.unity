@@ -761,10 +761,16 @@ MonoBehaviour:
   visual: {fileID: 1769084653}
   attackHitbox: {fileID: 2139550324}
   startFacingRight: 0
+  useKeyboard: 1
   moveLeftKey: 61
   moveRightKey: 62
   jumpKey: 1
   attackKey: 24
+  useGamepad: 1
+  gamepadIndex: 1
+  jumpButton: 5
+  attackButton: 7
+  stickDeadzone: 0.2
   heavyAttackHoldTime: 0.35
   quickAttackTriggerName: QuickAttack
   heavyAttackTriggerName: HeavyAttack
@@ -789,7 +795,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7a722350c27d6ca4688611c814f3c116, type: 3}
   - {fileID: 8300000, guid: df4990172a395464dbc760e5e69d0efd, type: 3}
   healSfxClips: []
-  localSfxVolume: 1
+  localSfxVolume: 0.05
   sfxVolumeSlider: {fileID: 0}
   sfxVolumePrefKey: SFX_VOLUME
 --- !u!1 &465671098
@@ -1265,10 +1271,16 @@ MonoBehaviour:
   visual: {fileID: 816676647}
   attackHitbox: {fileID: 676414915}
   startFacingRight: 1
+  useKeyboard: 1
   moveLeftKey: 15
   moveRightKey: 18
   jumpKey: 31
   attackKey: 19
+  useGamepad: 1
+  gamepadIndex: 0
+  jumpButton: 5
+  attackButton: 7
+  stickDeadzone: 0.2
   heavyAttackHoldTime: 0.35
   quickAttackTriggerName: QuickAttack
   heavyAttackTriggerName: HeavyAttack
@@ -1292,7 +1304,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2f1cad6493f23744aa27072854e9bb4e, type: 3}
   - {fileID: 8300000, guid: b26852a5e3af65a4081a080ec88d1b72, type: 3}
   healSfxClips: []
-  localSfxVolume: 0.458
+  localSfxVolume: 0.05
   sfxVolumeSlider: {fileID: 0}
   sfxVolumePrefKey: SFX_VOLUME
 --- !u!1 &665516665
@@ -1741,7 +1753,7 @@ MonoBehaviour:
   damageCooldown: 0.5
   launchUpVelocity: 25
   lavaHissSfx: {fileID: 8300000, guid: 5dea6efd3150183409293619cbd33a0b, type: 3}
-  lavaVolume: 0.288
+  lavaVolume: 0.1
 --- !u!61 &822747838
 BoxCollider2D:
   m_ObjectHideFlags: 0
