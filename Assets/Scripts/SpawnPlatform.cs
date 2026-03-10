@@ -26,13 +26,19 @@ public class SpawnPlatform : MonoBehaviour
 
     private void Start()
     {
+        // Do not auto-start here anymore.
+        // The GameStartScreen / GameManager will decide when the round begins.
+        SetPlatformVisible(true);
+    }
+
+    public void StartPlatformSequence()
+    {
         if (spawnPlayerOnStart)
             RespawnPlayer();
         else
             BeginFade();
     }
 
-    // Call this on death/respawn
     public void RespawnPlayer()
     {
         if (player == null)
@@ -41,7 +47,6 @@ public class SpawnPlatform : MonoBehaviour
             return;
         }
 
-        // Always move the real physics body if it exists
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         if (rb == null) rb = player.GetComponentInParent<Rigidbody2D>();
 
@@ -56,19 +61,14 @@ public class SpawnPlatform : MonoBehaviour
             return;
         }
 
-        // Make platform solid + visible again (bounds only valid when collider enabled)
         SetPlatformVisible(true);
 
-        // Robust alignment: put player's collider bottom exactly on platform top
         Bounds platformB = col.bounds;
         Bounds playerB = playerCol.bounds;
 
         float skin = Mathf.Max(0.02f, extraPlayerHeight);
 
-        // Move so: player bottom == platform top (+ skin)
         float deltaY = (platformB.max.y + skin) - playerB.min.y;
-
-        // Optional: snap player horizontally to platform center
         float deltaX = transform.position.x - playerB.center.x;
 
         Vector3 newPos = target.position + new Vector3(deltaX, deltaY, 0f);
@@ -91,7 +91,6 @@ public class SpawnPlatform : MonoBehaviour
 
     private IEnumerator FadeAndDisable()
     {
-        // Wait until it’s time to fade
         float wait = Mathf.Max(0f, lifetime - fadeDuration);
         yield return new WaitForSeconds(wait);
 
@@ -106,7 +105,6 @@ public class SpawnPlatform : MonoBehaviour
             yield return null;
         }
 
-        // After fade: disable visuals + collider (platform "gone")
         SetPlatformVisible(false);
     }
 

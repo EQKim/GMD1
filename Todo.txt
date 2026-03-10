@@ -5,16 +5,15 @@
    --- Spawning/Respawning mechanic
    --- Another player 
    --- Punch animations
+   --- Punch damage
 -------------------------------------------------
 TODO
- - Punch damage
+
+ - Start screen must have volume input
  - 3 Lives implementation 
  - Some platforms can only be stepped on "1" time
  - When he gets hurt 50/50 *Custom Recording*
 
 
 
-business canvas 
-
-pov
 

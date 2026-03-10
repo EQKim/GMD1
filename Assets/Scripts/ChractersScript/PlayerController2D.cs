@@ -279,4 +279,9 @@ public class PlayerController2D : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
+
+    public void SetControllable(bool value)
+    {
+        isControllable = value;
+    }
 }
