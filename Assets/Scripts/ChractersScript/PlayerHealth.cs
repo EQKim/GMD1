@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-[RequireComponent(typeof(AudioSource))]
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Health")]
@@ -16,6 +15,10 @@ public class PlayerHealth : MonoBehaviour
     [Header("Respawn")]
     [SerializeField] private SpawnPlatform respawnPlatform;
     [SerializeField] private float respawnDelay = 0.1f;
+
+    [Header("Audio Source")]
+    [Tooltip("Drag the AudioSource you want this health script to use.")]
+    [SerializeField] private AudioSource audioSource;
 
     [Header("Audio Clips (drag & drop)")]
     [Tooltip("List of hurt SFX. One will be chosen at random.")]
@@ -35,8 +38,6 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("PlayerPrefs key used to save the global SFX volume.")]
     [SerializeField] private string sfxVolumePrefKey = "SFX_VOLUME";
 
-    private AudioSource audioSource;
-
     // Cached global volume (0..1)
     private float globalSfxVolume = 1f;
 
@@ -47,10 +48,21 @@ public class PlayerHealth : MonoBehaviour
         CurrentHealth = maxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
 
-        audioSource = GetComponent<AudioSource>();
-        audioSource.playOnAwake = false;
-        audioSource.loop = false;
-        audioSource.spatialBlend = 0f; // 2D sound by default
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
+        if (audioSource != null)
+        {
+            audioSource.playOnAwake = false;
+            audioSource.loop = false;
+            audioSource.spatialBlend = 0f; // 2D sound by default
+        }
+        else
+        {
+            Debug.LogWarning($"PlayerHealth on '{gameObject.name}' has no AudioSource assigned.");
+        }
 
         LoadGlobalSfxVolume();
         HookupSliderIfPresent();
@@ -108,11 +120,9 @@ public class PlayerHealth : MonoBehaviour
         if (respawnDelay > 0f)
             yield return new WaitForSeconds(respawnDelay);
 
-        // Restore health + update UI
         CurrentHealth = maxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
 
-        // Respawn on platform (platform will re-enable + fade again)
         if (respawnPlatform != null)
         {
             respawnPlatform.RespawnPlayer();
@@ -128,6 +138,7 @@ public class PlayerHealth : MonoBehaviour
     private void PlaySfx(AudioClip clip)
     {
         if (clip == null) return;
+        if (audioSource == null) return;
 
         float volume = Mathf.Clamp01(globalSfxVolume * localSfxVolume);
         if (volume <= 0f) return;
@@ -140,7 +151,6 @@ public class PlayerHealth : MonoBehaviour
         if (clips == null || clips.Length == 0)
             return null;
 
-        // Filter out null entries without allocating; pick a random non-null if possible.
         int attempts = clips.Length;
         while (attempts-- > 0)
         {
@@ -171,9 +181,7 @@ public class PlayerHealth : MonoBehaviour
         sfxVolumeSlider.maxValue = 1f;
         sfxVolumeSlider.wholeNumbers = false;
 
-        // Initialize UI without triggering the callback twice
         sfxVolumeSlider.SetValueWithoutNotify(globalSfxVolume);
-
         sfxVolumeSlider.onValueChanged.AddListener(OnSfxSliderChanged);
     }
 
@@ -183,7 +191,6 @@ public class PlayerHealth : MonoBehaviour
         SaveGlobalSfxVolume();
     }
 
-    // Optional: call this from other scripts if you want to set volume without UI
     public void SetGlobalSfxVolume(float value01)
     {
         globalSfxVolume = Mathf.Clamp01(value01);
