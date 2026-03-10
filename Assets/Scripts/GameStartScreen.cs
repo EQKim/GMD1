@@ -118,16 +118,16 @@ public class GameStartScreen : MonoBehaviour
         player1.SetControllable(false);
         player2.SetControllable(false);
 
-        if (player1Health != null)
-            player1Health.ResetPlayer();
-
-        if (player2Health != null)
-            player2Health.ResetPlayer();
-
         if (spawnPlatformLeft != null)
             spawnPlatformLeft.ResetPlatform();
 
         if (spawnPlatformRight != null)
             spawnPlatformRight.ResetPlatform();
+
+        if (player1Health != null)
+            player1Health.ResetPlayer();
+
+        if (player2Health != null)
+            player2Health.ResetPlayer();
     }
 }

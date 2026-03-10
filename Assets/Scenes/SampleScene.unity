@@ -1714,7 +1714,7 @@ MonoBehaviour:
   livesUI: {fileID: 31150449}
   respawnPlatform: {fileID: 1126747266}
   respawnDelay: 0.1
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 192894432}
   audioSource: {fileID: 152657739}
   hurtSfxClips:
   - {fileID: 8300000, guid: 2f1cad6493f23744aa27072854e9bb4e, type: 3}

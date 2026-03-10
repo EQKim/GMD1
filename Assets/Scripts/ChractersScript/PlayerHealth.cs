@@ -267,9 +267,17 @@ public class PlayerHealth : MonoBehaviour
         if (livesUI != null)
             livesUI.UpdateLives(CurrentLives);
 
+        gameObject.SetActive(true);
+
         if (respawnPlatform != null)
             respawnPlatform.RespawnPlayer();
 
-        gameObject.SetActive(true);
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.Sleep();
+        }
     }
 }
