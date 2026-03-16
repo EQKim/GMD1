@@ -1,75 +1,42 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using TMPro;
 
 public class GameStartScreen : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private GameObject startScreen;
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject volumeSettings;
+
+    [Header("Players")]
     [SerializeField] private PlayerController2D player1;
     [SerializeField] private PlayerController2D player2;
-    [SerializeField] private SpawnPlatform spawnPlatformLeft;
-    [SerializeField] private SpawnPlatform spawnPlatformRight;
     [SerializeField] private PlayerHealth player1Health;
     [SerializeField] private PlayerHealth player2Health;
 
-    [Header("Start Screen Text")]
-    [SerializeField] private TMP_Text titleText;
-    [SerializeField] private TMP_Text pressStartText;
-    [SerializeField] private string defaultTitle = "NutCracker";
+    [Header("Spawn Platforms")]
+    [SerializeField] private SpawnPlatform spawnPlatformLeft;
+    [SerializeField] private SpawnPlatform spawnPlatformRight;
 
-    private bool gameStarted = false;
+    [Header("Title")]
+    [SerializeField] private TMP_Text titleText;
+    [SerializeField] private string defaultTitle = "NutCracker";
 
     private void Start()
     {
-        startScreen.SetActive(true);
+        ShowMainMenuState();
 
-        if (titleText != null)
-            titleText.text = defaultTitle;
+        if (player1 != null)
+            player1.SetControllable(false);
 
-        if (pressStartText != null)
-            pressStartText.gameObject.SetActive(true);
-
-        player1.SetControllable(false);
-        player2.SetControllable(false);
-    }
-
-    private void Update()
-    {
-        if (gameStarted)
-            return;
-
-        if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
-        {
-            StartGame();
-            return;
-        }
-
-        if (Gamepad.all.Count > 0)
-        {
-            foreach (var pad in Gamepad.all)
-            {
-                if (pad.buttonSouth.wasPressedThisFrame ||
-                    pad.buttonEast.wasPressedThisFrame ||
-                    pad.startButton.wasPressedThisFrame)
-                {
-                    StartGame();
-                    return;
-                }
-            }
-        }
+        if (player2 != null)
+            player2.SetControllable(false);
     }
 
     public void StartGame()
     {
-        gameStarted = true;
-
-        startScreen.SetActive(false);
-
-        if (titleText != null)
-            titleText.text = defaultTitle;
-
-        if (pressStartText != null)
-            pressStartText.gameObject.SetActive(true);
+        if (startScreen != null)
+            startScreen.SetActive(false);
 
         if (player1Health != null)
             player1Health.ResetPlayer();
@@ -77,8 +44,11 @@ public class GameStartScreen : MonoBehaviour
         if (player2Health != null)
             player2Health.ResetPlayer();
 
-        player1.SetControllable(true);
-        player2.SetControllable(true);
+        if (player1 != null)
+            player1.SetControllable(true);
+
+        if (player2 != null)
+            player2.SetControllable(true);
 
         if (spawnPlatformLeft != null)
             spawnPlatformLeft.StartPlatformSequence();
@@ -89,34 +59,34 @@ public class GameStartScreen : MonoBehaviour
 
     public void ShowWinnerScreen(string winnerName)
     {
-        gameStarted = true;
+        if (startScreen != null)
+            startScreen.SetActive(true);
 
-        startScreen.SetActive(true);
+        if (mainMenu != null)
+            mainMenu.SetActive(false);
+
+        if (volumeSettings != null)
+            volumeSettings.SetActive(false);
 
         if (titleText != null)
             titleText.text = winnerName + " Wins";
 
-        if (pressStartText != null)
-            pressStartText.gameObject.SetActive(false);
+        if (player1 != null)
+            player1.SetControllable(false);
 
-        player1.SetControllable(false);
-        player2.SetControllable(false);
+        if (player2 != null)
+            player2.SetControllable(false);
     }
 
     public void ReturnToStartScreen()
     {
-        gameStarted = false;
+        ShowMainMenuState();
 
-        startScreen.SetActive(true);
+        if (player1 != null)
+            player1.SetControllable(false);
 
-        if (titleText != null)
-            titleText.text = defaultTitle;
-
-        if (pressStartText != null)
-            pressStartText.gameObject.SetActive(true);
-
-        player1.SetControllable(false);
-        player2.SetControllable(false);
+        if (player2 != null)
+            player2.SetControllable(false);
 
         if (spawnPlatformLeft != null)
             spawnPlatformLeft.ResetPlatform();
@@ -129,5 +99,20 @@ public class GameStartScreen : MonoBehaviour
 
         if (player2Health != null)
             player2Health.ResetPlayer();
+    }
+
+    private void ShowMainMenuState()
+    {
+        if (startScreen != null)
+            startScreen.SetActive(true);
+
+        if (mainMenu != null)
+            mainMenu.SetActive(true);
+
+        if (volumeSettings != null)
+            volumeSettings.SetActive(false);
+
+        if (titleText != null)
+            titleText.text = defaultTitle;
     }
 }
