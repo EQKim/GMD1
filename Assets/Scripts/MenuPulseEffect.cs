@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class MenuPulseEffect : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
@@ -14,15 +15,14 @@ public class MenuPulseEffect : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     private Vector3 baseScale;
     private bool isSelected;
-    private TMPro.TMP_Text tmpText;
+    private TMP_Text tmpText;
 
     private void Awake()
     {
         baseScale = transform.localScale;
-        tmpText = GetComponent<TMPro.TMP_Text>();
+        tmpText = GetComponentInChildren<TMP_Text>();
 
-        if (tmpText != null && changeColor)
-            tmpText.color = normalColor;
+        ResetVisuals();
     }
 
     private void Update()
@@ -47,6 +47,16 @@ public class MenuPulseEffect : MonoBehaviour, ISelectHandler, IDeselectHandler
     }
 
     public void OnDeselect(BaseEventData eventData)
+    {
+        ResetVisuals();
+    }
+
+    private void OnDisable()
+    {
+        ResetVisuals();
+    }
+
+    private void ResetVisuals()
     {
         isSelected = false;
         transform.localScale = baseScale;

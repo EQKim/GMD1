@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 
 public class StartMenuUI : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class StartMenuUI : MonoBehaviour
     [SerializeField] private Selectable firstMainMenuSelection;
     [SerializeField] private Selectable firstSettingsSelection;
 
+    private Coroutine selectionRoutine;
+
     private void Start()
     {
         OpenMainMenu();
@@ -21,26 +24,37 @@ public class StartMenuUI : MonoBehaviour
     {
         mainMenu.SetActive(true);
         volumeSettings.SetActive(false);
-
-        EventSystem.current.SetSelectedGameObject(null);
-
-        if (firstMainMenuSelection != null)
-            EventSystem.current.SetSelectedGameObject(firstMainMenuSelection.gameObject);
+        SelectWithDelay(firstMainMenuSelection);
     }
 
     public void OpenSettings()
     {
         mainMenu.SetActive(false);
         volumeSettings.SetActive(true);
-
-        EventSystem.current.SetSelectedGameObject(null);
-
-        if (firstSettingsSelection != null)
-            EventSystem.current.SetSelectedGameObject(firstSettingsSelection.gameObject);
+        SelectWithDelay(firstSettingsSelection);
     }
 
     public void StartGame()
     {
         gameObject.SetActive(false);
+    }
+
+    private void SelectWithDelay(Selectable target)
+    {
+        if (selectionRoutine != null)
+            StopCoroutine(selectionRoutine);
+
+        selectionRoutine = StartCoroutine(SelectNextFrame(target));
+    }
+
+    private IEnumerator SelectNextFrame(Selectable target)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+
+        yield return null;
+        yield return null;
+
+        if (target != null && target.gameObject.activeInHierarchy)
+            EventSystem.current.SetSelectedGameObject(target.gameObject);
     }
 }

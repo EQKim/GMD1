@@ -554,7 +554,7 @@ MonoBehaviour:
   m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
@@ -2027,6 +2027,7 @@ GameObject:
   - component: {fileID: 747546522}
   - component: {fileID: 747546521}
   - component: {fileID: 747546520}
+  - component: {fileID: 747546523}
   m_Layer: 0
   m_Name: BackButton
   m_TagString: Untagged
@@ -2067,9 +2068,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 1102699508}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -2148,6 +2149,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747546518}
   m_CullTransparentMesh: 1
+--- !u!114 &747546523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747546518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f05ed23b38bbd4daf94b1d2fbe7583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuPulseEffect
+  pulseSpeed: 4
+  pulseAmount: 0.08
+  changeColor: 1
+  normalColor: {r: 0, g: 0, b: 0, a: 1}
+  selectedColor: {r: 0.627451, g: 0.1254902, b: 0.9411765, a: 1}
 --- !u!1 &816676644
 GameObject:
   m_ObjectHideFlags: 0
@@ -2581,6 +2599,7 @@ GameObject:
   - component: {fileID: 848648775}
   - component: {fileID: 848648774}
   - component: {fileID: 848648773}
+  - component: {fileID: 848648776}
   m_Layer: 0
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -2702,6 +2721,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848648771}
   m_CullTransparentMesh: 1
+--- !u!114 &848648776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848648771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f05ed23b38bbd4daf94b1d2fbe7583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuPulseEffect
+  pulseSpeed: 4
+  pulseAmount: 0.08
+  changeColor: 1
+  normalColor: {r: 0, g: 0, b: 0, a: 1}
+  selectedColor: {r: 0.627451, g: 0.1254902, b: 0.9411765, a: 1}
 --- !u!1 &869694573
 GameObject:
   m_ObjectHideFlags: 0
@@ -2998,7 +3034,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3137,7 +3173,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3278,7 +3314,7 @@ MonoBehaviour:
   mainMenu: {fileID: 448665852}
   volumeSettings: {fileID: 1158090734}
   firstMainMenuSelection: {fileID: 1105323414}
-  firstSettingsSelection: {fileID: 848648773}
+  firstSettingsSelection: {fileID: 1102699508}
 --- !u!1 &1102699506
 GameObject:
   m_ObjectHideFlags: 0
@@ -3331,10 +3367,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 747546520}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -3381,6 +3417,7 @@ GameObject:
   - component: {fileID: 1105323416}
   - component: {fileID: 1105323415}
   - component: {fileID: 1105323414}
+  - component: {fileID: 1105323417}
   m_Layer: 0
   m_Name: StartButton
   m_TagString: Untagged
@@ -3502,6 +3539,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105323412}
   m_CullTransparentMesh: 1
+--- !u!114 &1105323417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105323412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f05ed23b38bbd4daf94b1d2fbe7583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuPulseEffect
+  pulseSpeed: 4
+  pulseAmount: 0.08
+  changeColor: 1
+  normalColor: {r: 0, g: 0, b: 0, a: 1}
+  selectedColor: {r: 0.627451, g: 0.1254902, b: 0.9411765, a: 1}
 --- !u!1 &1118742158
 GameObject:
   m_ObjectHideFlags: 0
@@ -4374,7 +4428,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
