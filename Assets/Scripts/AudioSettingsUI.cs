@@ -5,22 +5,23 @@ public class AudioSettingsUI : MonoBehaviour
 {
     [SerializeField] private Slider volumeSlider;
 
-    private const string VolumeKey = "GameVolume";
-
-    void Start()
+    private void Start()
     {
-        float savedVolume = PlayerPrefs.GetFloat(VolumeKey, 1f);
-
-        AudioListener.volume = savedVolume;
-        volumeSlider.value = savedVolume;
-
-        volumeSlider.onValueChanged.AddListener(SetVolume);
+        if (volumeSlider != null)
+        {
+            volumeSlider.value = AudioListener.volume;
+            volumeSlider.onValueChanged.AddListener(SetVolume);
+        }
     }
 
-    public void SetVolume(float value)
+    private void SetVolume(float value)
     {
         AudioListener.volume = value;
-        PlayerPrefs.SetFloat(VolumeKey, value);
-        PlayerPrefs.Save();
+    }
+
+    private void OnDestroy()
+    {
+        if (volumeSlider != null)
+            volumeSlider.onValueChanged.RemoveListener(SetVolume);
     }
 }

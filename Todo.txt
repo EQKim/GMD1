@@ -7,10 +7,11 @@
    --- Punch animations
    --- Punch damage
    --- 3 Lives implementation 
+   --- Start screen must have volume input
 
 -------------------------------------------------
 TODO
- - Start screen must have volume input
+ 
  - Some platforms can only be stepped on "1" time
  - When he gets hurt 50/50 *Custom Recording*
  

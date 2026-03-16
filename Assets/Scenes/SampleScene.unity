@@ -3325,6 +3325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1102699507}
   - component: {fileID: 1102699508}
+  - component: {fileID: 1102699509}
   m_Layer: 0
   m_Name: VoulumeSlider
   m_TagString: Untagged
@@ -3405,6 +3406,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1102699509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102699506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a91fd210643d3f74b9b4dff37ea597c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSettingsUI
+  volumeSlider: {fileID: 1102699508}
 --- !u!1 &1105323412
 GameObject:
   m_ObjectHideFlags: 0
