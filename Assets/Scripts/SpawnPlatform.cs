@@ -31,7 +31,6 @@ public class SpawnPlatform : MonoBehaviour
         if (spawnPlayerOnStart)
         {
             RespawnPlayer();
-            StartPlatformSequence();
         }
     }
 
