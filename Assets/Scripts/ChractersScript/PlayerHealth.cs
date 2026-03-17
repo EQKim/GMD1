@@ -160,7 +160,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (respawnPlatform != null)
         {
-            respawnPlatform.RespawnPlayer();
+            respawnPlatform.RespawnPlayerWithPlatform();
         }
         else
         {
@@ -270,7 +270,7 @@ public class PlayerHealth : MonoBehaviour
         gameObject.SetActive(true);
 
         if (respawnPlatform != null)
-            respawnPlatform.RespawnPlayer();
+            respawnPlatform.RespawnPlayerWithPlatform();
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)

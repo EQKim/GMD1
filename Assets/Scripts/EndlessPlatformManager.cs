@@ -3,6 +3,19 @@ using UnityEngine;
 
 public class EndlessPlatformManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class SpawnableItem
+    {
+        public GameObject prefab;
+        [Range(0f, 100f)] public float weight = 1f;
+    }
+
+    private class SpawnedItemData
+    {
+        public GameObject itemObject;
+        public float xOffset;
+    }
+
     [Header("Prefab / Pool")]
     [SerializeField] private GameObject platformPrefab;
     [SerializeField] private int poolSize = 12;
@@ -22,7 +35,14 @@ public class EndlessPlatformManager : MonoBehaviour
     [SerializeField] private float minGapY = 0.8f;
     [SerializeField] private float maxGapY = 1.6f;
 
+    [Header("Items / Weapons / Powerups")]
+    [SerializeField] private List<SpawnableItem> spawnableItems = new();
+    [SerializeField, Range(0f, 1f)] private float itemSpawnChance = 0.35f;
+    [SerializeField] private float itemYOffset = 0.9f;
+    [SerializeField] private float itemRandomXOffset = 0.4f;
+
     private readonly List<Rigidbody2D> platforms = new();
+    private readonly Dictionary<Rigidbody2D, SpawnedItemData> platformItems = new();
 
     private void Awake()
     {
@@ -53,7 +73,7 @@ public class EndlessPlatformManager : MonoBehaviour
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb == null)
             {
-                Debug.LogError("Platform prefab must have a Rigidbody2D (set to Kinematic).");
+                Debug.LogError("Platform prefab must have a Rigidbody2D.");
                 enabled = false;
                 return;
             }
@@ -62,6 +82,9 @@ public class EndlessPlatformManager : MonoBehaviour
             rb.position = new Vector2(x, y);
 
             platforms.Add(rb);
+            platformItems[rb] = null;
+
+            TrySpawnItemOnPlatform(rb);
 
             y += Random.Range(minGapY, maxGapY);
         }
@@ -80,14 +103,107 @@ public class EndlessPlatformManager : MonoBehaviour
 
             if (p.y < despawnY)
             {
+                ClearItem(rb);
+
                 float highestY = GetHighestPlatformY();
                 float newY = highestY + Random.Range(minGapY, maxGapY);
                 float newX = Random.Range(minX, maxX);
                 p = new Vector2(newX, newY);
+
+                rb.position = p;
+                TrySpawnItemOnPlatform(rb);
+            }
+            else
+            {
+                rb.MovePosition(p);
             }
 
-            rb.MovePosition(p);
+            UpdateItemPosition(rb);
         }
+    }
+
+    private void TrySpawnItemOnPlatform(Rigidbody2D platform)
+    {
+        if (spawnableItems == null || spawnableItems.Count == 0)
+            return;
+
+        if (Random.value > itemSpawnChance)
+            return;
+
+        GameObject prefabToSpawn = GetRandomWeightedItem();
+        if (prefabToSpawn == null)
+            return;
+
+        float xOffset = Random.Range(-itemRandomXOffset, itemRandomXOffset);
+
+        GameObject item = Instantiate(prefabToSpawn);
+        item.transform.position = new Vector3(
+            platform.position.x + xOffset,
+            platform.position.y + itemYOffset,
+            0f
+        );
+
+        platformItems[platform] = new SpawnedItemData
+        {
+            itemObject = item,
+            xOffset = xOffset
+        };
+    }
+
+    private void UpdateItemPosition(Rigidbody2D platform)
+    {
+        if (!platformItems.TryGetValue(platform, out SpawnedItemData data))
+            return;
+
+        if (data == null || data.itemObject == null)
+            return;
+
+        data.itemObject.transform.position = new Vector3(
+            platform.position.x + data.xOffset,
+            platform.position.y + itemYOffset,
+            0f
+        );
+    }
+
+    private GameObject GetRandomWeightedItem()
+    {
+        float totalWeight = 0f;
+
+        for (int i = 0; i < spawnableItems.Count; i++)
+        {
+            if (spawnableItems[i].prefab != null)
+                totalWeight += spawnableItems[i].weight;
+        }
+
+        if (totalWeight <= 0f)
+            return null;
+
+        float roll = Random.Range(0f, totalWeight);
+        float current = 0f;
+
+        for (int i = 0; i < spawnableItems.Count; i++)
+        {
+            SpawnableItem item = spawnableItems[i];
+            if (item.prefab == null)
+                continue;
+
+            current += item.weight;
+            if (roll <= current)
+                return item.prefab;
+        }
+
+        return null;
+    }
+
+    private void ClearItem(Rigidbody2D platform)
+    {
+        if (!platformItems.TryGetValue(platform, out SpawnedItemData data))
+            return;
+
+        if (data != null && data.itemObject != null)
+            Destroy(data.itemObject);
+
+        platformItems[platform] = null;
     }
 
     private float GetHighestPlatformY()

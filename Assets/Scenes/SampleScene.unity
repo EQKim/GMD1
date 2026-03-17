@@ -3985,6 +3985,16 @@ MonoBehaviour:
   maxX: 4
   minGapY: 0.8
   maxGapY: 1.6
+  spawnableItems:
+  - prefab: {fileID: 4468420911897011266, guid: 13006b65e4c07bf42aab11a160f77b6f, type: 3}
+    weight: 17
+  - prefab: {fileID: 5123665596450971770, guid: 0bf06731bf81e574aac61672ccef5b59, type: 3}
+    weight: 50.8
+  - prefab: {fileID: 3070396822463491671, guid: 349a2ab20422af045a8ad4cd92de1a68, type: 3}
+    weight: 7.4
+  itemSpawnChance: 0.393
+  itemYOffset: 0.5
+  itemRandomXOffset: 0.4
 --- !u!1001 &1553904601
 PrefabInstance:
   m_ObjectHideFlags: 0

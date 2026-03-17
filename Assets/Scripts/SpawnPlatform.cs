@@ -31,7 +31,15 @@ public class SpawnPlatform : MonoBehaviour
         if (spawnPlayerOnStart)
         {
             RespawnPlayer();
+            StartPlatformSequence();
         }
+    }
+
+    public void RespawnPlayerWithPlatform()
+    {
+        ResetPlatform();
+        RespawnPlayer();
+        StartPlatformSequence();
     }
 
     public void StartPlatformSequence()
@@ -101,13 +109,9 @@ public class SpawnPlatform : MonoBehaviour
 
     public void ResetPlatform()
     {
-        if (fadeRoutine != null)
-        {
-            StopCoroutine(fadeRoutine);
-            fadeRoutine = null;
-        }
-
         StopAllCoroutines();
+        fadeRoutine = null;
+
         SetPlatformVisible(true);
 
         if (sr != null)
