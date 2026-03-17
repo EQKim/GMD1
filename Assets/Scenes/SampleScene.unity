@@ -1134,6 +1134,7 @@ MonoBehaviour:
   animator: {fileID: 1769084655}
   visual: {fileID: 1769084653}
   attackHitbox: {fileID: 2139550324}
+  weaponHolder: {fileID: 0}
   startFacingRight: 0
   useKeyboard: 1
   moveLeftKey: 61
@@ -1811,6 +1812,7 @@ MonoBehaviour:
   animator: {fileID: 816676645}
   visual: {fileID: 816676647}
   attackHitbox: {fileID: 676414915}
+  weaponHolder: {fileID: 647366007}
   startFacingRight: 1
   useKeyboard: 1
   moveLeftKey: 15
@@ -4089,11 +4091,11 @@ MonoBehaviour:
   maxGapY: 1.6
   spawnableItems:
   - prefab: {fileID: 4468420911897011266, guid: 13006b65e4c07bf42aab11a160f77b6f, type: 3}
-    weight: 17
+    weight: 36.9
   - prefab: {fileID: 5123665596450971770, guid: 0bf06731bf81e574aac61672ccef5b59, type: 3}
-    weight: 21.6
+    weight: 0
   - prefab: {fileID: 3070396822463491671, guid: 349a2ab20422af045a8ad4cd92de1a68, type: 3}
-    weight: 51.1
+    weight: 0
   itemSpawnChance: 0.549
   itemYOffset: 0.64
   itemRandomXOffset: 0.4

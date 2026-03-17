@@ -52,7 +52,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -160, y: 270, z: 0}
+  m_AnyStatePosition: {x: -170, y: 270, z: 0}
   m_EntryPosition: {x: -160, y: 140, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -151,6 +151,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: QuickAttack
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: HasWeapon
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4881399242173186313}
   m_Solo: 0
@@ -210,6 +213,12 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: QuickAttack
     m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: HasWeapon
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0

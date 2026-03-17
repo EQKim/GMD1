@@ -8,6 +8,11 @@ public class PlayerAttackHitbox : MonoBehaviour
     [SerializeField] private int quickAttackDamage = 10;
     [SerializeField] private int heavyAttackDamage = 20;
 
+    [Header("Weapon Effects")]
+    [SerializeField] private bool enableKnockback = false;
+    [SerializeField] private float knockbackForce = 8f;
+    [SerializeField] private bool enableBleed = true;
+
     [Header("Target Filtering")]
     [SerializeField] private LayerMask targetLayers;
 
@@ -35,6 +40,13 @@ public class PlayerAttackHitbox : MonoBehaviour
     {
         quickAttackDamage = quickDamage;
         heavyAttackDamage = heavyDamage;
+    }
+
+    public void SetWeaponEffects(bool knockbackEnabled, float knockbackAmount, bool bleedEnabled)
+    {
+        enableKnockback = knockbackEnabled;
+        knockbackForce = knockbackAmount;
+        enableBleed = bleedEnabled;
     }
 
     public int GetQuickDamage()
@@ -101,7 +113,29 @@ public class PlayerAttackHitbox : MonoBehaviour
         hitTargets.Add(targetHealth);
         targetHealth.TakeDamage(currentDamage);
 
-        SpawnBloodEffect(other);
+        if (enableKnockback)
+        {
+            ApplyKnockback(other);
+        }
+
+        if (enableBleed)
+        {
+            SpawnBloodEffect(other);
+        }
+    }
+
+    private void ApplyKnockback(Collider2D other)
+    {
+        Rigidbody2D targetRb = other.GetComponentInParent<Rigidbody2D>();
+        if (targetRb == null)
+            return;
+
+        float direction = Mathf.Sign(targetRb.transform.position.x - transform.position.x);
+        if (Mathf.Approximately(direction, 0f))
+            direction = 1f;
+
+        Vector2 force = new Vector2(direction * knockbackForce, knockbackForce * 0.25f);
+        targetRb.AddForce(force, ForceMode2D.Impulse);
     }
 
     private void SpawnBloodEffect(Collider2D other)

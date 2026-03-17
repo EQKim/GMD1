@@ -2,6 +2,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController2D : MonoBehaviour
@@ -22,6 +23,7 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Transform visual;
     [SerializeField] private PlayerAttackHitbox attackHitbox;
+    [SerializeField] private PlayerWeaponHolder weaponHolder;
 
     [Header("Flip Character")]
     [SerializeField] private bool startFacingRight = true;
@@ -49,6 +51,8 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private float heavyAttackHoldTime = 0.35f;
     [SerializeField] private string quickAttackTriggerName = "QuickAttack";
     [SerializeField] private string heavyAttackTriggerName = "HeavyAttack";
+    [SerializeField] private float weaponQuickAttackActiveTime = 0.12f;
+    [SerializeField] private float weaponHeavyAttackActiveTime = 0.18f;
 
     private Rigidbody2D rb;
     private bool grounded;
@@ -56,6 +60,7 @@ public class PlayerController2D : MonoBehaviour
     private bool attackHeld;
     private float attackHeldTime;
     private float attackStartTime;
+    private Coroutine weaponAttackRoutine;
 
     private void Awake()
     {
@@ -73,6 +78,9 @@ public class PlayerController2D : MonoBehaviour
 
         if (attackHitbox == null)
             attackHitbox = GetComponentInChildren<PlayerAttackHitbox>();
+
+        if (weaponHolder == null)
+            weaponHolder = GetComponent<PlayerWeaponHolder>();
     }
 
     private void Start()
@@ -235,16 +243,81 @@ public class PlayerController2D : MonoBehaviour
         {
             attackHeld = false;
 
-            if (animator != null)
+            bool useWeaponAttack = weaponHolder != null && weaponHolder.HasWeapon;
+
+            if (useWeaponAttack)
             {
                 if (attackHeldTime >= heavyAttackHoldTime)
-                    animator.SetTrigger(heavyAttackTriggerName);
+                {
+                    StartWeaponHeavyAttack();
+                }
                 else
-                    animator.SetTrigger(quickAttackTriggerName);
+                {
+                    StartWeaponQuickAttack();
+                }
+            }
+            else
+            {
+                if (animator != null)
+                {
+                    if (attackHeldTime >= heavyAttackHoldTime)
+                        animator.SetTrigger(heavyAttackTriggerName);
+                    else
+                        animator.SetTrigger(quickAttackTriggerName);
+                }
             }
 
             attackHeldTime = 0f;
         }
+    }
+
+    private void StartWeaponQuickAttack()
+    {
+        if (attackHitbox != null)
+            attackHitbox.EnableQuickAttack();
+
+        if (weaponHolder != null)
+        {
+            weaponHolder.PlayAttackSfx();
+            weaponHolder.PlayQuickWeaponSwing();
+        }
+
+        RestartWeaponAttackRoutine(weaponQuickAttackActiveTime);
+    }
+
+    private void StartWeaponHeavyAttack()
+    {
+        if (attackHitbox != null)
+            attackHitbox.EnableHeavyAttack();
+
+        if (weaponHolder != null)
+        {
+            weaponHolder.PlayAttackSfx();
+            weaponHolder.PlayHeavyWeaponSwing();
+        }
+
+        RestartWeaponAttackRoutine(weaponHeavyAttackActiveTime);
+    }
+
+    private void RestartWeaponAttackRoutine(float activeTime)
+    {
+        if (weaponAttackRoutine != null)
+            StopCoroutine(weaponAttackRoutine);
+
+        weaponAttackRoutine = StartCoroutine(WeaponAttackRoutine(activeTime));
+    }
+
+    private IEnumerator WeaponAttackRoutine(float activeTime)
+    {
+        yield return new WaitForSeconds(activeTime);
+
+        if (attackHitbox != null)
+            attackHitbox.DisableAttack();
+
+        if (weaponHolder != null)
+            weaponHolder.ReturnWeaponToIdle();
+
+        weaponAttackRoutine = null;
     }
 
     private void ResetAttackInput()
@@ -258,18 +331,35 @@ public class PlayerController2D : MonoBehaviour
     {
         if (attackHitbox != null)
             attackHitbox.EnableQuickAttack();
+
+        if (weaponHolder != null)
+        {
+            weaponHolder.PlayAttackSfx();
+            weaponHolder.PlayQuickWeaponSwing();
+        }
     }
 
     public void AE_EnableHeavyAttackHitbox()
     {
         if (attackHitbox != null)
             attackHitbox.EnableHeavyAttack();
+
+        if (weaponHolder != null)
+        {
+            weaponHolder.PlayAttackSfx();
+            weaponHolder.PlayHeavyWeaponSwing();
+        }
     }
 
     public void AE_DisableAttackHitbox()
     {
         if (attackHitbox != null)
             attackHitbox.DisableAttack();
+
+        if (weaponHolder != null)
+        {
+            weaponHolder.ReturnWeaponToIdle();
+        }
     }
 
     private void OnDrawGizmosSelected()

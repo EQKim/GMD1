@@ -13,6 +13,11 @@ public class WeaponPickup : MonoBehaviour
     [SerializeField] private int quickAttackDamage = 20;
     [SerializeField] private int heavyAttackDamage = 35;
 
+    [Header("Weapon Effects")]
+    [SerializeField] private bool enableKnockback = false;
+    [SerializeField] private float knockbackForce = 8f;
+    [SerializeField] private bool enableBleed = true;
+
     [Header("Audio")]
     [SerializeField] private AudioClip pickupSfx;
     [SerializeField] private AudioClip attackSfx;
@@ -42,6 +47,9 @@ public class WeaponPickup : MonoBehaviour
             duration,
             quickAttackDamage,
             heavyAttackDamage,
+            enableKnockback,
+            knockbackForce,
+            enableBleed,
             pickupSfx,
             attackSfx
         );

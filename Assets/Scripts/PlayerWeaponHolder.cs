@@ -13,7 +13,13 @@ public class PlayerWeaponHolder : MonoBehaviour
     [SerializeField] private int defaultQuickDamage = 10;
     [SerializeField] private int defaultHeavyDamage = 20;
 
+    [Header("Default Weapon Effects")]
+    [SerializeField] private bool defaultEnableKnockback = false;
+    [SerializeField] private float defaultKnockbackForce = 0f;
+    [SerializeField] private bool defaultEnableBleed = true;
+
     private GameObject equippedWeaponVisualInstance;
+    private EquippedWeaponVisual equippedWeaponVisual;
     private AudioClip currentAttackSfx;
     private Coroutine weaponTimerRoutine;
 
@@ -49,6 +55,7 @@ public class PlayerWeaponHolder : MonoBehaviour
         if (attackHitbox != null)
         {
             attackHitbox.SetDamageValues(defaultQuickDamage, defaultHeavyDamage);
+            attackHitbox.SetWeaponEffects(defaultEnableKnockback, defaultKnockbackForce, defaultEnableBleed);
         }
 
         if (audioSource != null)
@@ -69,6 +76,9 @@ public class PlayerWeaponHolder : MonoBehaviour
         float duration,
         int quickDamage,
         int heavyDamage,
+        bool enableKnockback,
+        float knockbackForce,
+        bool enableBleed,
         AudioClip pickupSfx,
         AudioClip attackSfx
     )
@@ -79,6 +89,8 @@ public class PlayerWeaponHolder : MonoBehaviour
         {
             equippedWeaponVisualInstance = Instantiate(equippedVisualPrefab, weaponAnchor);
             equippedWeaponVisualInstance.transform.localPosition = Vector3.zero;
+
+            equippedWeaponVisual = equippedWeaponVisualInstance.GetComponent<EquippedWeaponVisual>();
         }
 
         currentAttackSfx = attackSfx;
@@ -86,6 +98,7 @@ public class PlayerWeaponHolder : MonoBehaviour
         if (attackHitbox != null)
         {
             attackHitbox.SetDamageValues(quickDamage, heavyDamage);
+            attackHitbox.SetWeaponEffects(enableKnockback, knockbackForce, enableBleed);
         }
 
         if (pickupSfx != null && audioSource != null)
@@ -107,6 +120,24 @@ public class PlayerWeaponHolder : MonoBehaviour
         }
     }
 
+    public void PlayQuickWeaponSwing()
+    {
+        if (equippedWeaponVisual != null)
+            equippedWeaponVisual.PlayQuickSwing();
+    }
+
+    public void PlayHeavyWeaponSwing()
+    {
+        if (equippedWeaponVisual != null)
+            equippedWeaponVisual.PlayHeavySwing();
+    }
+
+    public void ReturnWeaponToIdle()
+    {
+        if (equippedWeaponVisual != null)
+            equippedWeaponVisual.ReturnToIdle();
+    }
+
     public void RemoveWeapon()
     {
         if (weaponTimerRoutine != null)
@@ -121,6 +152,7 @@ public class PlayerWeaponHolder : MonoBehaviour
         if (attackHitbox != null)
         {
             attackHitbox.SetDamageValues(defaultQuickDamage, defaultHeavyDamage);
+            attackHitbox.SetWeaponEffects(defaultEnableKnockback, defaultKnockbackForce, defaultEnableBleed);
         }
     }
 
@@ -138,5 +170,7 @@ public class PlayerWeaponHolder : MonoBehaviour
             Destroy(equippedWeaponVisualInstance);
             equippedWeaponVisualInstance = null;
         }
+
+        equippedWeaponVisual = null;
     }
 }
