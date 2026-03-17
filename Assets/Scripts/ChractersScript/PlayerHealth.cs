@@ -50,6 +50,10 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("PlayerPrefs key used to save the global SFX volume.")]
     [SerializeField] private string sfxVolumePrefKey = "SFX_VOLUME";
 
+    [Header("Hurtbox Control")]
+    [Tooltip("Optional. If left empty, all Collider2D components on this object and children except HitBox layers will be used.")]
+    [SerializeField] private Collider2D[] hurtboxColliders;
+
     private float globalSfxVolume = 1f;
     private bool isRespawning;
 
@@ -62,14 +66,10 @@ public class PlayerHealth : MonoBehaviour
         OnLivesChanged?.Invoke(CurrentLives, maxLives);
 
         if (livesUI != null)
-        {
             livesUI.UpdateLives(CurrentLives);
-        }
 
         if (audioSource == null)
-        {
             audioSource = GetComponent<AudioSource>();
-        }
 
         if (audioSource != null)
         {
@@ -82,6 +82,9 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogWarning($"PlayerHealth on '{gameObject.name}' has no AudioSource assigned.");
         }
 
+        CacheHurtboxesIfNeeded();
+        SetHurtboxesEnabled(true);
+
         LoadGlobalSfxVolume();
         HookupSliderIfPresent();
     }
@@ -89,31 +92,31 @@ public class PlayerHealth : MonoBehaviour
     private void OnDestroy()
     {
         if (sfxVolumeSlider != null)
-        {
             sfxVolumeSlider.onValueChanged.RemoveListener(OnSfxSliderChanged);
-        }
     }
 
-    public void TakeDamage(int amount)
+    public bool TakeDamage(int amount)
     {
-        if (amount <= 0) return;
-        if (CurrentHealth <= 0) return;
-        if (isRespawning) return;
-        if (CurrentLives <= 0) return;
+        if (amount <= 0) return false;
+        if (CurrentHealth <= 0) return false;
+        if (isRespawning) return false;
+        if (CurrentLives <= 0) return false;
 
         int prev = CurrentHealth;
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
         OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
 
         if (CurrentHealth < prev)
-        {
             PlaySfx(GetRandomClip(hurtSfxClips));
-        }
 
         if (CurrentHealth == 0)
         {
+            isRespawning = true;
+            SetHurtboxesEnabled(false);
             StartCoroutine(RespawnRoutine());
         }
+
+        return CurrentHealth < prev;
     }
 
     public void Heal(int amount)
@@ -128,26 +131,19 @@ public class PlayerHealth : MonoBehaviour
         OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
 
         if (CurrentHealth > prev)
-        {
             PlaySfx(GetRandomClip(healSfxClips));
-        }
     }
 
     private IEnumerator RespawnRoutine()
     {
-        isRespawning = true;
-
         LoseLife();
 
         if (CurrentLives <= 0)
         {
             if (gameManager != null)
-            {
                 gameManager.HandlePlayerDefeated(this);
-            }
 
             gameObject.SetActive(false);
-            isRespawning = false;
             yield break;
         }
 
@@ -166,6 +162,7 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogError("PlayerHealth: respawnPlatform not assigned.");
         }
 
+        SetHurtboxesEnabled(true);
         isRespawning = false;
     }
 
@@ -175,9 +172,7 @@ public class PlayerHealth : MonoBehaviour
         OnLivesChanged?.Invoke(CurrentLives, maxLives);
 
         if (livesUI != null)
-        {
             livesUI.UpdateLives(CurrentLives);
-        }
     }
 
     private void PlaySfx(AudioClip clip)
@@ -199,7 +194,7 @@ public class PlayerHealth : MonoBehaviour
         int attempts = clips.Length;
         while (attempts-- > 0)
         {
-            var c = clips[Random.Range(0, clips.Length)];
+            AudioClip c = clips[Random.Range(0, clips.Length)];
             if (c != null) return c;
         }
 
@@ -242,9 +237,7 @@ public class PlayerHealth : MonoBehaviour
         SaveGlobalSfxVolume();
 
         if (sfxVolumeSlider != null)
-        {
             sfxVolumeSlider.SetValueWithoutNotify(globalSfxVolume);
-        }
     }
 
     public float GetGlobalSfxVolume()
@@ -267,6 +260,7 @@ public class PlayerHealth : MonoBehaviour
             livesUI.UpdateLives(CurrentLives);
 
         gameObject.SetActive(true);
+        SetHurtboxesEnabled(true);
 
         if (respawnPlatform != null)
             respawnPlatform.RespawnPlayer();
@@ -277,6 +271,45 @@ public class PlayerHealth : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
             rb.Sleep();
+        }
+    }
+
+    private void CacheHurtboxesIfNeeded()
+    {
+        if (hurtboxColliders != null && hurtboxColliders.Length > 0)
+            return;
+
+        Collider2D[] allColliders = GetComponentsInChildren<Collider2D>(true);
+        int hitBoxLayer = LayerMask.NameToLayer("HitBox (Attack Collider)");
+        int fallbackHitBoxLayer = LayerMask.NameToLayer("Hitbox");
+
+        System.Collections.Generic.List<Collider2D> result = new System.Collections.Generic.List<Collider2D>();
+
+        foreach (Collider2D col in allColliders)
+        {
+            if (col == null)
+                continue;
+
+            int layer = col.gameObject.layer;
+
+            if (layer == hitBoxLayer || layer == fallbackHitBoxLayer)
+                continue;
+
+            result.Add(col);
+        }
+
+        hurtboxColliders = result.ToArray();
+    }
+
+    private void SetHurtboxesEnabled(bool enabled)
+    {
+        if (hurtboxColliders == null)
+            return;
+
+        for (int i = 0; i < hurtboxColliders.Length; i++)
+        {
+            if (hurtboxColliders[i] != null)
+                hurtboxColliders[i].enabled = enabled;
         }
     }
 }

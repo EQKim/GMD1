@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Hurtbox (Damage Receiver)
   - Water
   - UI
   - Ground
-  - 
+  - HitBox (Attack Colider)
   - 
   - 
   - 

@@ -231,5 +231,10 @@ MonoBehaviour:
   duration: 10
   quickAttackDamage: 20
   heavyAttackDamage: 35
+  enableKnockback: 0
+  knockbackForce: 0
+  enableBleed: 1
   pickupSfx: {fileID: 0}
-  attackSfx: {fileID: 0}
+  pickupSfxVolume: 1
+  attackSfx: {fileID: 8300000, guid: 1ca29e44d3d015647826ac69f7eaeb97, type: 3}
+  attackSfxVolume: 0.415

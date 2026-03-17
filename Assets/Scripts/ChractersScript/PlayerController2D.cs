@@ -54,6 +54,10 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private float weaponQuickAttackActiveTime = 0.12f;
     [SerializeField] private float weaponHeavyAttackActiveTime = 0.18f;
 
+    [Header("Knockback")]
+    [Tooltip("When >0, horizontal movement input won't overwrite X velocity for this duration after being knocked.")]
+    [SerializeField] private float knockbackLockDuration = 0.12f;
+
     private Rigidbody2D rb;
     private bool grounded;
 
@@ -61,6 +65,8 @@ public class PlayerController2D : MonoBehaviour
     private float attackHeldTime;
     private float attackStartTime;
     private Coroutine weaponAttackRoutine;
+
+    private float knockbackLockUntil;
 
     private void Awake()
     {
@@ -124,7 +130,12 @@ public class PlayerController2D : MonoBehaviour
         HandleJump();
         HandleAttack();
 
-        rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
+        // IMPORTANT: During knockback, don't stomp the physics-driven X velocity.
+        if (Time.time >= knockbackLockUntil)
+        {
+            rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
+        }
+        // else: keep rb.linearVelocity.x as-is so knockback can push left/right.
 
         if (visual != null && moveX != 0f)
         {
@@ -278,7 +289,7 @@ public class PlayerController2D : MonoBehaviour
 
         if (weaponHolder != null)
         {
-            weaponHolder.PlayAttackSfx();
+            // Swing animation only. Hit SFX should play only when a target is actually hit.
             weaponHolder.PlayQuickWeaponSwing();
         }
 
@@ -292,7 +303,7 @@ public class PlayerController2D : MonoBehaviour
 
         if (weaponHolder != null)
         {
-            weaponHolder.PlayAttackSfx();
+            // Swing animation only. Hit SFX should play only when a target is actually hit.
             weaponHolder.PlayHeavyWeaponSwing();
         }
 
@@ -334,7 +345,6 @@ public class PlayerController2D : MonoBehaviour
 
         if (weaponHolder != null)
         {
-            weaponHolder.PlayAttackSfx();
             weaponHolder.PlayQuickWeaponSwing();
         }
     }
@@ -346,7 +356,6 @@ public class PlayerController2D : MonoBehaviour
 
         if (weaponHolder != null)
         {
-            weaponHolder.PlayAttackSfx();
             weaponHolder.PlayHeavyWeaponSwing();
         }
     }
@@ -373,5 +382,14 @@ public class PlayerController2D : MonoBehaviour
     public void SetControllable(bool value)
     {
         isControllable = value;
+    }
+
+    /// <summary>
+    /// Call this when an external force (like an attack) should temporarily prevent input movement from overriding X velocity.
+    /// </summary>
+    public void ApplyKnockbackLock(float durationSeconds)
+    {
+        float d = durationSeconds > 0f ? durationSeconds : knockbackLockDuration;
+        knockbackLockUntil = Mathf.Max(knockbackLockUntil, Time.time + d);
     }
 }

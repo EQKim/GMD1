@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6381915287956888660}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.45, y: 1, z: 1}
-  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
+  m_LocalRotation: {x: 0, y: 0, z: 0.5, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3140921745433317289}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
 --- !u!212 &947785117622862297
 SpriteRenderer:
   serializedVersion: 2
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 81
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1385713945704982053, guid: 35b774117d9e84e44bd20d3155e19b36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -136,10 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cd659835a3fae34d84d7c32581f0a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquippedWeaponVisual
-  idleZRotation: 60
-  quickSwingZRotation: -20
-  quickSwingDuration: 0.08
-  quickReturnDuration: 0.12
-  heavySwingZRotation: -60
+  quickSwingZDelta: -80
+  quickSwingDuration: 0.14
+  quickReturnDuration: 0.16
+  heavySwingZDelta: -40
   heavySwingDuration: 0.12
   heavyReturnDuration: 0.18

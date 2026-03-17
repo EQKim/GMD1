@@ -243,7 +243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 152657738}
   - component: {fileID: 152657739}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   player: {fileID: 363081359}
   spawnPlayerOnStart: 1
-  lifetime: 5
+  lifetime: 300
   fadeDuration: 1
   extraPlayerHeight: 0
 --- !u!1 &240115823
@@ -1011,7 +1011,7 @@ GameObject:
   - component: {fileID: 363081362}
   - component: {fileID: 363081363}
   - component: {fileID: 363081364}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GrafftiWoman
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1036,6 +1036,7 @@ Transform:
   - {fileID: 2139550323}
   - {fileID: 1588179604}
   - {fileID: 1262639015}
+  - {fileID: 1877135595}
   m_Father: {fileID: 1214739539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &363081360
@@ -1149,6 +1150,9 @@ MonoBehaviour:
   heavyAttackHoldTime: 0.35
   quickAttackTriggerName: QuickAttack
   heavyAttackTriggerName: HeavyAttack
+  weaponQuickAttackActiveTime: 0.12
+  weaponHeavyAttackActiveTime: 0.18
+  knockbackLockDuration: 0.12
 --- !u!114 &363081363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,6 +1180,7 @@ MonoBehaviour:
   localSfxVolume: 0.05
   sfxVolumeSlider: {fileID: 0}
   sfxVolumePrefKey: SFX_VOLUME
+  hurtboxColliders: []
 --- !u!114 &363081364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,11 +1194,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHolder
   visual: {fileID: 1769084653}
-  weaponAnchor: {fileID: 1262639015}
+  weaponAnchorRight: {fileID: 1877135595}
+  weaponAnchorLeft: {fileID: 1262639015}
   attackHitbox: {fileID: 2139550324}
   audioSource: {fileID: 1588179605}
   defaultQuickDamage: 10
   defaultHeavyDamage: 20
+  overrideHitboxDefaults: 1
+  defaultKnockbackForce: 0
+  defaultEnableBleed: 1
 --- !u!1 &448665852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,7 +1698,7 @@ GameObject:
   - component: {fileID: 647366005}
   - component: {fileID: 647366006}
   - component: {fileID: 647366007}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HomelessMan
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1714,6 +1723,7 @@ Transform:
   - {fileID: 676414913}
   - {fileID: 152657738}
   - {fileID: 1510572456}
+  - {fileID: 1493162280}
   m_Father: {fileID: 1214739539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &647366003
@@ -1827,6 +1837,9 @@ MonoBehaviour:
   heavyAttackHoldTime: 0.35
   quickAttackTriggerName: QuickAttack
   heavyAttackTriggerName: HeavyAttack
+  weaponQuickAttackActiveTime: 0.12
+  weaponHeavyAttackActiveTime: 0.18
+  knockbackLockDuration: 0.17
 --- !u!114 &647366006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1853,6 +1866,7 @@ MonoBehaviour:
   localSfxVolume: 0.05
   sfxVolumeSlider: {fileID: 0}
   sfxVolumePrefKey: SFX_VOLUME
+  hurtboxColliders: []
 --- !u!114 &647366007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1866,11 +1880,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   visual: {fileID: 816676647}
-  weaponAnchor: {fileID: 1510572456}
+  weaponAnchorRight: {fileID: 1510572456}
+  weaponAnchorLeft: {fileID: 1493162280}
   attackHitbox: {fileID: 676414915}
   audioSource: {fileID: 152657739}
   defaultQuickDamage: 10
   defaultHeavyDamage: 20
+  overrideHitboxDefaults: 1
+  defaultKnockbackForce: 0
+  defaultEnableBleed: 1
 --- !u!1 &665516665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,9 +1955,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 676414913}
-  - component: {fileID: 676414915}
   - component: {fileID: 676414914}
-  m_Layer: 0
+  - component: {fileID: 676414915}
+  m_Layer: 3
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2021,9 +2039,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   quickAttackDamage: 5
   heavyAttackDamage: 10
+  knockbackForce: 30
+  knockbackUpwardMultiplier: 0.25
+  enableBleed: 0
   targetLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8
   bloodEffectPrefab: {fileID: 9203768844593803654, guid: 0654a82feadeb3a4db98a188162ffebb, type: 3}
   bloodSpawnOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &726702507
@@ -2035,7 +2056,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 726702508}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2220,7 +2241,7 @@ GameObject:
   - component: {fileID: 816676646}
   - component: {fileID: 816676645}
   - component: {fileID: 816676648}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3801,8 +3822,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1262639015}
-  m_Layer: 0
-  m_Name: Weapon Anchor
+  m_Layer: 3
+  m_Name: WeaponAnchorRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3817,7 +3838,7 @@ Transform:
   m_GameObject: {fileID: 1262639014}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.013, y: 0.060000055, z: 0}
+  m_LocalPosition: {x: -0.122, y: 0.060000055, z: 0}
   m_LocalScale: {x: 0.6666667, y: 0.7692308, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3914,6 +3935,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1493162279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1493162280}
+  m_Layer: 3
+  m_Name: WeaponAnchorLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1493162280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493162279}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.817, y: -1.697, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 647366002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1510572455
 GameObject:
   m_ObjectHideFlags: 0
@@ -3923,8 +3975,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1510572456}
-  m_Layer: 0
-  m_Name: Weapon Anchor
+  m_Layer: 3
+  m_Name: WeaponAnchorRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3939,7 +3991,7 @@ Transform:
   m_GameObject: {fileID: 1510572455}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.178, y: -1.697, z: 0}
+  m_LocalPosition: {x: 3.234, y: -1.697, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4091,12 +4143,12 @@ MonoBehaviour:
   maxGapY: 1.6
   spawnableItems:
   - prefab: {fileID: 4468420911897011266, guid: 13006b65e4c07bf42aab11a160f77b6f, type: 3}
-    weight: 36.9
+    weight: 24.7
   - prefab: {fileID: 5123665596450971770, guid: 0bf06731bf81e574aac61672ccef5b59, type: 3}
-    weight: 0
+    weight: 28.6
   - prefab: {fileID: 3070396822463491671, guid: 349a2ab20422af045a8ad4cd92de1a68, type: 3}
-    weight: 0
-  itemSpawnChance: 0.549
+    weight: 26.2
+  itemSpawnChance: 0.513
   itemYOffset: 0.64
   itemRandomXOffset: 0.4
 --- !u!1001 &1553904601
@@ -4176,7 +4228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1574693268}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4208,7 +4260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1588179604}
   - component: {fileID: 1588179605}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4754,7 +4806,7 @@ GameObject:
   - component: {fileID: 1769084654}
   - component: {fileID: 1769084655}
   - component: {fileID: 1769084656}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5195,6 +5247,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833136250}
   m_CullTransparentMesh: 1
+--- !u!1 &1877135594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1877135595}
+  m_Layer: 3
+  m_Name: WeaponAnchorLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1877135595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877135594}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 0.060000055, z: 0}
+  m_LocalScale: {x: 0.6666667, y: 0.7692308, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 363081359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1999089895
 GameObject:
   m_ObjectHideFlags: 0
@@ -5686,7 +5769,7 @@ GameObject:
   - component: {fileID: 2139550323}
   - component: {fileID: 2139550325}
   - component: {fileID: 2139550324}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5722,9 +5805,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHitbox
   quickAttackDamage: 10
   heavyAttackDamage: 20
+  knockbackForce: 30
+  knockbackUpwardMultiplier: 0.25
+  enableBleed: 1
   targetLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8
   bloodEffectPrefab: {fileID: 9203768844593803654, guid: 0654a82feadeb3a4db98a188162ffebb, type: 3}
   bloodSpawnOffset: {x: 0, y: 0, z: 0}
 --- !u!61 &2139550325

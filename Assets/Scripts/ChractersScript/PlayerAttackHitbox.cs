@@ -9,8 +9,11 @@ public class PlayerAttackHitbox : MonoBehaviour
     [SerializeField] private int heavyAttackDamage = 20;
 
     [Header("Weapon Effects")]
-    [SerializeField] private bool enableKnockback = false;
     [SerializeField] private float knockbackForce = 8f;
+
+    [Tooltip("Upward multiplier applied to knockback force (0..1 is typical).")]
+    [SerializeField] private float knockbackUpwardMultiplier = 0.25f;
+
     [SerializeField] private bool enableBleed = true;
 
     [Header("Target Filtering")]
@@ -25,6 +28,9 @@ public class PlayerAttackHitbox : MonoBehaviour
     private int currentDamage;
     private bool attackActive;
 
+    private Transform ownerVisual;
+    private Transform ownerRoot;
+
     private readonly HashSet<PlayerHealth> hitTargets = new HashSet<PlayerHealth>();
 
     private void Awake()
@@ -34,6 +40,17 @@ public class PlayerAttackHitbox : MonoBehaviour
         hitboxCollider.enabled = false;
 
         ownerHealth = GetComponentInParent<PlayerHealth>();
+        ownerRoot = ownerHealth != null ? ownerHealth.transform : transform;
+
+        if (ownerHealth != null)
+        {
+            Transform t = ownerHealth.transform.Find("Visual");
+            ownerVisual = t != null ? t : ownerHealth.transform;
+        }
+        else
+        {
+            ownerVisual = transform;
+        }
     }
 
     public void SetDamageValues(int quickDamage, int heavyDamage)
@@ -42,22 +59,19 @@ public class PlayerAttackHitbox : MonoBehaviour
         heavyAttackDamage = heavyDamage;
     }
 
-    public void SetWeaponEffects(bool knockbackEnabled, float knockbackAmount, bool bleedEnabled)
+    public void SetWeaponEffects(float knockbackForceAmount, bool bleedEnabled)
     {
-        enableKnockback = knockbackEnabled;
-        knockbackForce = knockbackAmount;
+        knockbackForce = Mathf.Max(0f, knockbackForceAmount);
         enableBleed = bleedEnabled;
     }
 
-    public int GetQuickDamage()
+    public void SetWeaponEffects(bool knockbackEnabled, float knockbackAmount, bool bleedEnabled)
     {
-        return quickAttackDamage;
+        SetWeaponEffects(knockbackEnabled ? knockbackAmount : 0f, bleedEnabled);
     }
 
-    public int GetHeavyDamage()
-    {
-        return heavyAttackDamage;
-    }
+    public int GetQuickDamage() => quickAttackDamage;
+    public int GetHeavyDamage() => heavyAttackDamage;
 
     public void EnableQuickAttack()
     {
@@ -65,6 +79,10 @@ public class PlayerAttackHitbox : MonoBehaviour
         attackActive = true;
         hitTargets.Clear();
         hitboxCollider.enabled = true;
+
+        PlayerWeaponHolder holder = GetComponentInParent<PlayerWeaponHolder>();
+        if (holder != null)
+            holder.ResetAttackSfxGate();
     }
 
     public void EnableHeavyAttack()
@@ -73,6 +91,10 @@ public class PlayerAttackHitbox : MonoBehaviour
         attackActive = true;
         hitTargets.Clear();
         hitboxCollider.enabled = true;
+
+        PlayerWeaponHolder holder = GetComponentInParent<PlayerWeaponHolder>();
+        if (holder != null)
+            holder.ResetAttackSfxGate();
     }
 
     public void DisableAttack()
@@ -82,15 +104,8 @@ public class PlayerAttackHitbox : MonoBehaviour
         hitTargets.Clear();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        TryHit(other);
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        TryHit(other);
-    }
+    private void OnTriggerEnter2D(Collider2D other) => TryHit(other);
+    private void OnTriggerStay2D(Collider2D other) => TryHit(other);
 
     private void TryHit(Collider2D other)
     {
@@ -110,32 +125,65 @@ public class PlayerAttackHitbox : MonoBehaviour
         if (hitTargets.Contains(targetHealth))
             return;
 
-        hitTargets.Add(targetHealth);
-        targetHealth.TakeDamage(currentDamage);
+        if (targetHealth.transform == ownerRoot || targetHealth.transform.IsChildOf(ownerRoot))
+            return;
 
-        if (enableKnockback)
-        {
-            ApplyKnockback(other);
-        }
+        bool didDamage = targetHealth.TakeDamage(currentDamage);
+        if (!didDamage)
+            return;
+
+        hitTargets.Add(targetHealth);
+
+        PlayerWeaponHolder holder = GetComponentInParent<PlayerWeaponHolder>();
+        if (holder != null)
+            holder.PlayAttackSfx();
+
+        if (IsKnockbackEnabled())
+            ApplyKnockback(targetHealth);
 
         if (enableBleed)
-        {
             SpawnBloodEffect(other);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (targetLayers == 0)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, 0.2f);
         }
     }
 
-    private void ApplyKnockback(Collider2D other)
+    private bool IsKnockbackEnabled() => knockbackForce > 0.0001f;
+
+    private void ApplyKnockback(PlayerHealth targetHealth)
     {
-        Rigidbody2D targetRb = other.GetComponentInParent<Rigidbody2D>();
+        Rigidbody2D targetRb = targetHealth.GetComponent<Rigidbody2D>();
+        if (targetRb == null)
+            targetRb = targetHealth.GetComponentInParent<Rigidbody2D>();
+
         if (targetRb == null)
             return;
 
-        float direction = Mathf.Sign(targetRb.transform.position.x - transform.position.x);
-        if (Mathf.Approximately(direction, 0f))
-            direction = 1f;
+        float direction = 1f;
+        if (ownerVisual != null)
+            direction = ownerVisual.localScale.x >= 0f ? 1f : -1f;
 
-        Vector2 force = new Vector2(direction * knockbackForce, knockbackForce * 0.25f);
-        targetRb.AddForce(force, ForceMode2D.Impulse);
+        targetRb.linearVelocity = new Vector2(0f, targetRb.linearVelocity.y);
+
+        Vector2 impulse = new Vector2(
+            direction * knockbackForce,
+            knockbackForce * Mathf.Max(0f, knockbackUpwardMultiplier)
+        );
+
+        targetRb.AddForce(impulse, ForceMode2D.Impulse);
+
+        PlayerController2D targetController = targetHealth.GetComponent<PlayerController2D>();
+        if (targetController == null)
+            targetController = targetHealth.GetComponentInParent<PlayerController2D>();
+
+        if (targetController != null)
+            targetController.ApplyKnockbackLock(0f);
     }
 
     private void SpawnBloodEffect(Collider2D other)
@@ -147,5 +195,7 @@ public class PlayerAttackHitbox : MonoBehaviour
 
         ParticleSystem fx = Instantiate(bloodEffectPrefab, spawnPos, Quaternion.identity);
         fx.Play();
+
+        Destroy(fx.gameObject, 2f);
     }
 }

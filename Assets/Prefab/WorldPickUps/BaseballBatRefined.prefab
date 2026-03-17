@@ -126,10 +126,12 @@ MonoBehaviour:
   quickAttackDamage: 15
   heavyAttackDamage: 35
   enableKnockback: 1
-  knockbackForce: 10
-  enableBleed: 0
+  knockbackForce: 40
+  enableBleed: 1
   pickupSfx: {fileID: 0}
-  attackSfx: {fileID: 0}
+  pickupSfxVolume: 1
+  attackSfx: {fileID: 8300000, guid: 2c455c84684dc434992d0a7a3f7d8cc7, type: 3}
+  attackSfxVolume: 0.16
 --- !u!1 &9212656676387473189
 GameObject:
   m_ObjectHideFlags: 0

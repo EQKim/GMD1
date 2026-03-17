@@ -5,7 +5,8 @@ public class PlayerWeaponHolder : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform visual;
-    [SerializeField] private Transform weaponAnchor;
+    [SerializeField] private Transform weaponAnchorRight;
+    [SerializeField] private Transform weaponAnchorLeft;
     [SerializeField] private PlayerAttackHitbox attackHitbox;
     [SerializeField] private AudioSource audioSource;
 
@@ -14,14 +15,25 @@ public class PlayerWeaponHolder : MonoBehaviour
     [SerializeField] private int defaultHeavyDamage = 20;
 
     [Header("Default Weapon Effects")]
-    [SerializeField] private bool defaultEnableKnockback = false;
+    [Tooltip("If enabled, this component will override the hitbox's knockback/bleed values on start and when the weapon expires.")]
+    [SerializeField] private bool overrideHitboxDefaults = false;
+
     [SerializeField] private float defaultKnockbackForce = 0f;
     [SerializeField] private bool defaultEnableBleed = true;
+
+    [Header("Hit SFX Protection")]
+    [Tooltip("Prevents the same hit sound from being triggered multiple times too quickly.")]
+    [SerializeField] private float minAttackSfxInterval = 0.08f;
 
     private GameObject equippedWeaponVisualInstance;
     private EquippedWeaponVisual equippedWeaponVisual;
     private AudioClip currentAttackSfx;
+    private float currentAttackSfxVolume = 1f;
     private Coroutine weaponTimerRoutine;
+    private bool lastFacingRight = true;
+
+    private float lastAttackSfxTime = -999f;
+    private int lastAttackSfxFrame = -1;
 
     public bool HasWeapon => equippedWeaponVisualInstance != null;
 
@@ -34,16 +46,18 @@ public class PlayerWeaponHolder : MonoBehaviour
                 visual = found;
         }
 
-        if (weaponAnchor == null && visual != null)
+        if (weaponAnchorRight == null && visual != null)
         {
-            Transform foundAnchor = visual.Find("WeaponAnchor");
-            if (foundAnchor != null)
-                weaponAnchor = foundAnchor;
+            Transform foundRight = visual.Find("WeaponAnchorRight");
+            if (foundRight != null)
+                weaponAnchorRight = foundRight;
         }
 
-        if (weaponAnchor == null)
+        if (weaponAnchorLeft == null && visual != null)
         {
-            weaponAnchor = visual != null ? visual : transform;
+            Transform foundLeft = visual.Find("WeaponAnchorLeft");
+            if (foundLeft != null)
+                weaponAnchorLeft = foundLeft;
         }
 
         if (attackHitbox == null)
@@ -55,7 +69,9 @@ public class PlayerWeaponHolder : MonoBehaviour
         if (attackHitbox != null)
         {
             attackHitbox.SetDamageValues(defaultQuickDamage, defaultHeavyDamage);
-            attackHitbox.SetWeaponEffects(defaultEnableKnockback, defaultKnockbackForce, defaultEnableBleed);
+
+            if (overrideHitboxDefaults)
+                attackHitbox.SetWeaponEffects(defaultKnockbackForce, defaultEnableBleed);
         }
 
         if (audioSource != null)
@@ -68,6 +84,19 @@ public class PlayerWeaponHolder : MonoBehaviour
         {
             Debug.LogWarning($"{name}: No AudioSource assigned or found for PlayerWeaponHolder.");
         }
+
+        lastFacingRight = IsFacingRight();
+    }
+
+    private void Update()
+    {
+        bool facingRight = IsFacingRight();
+
+        if (facingRight != lastFacingRight)
+        {
+            lastFacingRight = facingRight;
+            RefreshWeaponParent();
+        }
     }
 
     public void EquipWeapon(
@@ -76,34 +105,46 @@ public class PlayerWeaponHolder : MonoBehaviour
         float duration,
         int quickDamage,
         int heavyDamage,
-        bool enableKnockback,
         float knockbackForce,
         bool enableBleed,
         AudioClip pickupSfx,
-        AudioClip attackSfx
+        float pickupSfxVolume,
+        AudioClip attackSfx,
+        float attackSfxVolume
     )
     {
         ClearCurrentWeaponVisual();
 
         if (equippedVisualPrefab != null)
         {
-            equippedWeaponVisualInstance = Instantiate(equippedVisualPrefab, weaponAnchor);
+            Transform targetAnchor = GetCurrentWeaponAnchor();
+
+            equippedWeaponVisualInstance = Instantiate(
+                equippedVisualPrefab,
+                targetAnchor != null ? targetAnchor : transform
+            );
+
             equippedWeaponVisualInstance.transform.localPosition = Vector3.zero;
+            equippedWeaponVisualInstance.transform.localRotation = Quaternion.identity;
+
+            ApplyFacingScale(equippedWeaponVisualInstance.transform);
 
             equippedWeaponVisual = equippedWeaponVisualInstance.GetComponent<EquippedWeaponVisual>();
+
+            if (equippedWeaponVisual != null)
+                equippedWeaponVisual.RefreshIdlePose();
         }
 
         currentAttackSfx = attackSfx;
+        currentAttackSfxVolume = Mathf.Clamp01(attackSfxVolume);
+
+        if (pickupSfx != null && audioSource != null)
+            audioSource.PlayOneShot(pickupSfx, Mathf.Clamp01(pickupSfxVolume));
 
         if (attackHitbox != null)
         {
             attackHitbox.SetDamageValues(quickDamage, heavyDamage);
-            attackHitbox.SetWeaponEffects(enableKnockback, knockbackForce, enableBleed);
-        }
-
-        if (pickupSfx != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(pickupSfx);
+            attackHitbox.SetWeaponEffects(knockbackForce, enableBleed);
         }
 
         if (weaponTimerRoutine != null)
@@ -114,10 +155,25 @@ public class PlayerWeaponHolder : MonoBehaviour
 
     public void PlayAttackSfx()
     {
-        if (currentAttackSfx != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(currentAttackSfx);
-        }
+        if (currentAttackSfx == null || audioSource == null)
+            return;
+
+        if (Time.frameCount == lastAttackSfxFrame)
+            return;
+
+        if (Time.time - lastAttackSfxTime < minAttackSfxInterval)
+            return;
+
+        lastAttackSfxFrame = Time.frameCount;
+        lastAttackSfxTime = Time.time;
+
+        audioSource.PlayOneShot(currentAttackSfx, currentAttackSfxVolume);
+    }
+
+    public void ResetAttackSfxGate()
+    {
+        lastAttackSfxFrame = -1;
+        lastAttackSfxTime = -999f;
     }
 
     public void PlayQuickWeaponSwing()
@@ -148,11 +204,14 @@ public class PlayerWeaponHolder : MonoBehaviour
 
         ClearCurrentWeaponVisual();
         currentAttackSfx = null;
+        ResetAttackSfxGate();
 
         if (attackHitbox != null)
         {
             attackHitbox.SetDamageValues(defaultQuickDamage, defaultHeavyDamage);
-            attackHitbox.SetWeaponEffects(defaultEnableKnockback, defaultKnockbackForce, defaultEnableBleed);
+
+            if (overrideHitboxDefaults)
+                attackHitbox.SetWeaponEffects(defaultKnockbackForce, defaultEnableBleed);
         }
     }
 
@@ -172,5 +231,47 @@ public class PlayerWeaponHolder : MonoBehaviour
         }
 
         equippedWeaponVisual = null;
+    }
+
+    private bool IsFacingRight()
+    {
+        if (visual == null)
+            return true;
+
+        return visual.localScale.x > 0f;
+    }
+
+    private Transform GetCurrentWeaponAnchor()
+    {
+        if (IsFacingRight())
+            return weaponAnchorRight != null ? weaponAnchorRight : transform;
+
+        return weaponAnchorLeft != null ? weaponAnchorLeft : transform;
+    }
+
+    private void RefreshWeaponParent()
+    {
+        if (equippedWeaponVisualInstance == null)
+            return;
+
+        Transform targetAnchor = GetCurrentWeaponAnchor();
+        if (targetAnchor == null)
+            return;
+
+        equippedWeaponVisualInstance.transform.SetParent(targetAnchor, false);
+        equippedWeaponVisualInstance.transform.localPosition = Vector3.zero;
+        equippedWeaponVisualInstance.transform.localRotation = Quaternion.identity;
+
+        ApplyFacingScale(equippedWeaponVisualInstance.transform);
+
+        if (equippedWeaponVisual != null)
+            equippedWeaponVisual.RefreshIdlePose();
+    }
+
+    private void ApplyFacingScale(Transform weaponTransform)
+    {
+        Vector3 scale = weaponTransform.localScale;
+        scale.x = IsFacingRight() ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+        weaponTransform.localScale = scale;
     }
 }
