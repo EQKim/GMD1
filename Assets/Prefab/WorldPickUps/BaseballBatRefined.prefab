@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7353277469987165782}
   - component: {fileID: 7212892437092825384}
   - component: {fileID: 6209335793357790714}
-  - component: {fileID: 1410437320930726772}
+  - component: {fileID: 5888915453314580529}
   m_Layer: 0
   m_Name: BaseballBatRefined
   m_TagString: Untagged
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 4468420911897011266}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.213, y: 2.15, z: 0}
-  m_LocalScale: {x: 0.13, y: 0.13, z: 0.25}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7350129553645242925}
@@ -79,7 +79,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 10.2, y: 1}
+  m_Size: {x: 1.23, y: 0.2}
   m_EdgeRadius: 0
 --- !u!50 &6209335793357790714
 Rigidbody2D:
@@ -96,7 +96,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,8 +107,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &1410437320930726772
+  m_Constraints: 4
+--- !u!114 &5888915453314580529
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,9 +117,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4468420911897011266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2721aa76228fb145877e280e5384fb4, type: 3}
+  m_Script: {fileID: 11500000, guid: b88d122e4fea0cc4da5864f8fd575f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
+  weaponName: Baseballbat
+  equippedVisualPrefab: {fileID: 8322705483351440558, guid: 79256a7ed1e53614aa6dac2a73ae5c47, type: 3}
+  duration: 10
+  quickAttackDamage: 20
+  heavyAttackDamage: 35
+  pickupSfx: {fileID: 0}
+  attackSfx: {fileID: 0}
 --- !u!1 &9212656676387473189
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +155,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7353277469987165782}

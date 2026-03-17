@@ -20,7 +20,6 @@ public class PlayerAttackHitbox : MonoBehaviour
     private int currentDamage;
     private bool attackActive;
 
-    // Prevent hitting the same target multiple times in one punch
     private readonly HashSet<PlayerHealth> hitTargets = new HashSet<PlayerHealth>();
 
     private void Awake()
@@ -30,6 +29,22 @@ public class PlayerAttackHitbox : MonoBehaviour
         hitboxCollider.enabled = false;
 
         ownerHealth = GetComponentInParent<PlayerHealth>();
+    }
+
+    public void SetDamageValues(int quickDamage, int heavyDamage)
+    {
+        quickAttackDamage = quickDamage;
+        heavyAttackDamage = heavyDamage;
+    }
+
+    public int GetQuickDamage()
+    {
+        return quickAttackDamage;
+    }
+
+    public int GetHeavyDamage()
+    {
+        return heavyAttackDamage;
     }
 
     public void EnableQuickAttack()
