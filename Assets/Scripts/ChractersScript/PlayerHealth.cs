@@ -51,7 +51,6 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private string sfxVolumePrefKey = "SFX_VOLUME";
 
     private float globalSfxVolume = 1f;
-
     private bool isRespawning;
 
     private void Awake()
@@ -270,7 +269,7 @@ public class PlayerHealth : MonoBehaviour
         gameObject.SetActive(true);
 
         if (respawnPlatform != null)
-            respawnPlatform.RespawnPlayerWithPlatform();
+            respawnPlatform.RespawnPlayer();
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
