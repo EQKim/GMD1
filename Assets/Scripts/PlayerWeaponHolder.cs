@@ -79,7 +79,6 @@ public class PlayerWeaponHolder : MonoBehaviour
         {
             equippedWeaponVisualInstance = Instantiate(equippedVisualPrefab, weaponAnchor);
             equippedWeaponVisualInstance.transform.localPosition = Vector3.zero;
-            equippedWeaponVisualInstance.transform.localRotation = Quaternion.identity;
         }
 
         currentAttackSfx = attackSfx;
