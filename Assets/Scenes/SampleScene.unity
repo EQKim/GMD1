@@ -615,7 +615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   player: {fileID: 363081359}
   spawnPlayerOnStart: 1
-  lifetime: 300
+  lifetime: 5
   fadeDuration: 1
   extraPlayerHeight: 0
 --- !u!1 &240115823
