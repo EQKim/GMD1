@@ -13,6 +13,8 @@ public class GameStartScreen : MonoBehaviour
     [SerializeField] private PlayerController2D player2;
     [SerializeField] private PlayerHealth player1Health;
     [SerializeField] private PlayerHealth player2Health;
+    [SerializeField] private PlayerWeaponHolder player1WeaponHolder;
+    [SerializeField] private PlayerWeaponHolder player2WeaponHolder;
 
     [Header("Spawn Platforms")]
     [SerializeField] private SpawnPlatform spawnPlatformLeft;
@@ -22,19 +24,32 @@ public class GameStartScreen : MonoBehaviour
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private string defaultTitle = "NutCracker";
 
+    [Header("Music")]
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioClip menuMusic;
+    [SerializeField] private AudioClip matchMusic;
+    [SerializeField] private bool loopMusic = true;
+    [Range(0f, 1f)]
+    [SerializeField] private float musicVolume = 0.5f;
+
     private void Start()
     {
         ShowMainMenuState();
+        ForceResetRoundState();
 
         if (player1 != null)
             player1.SetControllable(false);
 
         if (player2 != null)
             player2.SetControllable(false);
+
+        PlayMusic(menuMusic);
     }
 
     public void StartGame()
     {
+        ForceResetRoundState();
+
         if (startScreen != null)
             startScreen.SetActive(false);
 
@@ -55,6 +70,8 @@ public class GameStartScreen : MonoBehaviour
 
         if (spawnPlatformRight != null)
             spawnPlatformRight.StartPlatformSequence();
+
+        PlayMusic(matchMusic);
     }
 
     public void ShowWinnerScreen(string winnerName)
@@ -76,10 +93,14 @@ public class GameStartScreen : MonoBehaviour
 
         if (player2 != null)
             player2.SetControllable(false);
+
+        // Optional safety cleanup
+        ForceStopCombatOnly();
     }
 
     public void ReturnToStartScreen()
     {
+        ForceResetRoundState();
         ShowMainMenuState();
 
         if (player1 != null)
@@ -99,6 +120,8 @@ public class GameStartScreen : MonoBehaviour
 
         if (player2Health != null)
             player2Health.ResetPlayer();
+
+        PlayMusic(menuMusic);
     }
 
     private void ShowMainMenuState()
@@ -114,5 +137,59 @@ public class GameStartScreen : MonoBehaviour
 
         if (titleText != null)
             titleText.text = defaultTitle;
+    }
+
+    private void PlayMusic(AudioClip clip)
+    {
+        if (musicSource == null || clip == null)
+            return;
+
+        if (musicSource.clip == clip && musicSource.isPlaying)
+            return;
+
+        musicSource.clip = clip;
+        musicSource.loop = loopMusic;
+        musicSource.volume = Mathf.Clamp01(musicVolume);
+        musicSource.Play();
+    }
+
+    private void DestroyAllBullets()
+    {
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
+
+        for (int i = 0; i < bullets.Length; i++)
+            Destroy(bullets[i]);
+    }
+
+    private void ForceStopCombatOnly()
+    {
+        if (player1 != null)
+            player1.ResetCombatState();
+
+        if (player2 != null)
+            player2.ResetCombatState();
+
+        if (player1WeaponHolder != null)
+            player1WeaponHolder.StopRangedAttack();
+
+        if (player2WeaponHolder != null)
+            player2WeaponHolder.StopRangedAttack();
+    }
+
+    private void ForceResetRoundState()
+    {
+        DestroyAllBullets();
+
+        if (player1 != null)
+            player1.ResetCombatState();
+
+        if (player2 != null)
+            player2.ResetCombatState();
+
+        if (player1WeaponHolder != null)
+            player1WeaponHolder.RemoveWeapon();
+
+        if (player2WeaponHolder != null)
+            player2WeaponHolder.RemoveWeapon();
     }
 }

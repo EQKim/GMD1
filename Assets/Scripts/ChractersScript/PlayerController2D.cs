@@ -130,12 +130,10 @@ public class PlayerController2D : MonoBehaviour
         HandleJump();
         HandleAttack();
 
-        // IMPORTANT: During knockback, don't stomp the physics-driven X velocity.
         if (Time.time >= knockbackLockUntil)
         {
             rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
         }
-        // else: keep rb.linearVelocity.x as-is so knockback can push left/right.
 
         if (visual != null && moveX != 0f)
         {
@@ -238,6 +236,50 @@ public class PlayerController2D : MonoBehaviour
             }
         }
 
+        bool useWeaponAttack = weaponHolder != null && weaponHolder.HasWeapon;
+        bool useRangedAttack = useWeaponAttack && weaponHolder.CurrentWeaponIsRanged;
+
+        if (useRangedAttack)
+        {
+            HandleRangedAttack(pressedThisFrame, releasedThisFrame, isPressed);
+            return;
+        }
+
+        HandleMeleeAttack(pressedThisFrame, releasedThisFrame, isPressed, useWeaponAttack);
+    }
+
+    private void HandleRangedAttack(bool pressedThisFrame, bool releasedThisFrame, bool isPressed)
+    {
+        if (pressedThisFrame)
+        {
+            attackHeld = true;
+            attackStartTime = Time.time;
+            attackHeldTime = 0f;
+        }
+
+        if (attackHeld && isPressed)
+        {
+            attackHeldTime = Time.time - attackStartTime;
+        }
+
+        if (pressedThisFrame)
+        {
+            if (weaponHolder != null)
+                weaponHolder.StartRangedAttack();
+        }
+
+        if (releasedThisFrame)
+        {
+            attackHeld = false;
+            attackHeldTime = 0f;
+
+            if (weaponHolder != null)
+                weaponHolder.StopRangedAttack();
+        }
+    }
+
+    private void HandleMeleeAttack(bool pressedThisFrame, bool releasedThisFrame, bool isPressed, bool useWeaponAttack)
+    {
         if (pressedThisFrame)
         {
             attackHeld = true;
@@ -254,18 +296,12 @@ public class PlayerController2D : MonoBehaviour
         {
             attackHeld = false;
 
-            bool useWeaponAttack = weaponHolder != null && weaponHolder.HasWeapon;
-
             if (useWeaponAttack)
             {
                 if (attackHeldTime >= heavyAttackHoldTime)
-                {
                     StartWeaponHeavyAttack();
-                }
                 else
-                {
                     StartWeaponQuickAttack();
-                }
             }
             else
             {
@@ -288,10 +324,7 @@ public class PlayerController2D : MonoBehaviour
             attackHitbox.EnableQuickAttack();
 
         if (weaponHolder != null)
-        {
-            // Swing animation only. Hit SFX should play only when a target is actually hit.
             weaponHolder.PlayQuickWeaponSwing();
-        }
 
         RestartWeaponAttackRoutine(weaponQuickAttackActiveTime);
     }
@@ -302,10 +335,7 @@ public class PlayerController2D : MonoBehaviour
             attackHitbox.EnableHeavyAttack();
 
         if (weaponHolder != null)
-        {
-            // Swing animation only. Hit SFX should play only when a target is actually hit.
             weaponHolder.PlayHeavyWeaponSwing();
-        }
 
         RestartWeaponAttackRoutine(weaponHeavyAttackActiveTime);
     }
@@ -336,6 +366,9 @@ public class PlayerController2D : MonoBehaviour
         attackHeld = false;
         attackHeldTime = 0f;
         attackStartTime = 0f;
+
+        if (weaponHolder != null)
+            weaponHolder.StopRangedAttack();
     }
 
     public void AE_EnableQuickAttackHitbox()
@@ -344,9 +377,7 @@ public class PlayerController2D : MonoBehaviour
             attackHitbox.EnableQuickAttack();
 
         if (weaponHolder != null)
-        {
             weaponHolder.PlayQuickWeaponSwing();
-        }
     }
 
     public void AE_EnableHeavyAttackHitbox()
@@ -355,9 +386,7 @@ public class PlayerController2D : MonoBehaviour
             attackHitbox.EnableHeavyAttack();
 
         if (weaponHolder != null)
-        {
             weaponHolder.PlayHeavyWeaponSwing();
-        }
     }
 
     public void AE_DisableAttackHitbox()
@@ -366,9 +395,7 @@ public class PlayerController2D : MonoBehaviour
             attackHitbox.DisableAttack();
 
         if (weaponHolder != null)
-        {
             weaponHolder.ReturnWeaponToIdle();
-        }
     }
 
     private void OnDrawGizmosSelected()
@@ -384,12 +411,29 @@ public class PlayerController2D : MonoBehaviour
         isControllable = value;
     }
 
-    /// <summary>
-    /// Call this when an external force (like an attack) should temporarily prevent input movement from overriding X velocity.
-    /// </summary>
     public void ApplyKnockbackLock(float durationSeconds)
     {
         float d = durationSeconds > 0f ? durationSeconds : knockbackLockDuration;
         knockbackLockUntil = Mathf.Max(knockbackLockUntil, Time.time + d);
+    }
+
+    public void ResetCombatState()
+    {
+        ResetAttackInput();
+
+        if (weaponAttackRoutine != null)
+        {
+            StopCoroutine(weaponAttackRoutine);
+            weaponAttackRoutine = null;
+        }
+
+        if (attackHitbox != null)
+            attackHitbox.DisableAttack();
+
+        if (weaponHolder != null)
+        {
+            weaponHolder.StopRangedAttack();
+            weaponHolder.ReturnWeaponToIdle();
+        }
     }
 }

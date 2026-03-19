@@ -9,6 +9,12 @@ public class WeaponPickup : MonoBehaviour
     [SerializeField] private GameObject equippedVisualPrefab;
     [SerializeField] private float duration = 10f;
 
+    [Header("Weapon Type")]
+    [SerializeField] private bool isRangedWeapon = false;
+
+    [Tooltip("Shots per second for ranged weapons.")]
+    [SerializeField] private float fireRate = 8f;
+
     [Header("Damage")]
     [SerializeField] private int quickAttackDamage = 20;
     [SerializeField] private int heavyAttackDamage = 35;
@@ -35,6 +41,8 @@ public class WeaponPickup : MonoBehaviour
             knockbackForce = 0f;
         else
             knockbackForce = Mathf.Max(0f, knockbackForce);
+
+        fireRate = Mathf.Max(0.1f, fireRate);
 
         pickupSfxVolume = Mathf.Clamp01(pickupSfxVolume);
         attackSfxVolume = Mathf.Clamp01(attackSfxVolume);
@@ -69,6 +77,8 @@ public class WeaponPickup : MonoBehaviour
             weaponName,
             equippedVisualPrefab,
             duration,
+            isRangedWeapon,
+            fireRate,
             quickAttackDamage,
             heavyAttackDamage,
             knockbackForce,

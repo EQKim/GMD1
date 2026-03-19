@@ -262,6 +262,20 @@ public class PlayerHealth : MonoBehaviour
         gameObject.SetActive(true);
         SetHurtboxesEnabled(true);
 
+        PlayerController2D controller = GetComponent<PlayerController2D>();
+        if (controller == null)
+            controller = GetComponentInParent<PlayerController2D>();
+
+        if (controller != null)
+            controller.ResetCombatState();
+
+        PlayerWeaponHolder holder = GetComponent<PlayerWeaponHolder>();
+        if (holder == null)
+            holder = GetComponentInParent<PlayerWeaponHolder>();
+
+        if (holder != null)
+            holder.RemoveWeapon();
+
         if (respawnPlatform != null)
             respawnPlatform.RespawnPlayer();
 
