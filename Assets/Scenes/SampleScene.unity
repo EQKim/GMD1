@@ -470,12 +470,13 @@ MonoBehaviour:
   startScreen: {fileID: 1068017599}
   mainMenu: {fileID: 448665852}
   volumeSettings: {fileID: 1158090734}
+  firstMainMenuSelection: {fileID: 1105323414}
   player1: {fileID: 647366005}
   player2: {fileID: 363081362}
   player1Health: {fileID: 647366006}
   player2Health: {fileID: 363081363}
-  player1WeaponHolder: {fileID: 0}
-  player2WeaponHolder: {fileID: 0}
+  player1WeaponHolder: {fileID: 647366007}
+  player2WeaponHolder: {fileID: 363081364}
   spawnPlatformLeft: {fileID: 1126747266}
   spawnPlatformRight: {fileID: 209599675}
   titleText: {fileID: 1606552582}

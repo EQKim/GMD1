@@ -1,5 +1,8 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System.Collections;
 
 public class GameStartScreen : MonoBehaviour
 {
@@ -7,6 +10,9 @@ public class GameStartScreen : MonoBehaviour
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject volumeSettings;
+
+    [Header("Menu Selection")]
+    [SerializeField] private Selectable firstMainMenuSelection;
 
     [Header("Players")]
     [SerializeField] private PlayerController2D player1;
@@ -31,6 +37,8 @@ public class GameStartScreen : MonoBehaviour
     [SerializeField] private bool loopMusic = true;
     [Range(0f, 1f)]
     [SerializeField] private float musicVolume = 0.5f;
+
+    private Coroutine reselectionRoutine;
 
     private void Start()
     {
@@ -94,7 +102,6 @@ public class GameStartScreen : MonoBehaviour
         if (player2 != null)
             player2.SetControllable(false);
 
-        // Optional safety cleanup
         ForceStopCombatOnly();
     }
 
@@ -137,6 +144,8 @@ public class GameStartScreen : MonoBehaviour
 
         if (titleText != null)
             titleText.text = defaultTitle;
+
+        ReselectMainMenuButton();
     }
 
     private void PlayMusic(AudioClip clip)
@@ -191,5 +200,29 @@ public class GameStartScreen : MonoBehaviour
 
         if (player2WeaponHolder != null)
             player2WeaponHolder.RemoveWeapon();
+    }
+
+    private void ReselectMainMenuButton()
+    {
+        if (reselectionRoutine != null)
+            StopCoroutine(reselectionRoutine);
+
+        reselectionRoutine = StartCoroutine(ReselectMainMenuButtonRoutine());
+    }
+
+    private IEnumerator ReselectMainMenuButtonRoutine()
+    {
+        yield return null;
+
+        if (EventSystem.current == null || firstMainMenuSelection == null)
+        {
+            reselectionRoutine = null;
+            yield break;
+        }
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstMainMenuSelection.gameObject);
+
+        reselectionRoutine = null;
     }
 }
