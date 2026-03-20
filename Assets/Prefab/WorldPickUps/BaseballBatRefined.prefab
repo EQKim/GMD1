@@ -123,13 +123,15 @@ MonoBehaviour:
   weaponName: Baseballbat
   equippedVisualPrefab: {fileID: 8322705483351440558, guid: 79256a7ed1e53614aa6dac2a73ae5c47, type: 3}
   duration: 10
+  isRangedWeapon: 0
+  fireRate: 8
   quickAttackDamage: 15
   heavyAttackDamage: 35
   enableKnockback: 1
   knockbackForce: 40
   enableBleed: 1
-  pickupSfx: {fileID: 0}
-  pickupSfxVolume: 1
+  pickupSfx: {fileID: 8300000, guid: 4bc8976f44271e34089b2fb6d0eff36a, type: 3}
+  pickupSfxVolume: 0.458
   attackSfx: {fileID: 8300000, guid: 2c455c84684dc434992d0a7a3f7d8cc7, type: 3}
   attackSfxVolume: 0.16
 --- !u!1 &9212656676387473189

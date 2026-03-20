@@ -229,12 +229,14 @@ MonoBehaviour:
   weaponName: Knife
   equippedVisualPrefab: {fileID: 8471193992023887484, guid: d4f0a995c418c314e956c1ad6a1ef8f3, type: 3}
   duration: 10
+  isRangedWeapon: 0
+  fireRate: 8
   quickAttackDamage: 20
   heavyAttackDamage: 35
   enableKnockback: 0
   knockbackForce: 0
   enableBleed: 1
-  pickupSfx: {fileID: 0}
-  pickupSfxVolume: 1
+  pickupSfx: {fileID: 8300000, guid: 975d92143ff58124eaa56c40d559b8aa, type: 3}
+  pickupSfxVolume: 0.491
   attackSfx: {fileID: 8300000, guid: 1ca29e44d3d015647826ac69f7eaeb97, type: 3}
   attackSfxVolume: 0.415
