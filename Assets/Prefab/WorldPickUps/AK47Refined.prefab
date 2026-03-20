@@ -236,7 +236,7 @@ MonoBehaviour:
   enableKnockback: 0
   knockbackForce: 0
   enableBleed: 1
-  pickupSfx: {fileID: 0}
-  pickupSfxVolume: 1
+  pickupSfx: {fileID: 8300000, guid: e4d7cea059d8af2478e9b3f8c44819a1, type: 3}
+  pickupSfxVolume: 0.251
   attackSfx: {fileID: 8300000, guid: db80a822da9600249afa673ea1286378, type: 3}
   attackSfxVolume: 0.383

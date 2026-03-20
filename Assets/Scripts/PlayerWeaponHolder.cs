@@ -8,7 +8,10 @@ public class PlayerWeaponHolder : MonoBehaviour
     [SerializeField] private Transform weaponAnchorRight;
     [SerializeField] private Transform weaponAnchorLeft;
     [SerializeField] private PlayerAttackHitbox attackHitbox;
-    [SerializeField] private AudioSource audioSource;
+
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource PickupAudio;
+    [SerializeField] private AudioSource AttackAudio;
 
     [Header("Ranged")]
     [SerializeField] private GameObject bulletPrefab;
@@ -37,8 +40,12 @@ public class PlayerWeaponHolder : MonoBehaviour
     private Transform muzzleFlashPoint;
     private ParticleSystem smokeParticles;
 
+    private AudioClip currentPickupSfx;
+    private float currentPickupSfxVolume = 1f;
+
     private AudioClip currentAttackSfx;
     private float currentAttackSfxVolume = 1f;
+
     private Coroutine weaponTimerRoutine;
     private Coroutine rangedAttackRoutine;
     private bool lastFacingRight = true;
@@ -81,8 +88,16 @@ public class PlayerWeaponHolder : MonoBehaviour
         if (attackHitbox == null)
             attackHitbox = GetComponentInChildren<PlayerAttackHitbox>();
 
-        if (audioSource == null)
-            audioSource = GetComponentInChildren<AudioSource>();
+        if (PickupAudio == null || AttackAudio == null)
+        {
+            AudioSource[] foundSources = GetComponentsInChildren<AudioSource>();
+
+            if (PickupAudio == null && foundSources.Length > 0)
+                PickupAudio = foundSources[0];
+
+            if (AttackAudio == null && foundSources.Length > 1)
+                AttackAudio = foundSources[1];
+        }
 
         if (attackHitbox != null)
         {
@@ -95,18 +110,26 @@ public class PlayerWeaponHolder : MonoBehaviour
         currentQuickDamage = defaultQuickDamage;
         currentHeavyDamage = defaultHeavyDamage;
 
-        if (audioSource != null)
-        {
-            audioSource.playOnAwake = false;
-            audioSource.loop = false;
-            audioSource.spatialBlend = 0f;
-        }
-        else
-        {
-            Debug.LogWarning($"{name}: No AudioSource assigned or found for PlayerWeaponHolder.");
-        }
+        ConfigureAudioSource(PickupAudio);
+        ConfigureAudioSource(AttackAudio);
+
+        if (PickupAudio == null)
+            Debug.LogWarning($"{name}: No SFX AudioSource assigned or found for PlayerWeaponHolder.");
+
+        if (AttackAudio == null)
+            Debug.LogWarning($"{name}: No Weapon AudioSource assigned or found for PlayerWeaponHolder.");
 
         lastFacingRight = IsFacingRight();
+    }
+
+    private void ConfigureAudioSource(AudioSource source)
+    {
+        if (source == null)
+            return;
+
+        source.playOnAwake = false;
+        source.loop = false;
+        source.spatialBlend = 0f;
     }
 
     private void Update()
@@ -180,13 +203,14 @@ public class PlayerWeaponHolder : MonoBehaviour
             }
         }
 
+        currentPickupSfx = pickupSfx;
+        currentPickupSfxVolume = Mathf.Clamp01(pickupSfxVolume);
+
         currentAttackSfx = attackSfx;
         currentAttackSfxVolume = Mathf.Clamp01(attackSfxVolume);
 
         ConfigureAudioForCurrentWeapon();
-
-        if (pickupSfx != null && audioSource != null)
-            audioSource.PlayOneShot(pickupSfx, Mathf.Clamp01(pickupSfxVolume));
+        PlayPickupSfx();
 
         if (attackHitbox != null)
         {
@@ -202,30 +226,40 @@ public class PlayerWeaponHolder : MonoBehaviour
 
     private void ConfigureAudioForCurrentWeapon()
     {
-        if (audioSource == null)
+        if (AttackAudio == null)
             return;
 
-        audioSource.Stop();
-        audioSource.clip = null;
-        audioSource.loop = false;
-        audioSource.volume = 1f;
+        AttackAudio.Stop();
+        AttackAudio.clip = null;
+        AttackAudio.loop = false;
+        AttackAudio.volume = 1f;
+    }
 
-        if (currentWeaponIsRanged && currentAttackSfx != null)
-        {
-            audioSource.clip = currentAttackSfx;
-            audioSource.loop = true;
-            audioSource.volume = currentAttackSfxVolume;
-        }
+    private void PlayPickupSfx()
+    {
+        if (PickupAudio == null || currentPickupSfx == null)
+            return;
+
+        PickupAudio.PlayOneShot(currentPickupSfx, currentPickupSfxVolume);
     }
 
     private void StopCurrentWeaponAudio()
     {
-        if (audioSource == null)
-            return;
+        if (PickupAudio != null)
+        {
+            PickupAudio.Stop();
+            PickupAudio.clip = null;
+            PickupAudio.loop = false;
+            PickupAudio.volume = 1f;
+        }
 
-        audioSource.Stop();
-        audioSource.clip = null;
-        audioSource.loop = false;
+        if (AttackAudio != null)
+        {
+            AttackAudio.Stop();
+            AttackAudio.clip = null;
+            AttackAudio.loop = false;
+            AttackAudio.volume = 1f;
+        }
     }
 
     public void PlayAttackSfx()
@@ -233,7 +267,7 @@ public class PlayerWeaponHolder : MonoBehaviour
         if (currentWeaponIsRanged)
             return;
 
-        if (currentAttackSfx == null || audioSource == null)
+        if (currentAttackSfx == null || PickupAudio == null)
             return;
 
         if (Time.frameCount == lastAttackSfxFrame)
@@ -245,7 +279,7 @@ public class PlayerWeaponHolder : MonoBehaviour
         lastAttackSfxFrame = Time.frameCount;
         lastAttackSfxTime = Time.time;
 
-        audioSource.PlayOneShot(currentAttackSfx, currentAttackSfxVolume);
+        PickupAudio.PlayOneShot(currentAttackSfx, currentAttackSfxVolume);
     }
 
     public void ResetAttackSfxGate()
@@ -300,26 +334,35 @@ public class PlayerWeaponHolder : MonoBehaviour
 
     private void StartRangedLoopAudio()
     {
-        if (audioSource == null || !currentWeaponIsRanged || currentAttackSfx == null)
+        if (AttackAudio == null || !currentWeaponIsRanged || currentAttackSfx == null)
             return;
 
-        audioSource.clip = currentAttackSfx;
-        audioSource.loop = true;
-        audioSource.volume = currentAttackSfxVolume;
+        bool alreadyUsingAttackLoop =
+            AttackAudio.clip == currentAttackSfx &&
+            AttackAudio.loop;
 
-        if (audioSource.time > 0f)
-            audioSource.UnPause();
-        else if (!audioSource.isPlaying)
-            audioSource.Play();
+        if (alreadyUsingAttackLoop)
+        {
+            if (!AttackAudio.isPlaying)
+                AttackAudio.UnPause();
+
+            return;
+        }
+
+        AttackAudio.Stop();
+        AttackAudio.clip = currentAttackSfx;
+        AttackAudio.loop = true;
+        AttackAudio.volume = currentAttackSfxVolume;
+        AttackAudio.Play();
     }
 
     private void PauseRangedLoopAudio()
     {
-        if (audioSource == null || !currentWeaponIsRanged)
+        if (AttackAudio == null || !currentWeaponIsRanged)
             return;
 
-        if (audioSource.isPlaying)
-            audioSource.Pause();
+        if (AttackAudio.isPlaying)
+            AttackAudio.Pause();
     }
 
     private IEnumerator RangedAttackRoutine()
@@ -414,7 +457,12 @@ public class PlayerWeaponHolder : MonoBehaviour
         StopRangedAttack();
         StopCurrentWeaponAudio();
         ClearCurrentWeaponVisual();
+
+        currentPickupSfx = null;
+        currentPickupSfxVolume = 1f;
         currentAttackSfx = null;
+        currentAttackSfxVolume = 1f;
+
         ResetAttackSfxGate();
 
         currentWeaponIsRanged = false;
