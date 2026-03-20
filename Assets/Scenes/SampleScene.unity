@@ -606,8 +606,8 @@ MonoBehaviour:
   player2Health: {fileID: 363081363}
   player1WeaponHolder: {fileID: 647366007}
   player2WeaponHolder: {fileID: 363081364}
-  spawnPlatformLeft: {fileID: 0}
-  spawnPlatformRight: {fileID: 0}
+  spawnPlatformLeft: {fileID: 1982589759}
+  spawnPlatformRight: {fileID: 1927774550}
   titleText: {fileID: 1606552582}
   defaultTitle: NutCracker
   musicSource: {fileID: 1823092543}
@@ -1285,7 +1285,7 @@ MonoBehaviour:
   maxHealth: 700
   maxLives: 3
   livesUI: {fileID: 145625134}
-  respawnPlatform: {fileID: 0}
+  respawnPlatform: {fileID: 1927774550}
   respawnDelay: 0.1
   gameManager: {fileID: 192894432}
   audioSource: {fileID: 1588179605}
@@ -1978,7 +1978,7 @@ MonoBehaviour:
   maxHealth: 700
   maxLives: 3
   livesUI: {fileID: 31150449}
-  respawnPlatform: {fileID: 0}
+  respawnPlatform: {fileID: 1982589759}
   respawnDelay: 0.1
   gameManager: {fileID: 192894432}
   audioSource: {fileID: 152657739}
@@ -5659,8 +5659,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7732116839960091459, guid: 3f10275d666c32e46a2138b7352ee596, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1927774550}
   m_SourcePrefab: {fileID: 100100000, guid: 3f10275d666c32e46a2138b7352ee596, type: 3}
+--- !u!1 &1927774549 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7732116839960091459, guid: 3f10275d666c32e46a2138b7352ee596, type: 3}
+  m_PrefabInstance: {fileID: 1927774548}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1927774550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927774549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5a30093e5405a44b4745dc5a9c73b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPlatform
+  player: {fileID: 363081359}
+  spawnPlayerOnStart: 1
+  lifetime: 5
+  fadeDuration: 1
+  extraPlayerHeight: 0.05
 --- !u!1001 &1982589757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5716,8 +5741,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7732116839960091459, guid: 3f10275d666c32e46a2138b7352ee596, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1982589759}
   m_SourcePrefab: {fileID: 100100000, guid: 3f10275d666c32e46a2138b7352ee596, type: 3}
+--- !u!1 &1982589758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7732116839960091459, guid: 3f10275d666c32e46a2138b7352ee596, type: 3}
+  m_PrefabInstance: {fileID: 1982589757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1982589759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982589758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5a30093e5405a44b4745dc5a9c73b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPlatform
+  player: {fileID: 647366002}
+  spawnPlayerOnStart: 1
+  lifetime: 5
+  fadeDuration: 1
+  extraPlayerHeight: 0.05
 --- !u!1 &1999089895
 GameObject:
   m_ObjectHideFlags: 0
@@ -6571,6 +6621,6 @@ SceneRoots:
   - {fileID: 628985291}
   - {fileID: 192894431}
   - {fileID: 1823092544}
-  - {fileID: 1920149836}
   - {fileID: 1982589757}
   - {fileID: 1927774548}
+  - {fileID: 1920149836}
