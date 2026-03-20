@@ -1118,7 +1118,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &363081362
 MonoBehaviour:
@@ -1808,7 +1808,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &647366005
 MonoBehaviour:
@@ -2505,7 +2505,7 @@ MonoBehaviour:
   damageCooldown: 0.5
   launchUpVelocity: 25
   lavaHissSfx: {fileID: 8300000, guid: 5dea6efd3150183409293619cbd33a0b, type: 3}
-  lavaVolume: 0.1
+  lavaVolume: 0.387
 --- !u!61 &822747838
 BoxCollider2D:
   m_ObjectHideFlags: 0
