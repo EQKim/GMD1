@@ -84,8 +84,8 @@ public class SpawnPlatform : MonoBehaviour
 
         float skin = Mathf.Max(0.02f, extraPlayerHeight);
 
-        float deltaY = (platformB.max.y + skin) - playerB.min.y;
-        float deltaX = transform.position.x - playerB.center.x;
+        float newX = transform.position.x;
+        float newY = platformB.max.y + skin + (playerB.extents.y);
 
         if (rb != null)
         {
@@ -94,8 +94,7 @@ public class SpawnPlatform : MonoBehaviour
             rb.simulated = false;
         }
 
-        Vector3 newPos = target.position + new Vector3(deltaX, deltaY, 0f);
-        target.position = newPos;
+        target.position = new Vector3(newX, newY, target.position.z);
 
         if (rb != null)
         {
