@@ -2614,7 +2614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd0c76512d98fe4d92c6615ca8692fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  damage: 10
+  damage: 100
   damageCooldown: 0.5
   launchUpVelocity: 25
   lavaHissSfx: {fileID: 8300000, guid: 5dea6efd3150183409293619cbd33a0b, type: 3}
@@ -3099,6 +3099,76 @@ MonoBehaviour:
   - {fileID: 0}
   aliveColor: {r: 0, g: 0, b: 1, a: 1}
   deadColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!1 &905365564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 905365565}
+  - component: {fileID: 905365567}
+  - component: {fileID: 905365566}
+  m_Layer: 0
+  m_Name: EndlessFallingObjectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &905365565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905365564}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.51523, y: -3.67411, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &905365566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905365564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e9e65b8ff242df4898365d14ed1d79b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  spawnableObjects:
+  - prefab: {fileID: 453545400435153037, guid: 98e7e5f3b37351e4ab9b77645bf33b1b, type: 3}
+    weight: 74.6
+  targetCamera: {fileID: 519420031}
+  spawnInterval: 1.5
+  fallSpeed: 4
+  minX: -6
+  maxX: 6
+  spawnYOffset: 2
+  despawnYOffset: 2
+--- !u!114 &905365567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905365564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.VisualScripting.Core::Unity.VisualScripting.Variables
+  _data:
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
 --- !u!1 &929261058
 GameObject:
   m_ObjectHideFlags: 0
@@ -6613,6 +6683,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 199737152}
   - {fileID: 519420032}
+  - {fileID: 905365565}
   - {fileID: 1553779629}
   - {fileID: 665516667}
   - {fileID: 822747836}
