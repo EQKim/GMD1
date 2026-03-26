@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   damage: 40
   impactEffect: {fileID: 6633543921611073805, guid: addf278f6b4c0cc4d8d2e58ee2a8ce17, type: 3}
-  impactSfx: {fileID: 0}
+  impactSfx: {fileID: 8300000, guid: a84d8bcaa46948148bb83084b50f2a12, type: 3}
   impactVolume: 1
 --- !u!58 &2878233565441452227
 CircleCollider2D:
