@@ -27,9 +27,8 @@ public class EndlessPlatformManager : MonoBehaviour
     [SerializeField] private Camera targetCamera;
     [SerializeField] private float verticalBuffer = 1.5f;
 
-    [Header("Horizontal range (world X)")]
-    [SerializeField] private float minX = -4f;
-    [SerializeField] private float maxX = 4f;
+    [Header("Lane positions")]
+    [SerializeField] private float[] laneXPositions = new float[] { -5f, -2.5f, 0f, 2.5f, 5f };
 
     [Header("Vertical spacing")]
     [SerializeField] private float minGapY = 0.8f;
@@ -43,6 +42,8 @@ public class EndlessPlatformManager : MonoBehaviour
 
     private readonly List<Rigidbody2D> platforms = new();
     private readonly Dictionary<Rigidbody2D, SpawnedItemData> platformItems = new();
+
+    private int lastLaneIndex = -1;
 
     private void Awake()
     {
@@ -63,6 +64,13 @@ public class EndlessPlatformManager : MonoBehaviour
             return;
         }
 
+        if (laneXPositions == null || laneXPositions.Length == 0)
+        {
+            Debug.LogError("Add at least one lane X position.");
+            enabled = false;
+            return;
+        }
+
         float spawnY = GetSpawnY();
         float y = spawnY;
 
@@ -78,7 +86,7 @@ public class EndlessPlatformManager : MonoBehaviour
                 return;
             }
 
-            float x = Random.Range(minX, maxX);
+            float x = GetNextLaneX();
             rb.position = new Vector2(x, y);
 
             platforms.Add(rb);
@@ -107,7 +115,7 @@ public class EndlessPlatformManager : MonoBehaviour
 
                 float highestY = GetHighestPlatformY();
                 float newY = highestY + Random.Range(minGapY, maxGapY);
-                float newX = Random.Range(minX, maxX);
+                float newX = GetNextLaneX();
                 p = new Vector2(newX, newY);
 
                 rb.position = p;
@@ -120,6 +128,23 @@ public class EndlessPlatformManager : MonoBehaviour
 
             UpdateItemPosition(rb);
         }
+    }
+
+    private float GetNextLaneX()
+    {
+        if (laneXPositions.Length == 1)
+            return laneXPositions[0];
+
+        int newLane;
+
+        do
+        {
+            newLane = Random.Range(0, laneXPositions.Length);
+        }
+        while (newLane == lastLaneIndex);
+
+        lastLaneIndex = newLane;
+        return laneXPositions[newLane];
     }
 
     private void TrySpawnItemOnPlatform(Rigidbody2D platform)
@@ -212,7 +237,8 @@ public class EndlessPlatformManager : MonoBehaviour
         for (int i = 0; i < platforms.Count; i++)
         {
             float y = platforms[i].position.y;
-            if (y > highest) highest = y;
+            if (y > highest)
+                highest = y;
         }
         return highest;
     }
