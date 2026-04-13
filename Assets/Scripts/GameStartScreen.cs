@@ -26,6 +26,9 @@ public class GameStartScreen : MonoBehaviour
     [SerializeField] private SpawnPlatform spawnPlatformLeft;
     [SerializeField] private SpawnPlatform spawnPlatformRight;
 
+    [Header("Enemies")]
+    [SerializeField] private FlyingDemonSpawner flyingDemonSpawner;
+
     [Header("Title")]
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private string defaultTitle = "NutCracker";
@@ -44,6 +47,9 @@ public class GameStartScreen : MonoBehaviour
     {
         ShowMainMenuState();
         ForceResetRoundState();
+
+        if (flyingDemonSpawner != null)
+            flyingDemonSpawner.StopAndClear();
 
         if (player1 != null)
             player1.SetControllable(false);
@@ -80,6 +86,9 @@ public class GameStartScreen : MonoBehaviour
             spawnPlatformRight.StartPlatformSequence();
 
         PlayMusic(matchMusic);
+
+        if (flyingDemonSpawner != null)
+            flyingDemonSpawner.BeginMatch();
     }
 
     public void ShowWinnerScreen(string winnerName)
@@ -103,11 +112,18 @@ public class GameStartScreen : MonoBehaviour
             player2.SetControllable(false);
 
         ForceStopCombatOnly();
+
+        if (flyingDemonSpawner != null)
+            flyingDemonSpawner.StopAndClear();
     }
 
     public void ReturnToStartScreen()
     {
         ForceResetRoundState();
+
+        if (flyingDemonSpawner != null)
+            flyingDemonSpawner.StopAndClear();
+
         ShowMainMenuState();
 
         if (player1 != null)
@@ -167,11 +183,16 @@ public class GameStartScreen : MonoBehaviour
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
 
         for (int i = 0; i < bullets.Length; i++)
-            Destroy(bullets[i]);
+        {
+            if (bullets[i] != null)
+                Destroy(bullets[i]);
+        }
     }
 
     private void ForceStopCombatOnly()
     {
+        DestroyAllBullets();
+
         if (player1 != null)
             player1.ResetCombatState();
 

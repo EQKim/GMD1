@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bullet
+  - EnemyProjectile
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - UI
   - Ground
   - HitBox (Attack Colider)
-  - 
+  - EnemyProjectile
   - 
   - 
   - 
