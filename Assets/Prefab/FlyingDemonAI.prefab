@@ -321,9 +321,9 @@ MonoBehaviour:
   destroyDelayAfterDeath: 1.25
   playerLayers:
     serializedVersion: 2
-    m_Bits: 128
-  riderCheckBoxSize: {x: 1.2, y: 0.35}
-  riderCheckOffset: {x: 0, y: 0.9}
+    m_Bits: 8
+  riderCheckBoxSize: {x: 1.2, y: 2}
+  riderCheckOffset: {x: 0, y: 0}
   riderPushDownSpeed: 2.5
   blockUpwardMovementWhenRidden: 1
   minX: -8
