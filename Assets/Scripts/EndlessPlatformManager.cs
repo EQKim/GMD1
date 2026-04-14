@@ -35,6 +35,10 @@ public class EndlessPlatformManager : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float speedIncreaseVolume = 1f;
 
+    [Header("Linked Managers")]
+    [SerializeField] private EndlessBackgroundManager backgroundManager;
+    [SerializeField] private float backgroundSpeedMultiplier = 0.6f;
+
     [Header("Camera-based bounds")]
     [SerializeField] private Camera targetCamera;
     [SerializeField] private float verticalBuffer = 1.5f;
@@ -164,6 +168,7 @@ public class EndlessPlatformManager : MonoBehaviour
     {
         currentFallSpeed = startingFallSpeed;
         speedIncreaseTimer = 0f;
+        UpdateBackgroundSpeed();
     }
 
     public float GetCurrentFallSpeed()
@@ -181,6 +186,7 @@ public class EndlessPlatformManager : MonoBehaviour
         currentFallSpeed = startingFallSpeed;
         speedIncreaseTimer = 0f;
         lastLaneIndex = -1;
+        UpdateBackgroundSpeed();
     }
 
     private void BuildPlatformPool()
@@ -253,7 +259,18 @@ public class EndlessPlatformManager : MonoBehaviour
         currentFallSpeed = Mathf.Min(currentFallSpeed + speedIncreaseAmount, maxFallSpeed);
 
         if (!Mathf.Approximately(previousSpeed, currentFallSpeed))
+        {
+            UpdateBackgroundSpeed();
             PlaySpeedIncreaseSfx();
+        }
+    }
+
+    private void UpdateBackgroundSpeed()
+    {
+        if (backgroundManager == null)
+            return;
+
+        backgroundManager.SetScrollSpeed(currentFallSpeed * backgroundSpeedMultiplier);
     }
 
     private void PlaySpeedIncreaseSfx()

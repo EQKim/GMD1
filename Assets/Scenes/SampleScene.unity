@@ -2594,7 +2594,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.059, y: -0.73, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 647366002}
@@ -5288,6 +5288,8 @@ MonoBehaviour:
   speedIncreaseAudioSource: {fileID: 156923289}
   speedIncreaseSfx: {fileID: 8300000, guid: 076c7028602d35549a22ae7b7a3ca77c, type: 3}
   speedIncreaseVolume: 0.507
+  backgroundManager: {fileID: 665516666}
+  backgroundSpeedMultiplier: 0.6
   targetCamera: {fileID: 519420031}
   verticalBuffer: 1.5
   laneXPositions:
@@ -5334,7 +5336,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.01, y: -0.563, z: 0}
-  m_LocalScale: {x: 0.6666667, y: 0.7692308, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 363081359}

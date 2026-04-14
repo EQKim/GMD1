@@ -48,15 +48,12 @@ public class EndlessBackgroundManager : MonoBehaviour
             return;
         }
 
-        // Initial sprites
         pieceA.sprite = variants[0];
         pieceB.sprite = variants[Mathf.Min(1, variants.Length - 1)];
 
-        // Stretch both to camera height
         StretchToCameraHeight(pieceA);
         StretchToCameraHeight(pieceB);
 
-        // Place B directly above A
         SnapAbove(pieceB, pieceA, verticalOverlap);
 
         if (pixelSnapY)
@@ -83,19 +80,25 @@ public class EndlessBackgroundManager : MonoBehaviour
         TryWrap(pieceB, pieceA);
     }
 
+    public void SetScrollSpeed(float newSpeed)
+    {
+        scrollSpeed = Mathf.Max(0f, newSpeed);
+    }
+
+    public float GetScrollSpeed()
+    {
+        return scrollSpeed;
+    }
+
     private void TryWrap(SpriteRenderer moving, SpriteRenderer other)
     {
         float camBottom = cam.transform.position.y - cam.orthographicSize;
 
-        // Wrap earlier than fully leaving the camera to avoid 1-frame gaps.
         if (moving.bounds.max.y < camBottom + wrapBuffer)
         {
             moving.sprite = GetNextSprite();
 
-            // Re-stretch in case sprite sizes differ
             StretchToCameraHeight(moving);
-
-            // Move it above the other piece with overlap to hide seams
             SnapAbove(moving, other, verticalOverlap);
 
             if (pixelSnapY)
@@ -121,10 +124,8 @@ public class EndlessBackgroundManager : MonoBehaviour
 
     private static void SnapAbove(SpriteRenderer top, SpriteRenderer bottom, float overlap = 0f)
     {
-        // Keep any pivot/offset intact
         float offset = top.transform.position.y - top.bounds.center.y;
 
-        // Put top directly above bottom with optional overlap
         float desiredY = bottom.bounds.max.y + top.bounds.extents.y - overlap;
 
         Vector3 p = top.transform.position;
@@ -147,8 +148,6 @@ public class EndlessBackgroundManager : MonoBehaviour
 
     private void SnapToPixelGrid(Transform t)
     {
-        // Convert world units to pixels, round, then convert back.
-        // This helps remove sub-pixel movement seams with point filtering.
         float unitsPerPixel = 1f / Mathf.Max(0.0001f, pixelsPerUnit);
 
         Vector3 p = t.position;
