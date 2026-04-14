@@ -115,6 +115,21 @@ public class PlayerAttackHitbox : MonoBehaviour
         if (((1 << other.gameObject.layer) & targetLayers) == 0)
             return;
 
+        FlyingDemonAI demon = other.GetComponentInParent<FlyingDemonAI>();
+        if (demon != null)
+        {
+            demon.TakeDamage(currentDamage);
+
+            PlayerWeaponHolder holder = GetComponentInParent<PlayerWeaponHolder>();
+            if (holder != null)
+                holder.PlayAttackSfx();
+
+            if (enableBleed)
+                SpawnBloodEffect(other);
+
+            return;
+        }
+
         PlayerHealth targetHealth = other.GetComponentInParent<PlayerHealth>();
         if (targetHealth == null)
             return;
@@ -134,9 +149,9 @@ public class PlayerAttackHitbox : MonoBehaviour
 
         hitTargets.Add(targetHealth);
 
-        PlayerWeaponHolder holder = GetComponentInParent<PlayerWeaponHolder>();
-        if (holder != null)
-            holder.PlayAttackSfx();
+        PlayerWeaponHolder weaponHolder = GetComponentInParent<PlayerWeaponHolder>();
+        if (weaponHolder != null)
+            weaponHolder.PlayAttackSfx();
 
         if (IsKnockbackEnabled())
             ApplyKnockback(targetHealth);

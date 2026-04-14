@@ -40,6 +40,15 @@ public class BulletProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        FlyingDemonAI demon = other.GetComponentInParent<FlyingDemonAI>();
+        if (demon != null)
+        {
+            demon.TakeDamage(damage);
+            SpawnBloodEffect(other);
+            Destroy(gameObject);
+            return;
+        }
+
         PlayerHealth target = other.GetComponentInParent<PlayerHealth>();
 
         if (target != null && target != owner)

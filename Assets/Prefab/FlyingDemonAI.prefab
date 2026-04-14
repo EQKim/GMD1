@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 2205908303618178392}
   - component: {fileID: 8635072529913292940}
   - component: {fileID: 8039578068515558166}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FlyingDemonAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
