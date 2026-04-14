@@ -608,6 +608,7 @@ MonoBehaviour:
   player2WeaponHolder: {fileID: 363081364}
   spawnPlatformLeft: {fileID: 1628722112}
   spawnPlatformRight: {fileID: 572730579}
+  endlessPlatformManager: {fileID: 1553779630}
   flyingDemonSpawner: {fileID: 1521933651}
   titleText: {fileID: 1606552582}
   defaultTitle: NutCracker
@@ -1325,71 +1326,6 @@ MonoBehaviour:
   defaultKnockbackForce: 0
   defaultEnableBleed: 1
   minAttackSfxInterval: 0.08
---- !u!1001 &399060300
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -15.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531736303801874142, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      propertyPath: m_Name
-      value: FlyingDemonAI (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 833126385}
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
---- !u!4 &399060301 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6452635043146829350, guid: 2b1757df5dc79354b994a7315a5f76cf, type: 3}
-  m_PrefabInstance: {fileID: 399060300}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &448665852
 GameObject:
   m_ObjectHideFlags: 0
@@ -2954,84 +2890,6 @@ MonoBehaviour:
   splashPrefab: {fileID: 2093267005869952294, guid: 012b81debfda97642ad27bf4d5879861, type: 3}
   yOffset: 0.85
   spawnCooldown: 0
---- !u!1 &833126384
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 833126385}
-  - component: {fileID: 833126386}
-  m_Layer: 10
-  m_Name: Rideable
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &833126385
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833126384}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 399060301}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &833126386
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833126384}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.9}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 2.37, y: 0.17}
-  m_EdgeRadius: 0
 --- !u!1 &848648771
 GameObject:
   m_ObjectHideFlags: 0
@@ -4747,7 +4605,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EndlessPlatformManager
   platformPrefab: {fileID: 7769182149998739298, guid: a6e40f510d88ace4587ea3698e6dd546, type: 3}
   poolSize: 20
-  fallSpeed: 2.5
+  startingFallSpeed: 2.5
+  maxFallSpeed: 8
+  enableSpeedIncrease: 1
+  speedIncreaseInterval: 30
+  speedIncreaseAmount: 0.5
+  speedIncreaseAudioSource: {fileID: 0}
+  speedIncreaseSfx: {fileID: 0}
+  speedIncreaseVolume: 1
   targetCamera: {fileID: 519420031}
   verticalBuffer: 1.5
   laneXPositions:
@@ -7086,6 +6951,5 @@ SceneRoots:
   - {fileID: 1628722111}
   - {fileID: 1520922027}
   - {fileID: 5012707457551165493}
-  - {fileID: 399060300}
   - {fileID: 3095092524508486021}
   - {fileID: 1920149836}

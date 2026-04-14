@@ -26,6 +26,9 @@ public class GameStartScreen : MonoBehaviour
     [SerializeField] private SpawnPlatform spawnPlatformLeft;
     [SerializeField] private SpawnPlatform spawnPlatformRight;
 
+    [Header("Endless Platforms")]
+    [SerializeField] private EndlessPlatformManager endlessPlatformManager;
+
     [Header("Enemies")]
     [SerializeField] private FlyingDemonSpawner flyingDemonSpawner;
 
@@ -47,6 +50,9 @@ public class GameStartScreen : MonoBehaviour
     {
         ShowMainMenuState();
         ForceResetRoundState();
+
+        if (endlessPlatformManager != null)
+            endlessPlatformManager.StopRun();
 
         if (flyingDemonSpawner != null)
             flyingDemonSpawner.StopAndClear();
@@ -85,6 +91,9 @@ public class GameStartScreen : MonoBehaviour
         if (spawnPlatformRight != null)
             spawnPlatformRight.StartPlatformSequence();
 
+        if (endlessPlatformManager != null)
+            endlessPlatformManager.BeginRun();
+
         PlayMusic(matchMusic);
 
         if (flyingDemonSpawner != null)
@@ -113,6 +122,9 @@ public class GameStartScreen : MonoBehaviour
 
         ForceStopCombatOnly();
 
+        if (endlessPlatformManager != null)
+            endlessPlatformManager.StopRun();
+
         if (flyingDemonSpawner != null)
             flyingDemonSpawner.StopAndClear();
     }
@@ -120,6 +132,9 @@ public class GameStartScreen : MonoBehaviour
     public void ReturnToStartScreen()
     {
         ForceResetRoundState();
+
+        if (endlessPlatformManager != null)
+            endlessPlatformManager.StopRun();
 
         if (flyingDemonSpawner != null)
             flyingDemonSpawner.StopAndClear();

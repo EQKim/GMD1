@@ -21,7 +21,19 @@ public class EndlessPlatformManager : MonoBehaviour
     [SerializeField] private int poolSize = 12;
 
     [Header("Movement")]
-    [SerializeField] private float fallSpeed = 2.5f;
+    [SerializeField] private float startingFallSpeed = 2.5f;
+    [SerializeField] private float maxFallSpeed = 8f;
+
+    [Header("Speed Progression")]
+    [SerializeField] private bool enableSpeedIncrease = true;
+    [SerializeField] private float speedIncreaseInterval = 30f;
+    [SerializeField] private float speedIncreaseAmount = 0.5f;
+
+    [Header("Speed Increase Audio")]
+    [SerializeField] private AudioSource speedIncreaseAudioSource;
+    [SerializeField] private AudioClip speedIncreaseSfx;
+    [Range(0f, 1f)]
+    [SerializeField] private float speedIncreaseVolume = 1f;
 
     [Header("Camera-based bounds")]
     [SerializeField] private Camera targetCamera;
@@ -44,6 +56,9 @@ public class EndlessPlatformManager : MonoBehaviour
     private readonly Dictionary<Rigidbody2D, SpawnedItemData> platformItems = new();
 
     private int lastLaneIndex = -1;
+    private float currentFallSpeed;
+    private float speedIncreaseTimer;
+    private bool isRunning;
 
     private void Awake()
     {
@@ -71,41 +86,39 @@ public class EndlessPlatformManager : MonoBehaviour
             return;
         }
 
-        float spawnY = GetSpawnY();
-        float y = spawnY;
-
-        for (int i = 0; i < poolSize; i++)
+        if (speedIncreaseAudioSource != null)
         {
-            GameObject go = Instantiate(platformPrefab, transform);
-
-            Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
-            if (rb == null)
-            {
-                Debug.LogError("Platform prefab must have a Rigidbody2D.");
-                enabled = false;
-                return;
-            }
-
-            float x = GetNextLaneX();
-            rb.position = new Vector2(x, y);
-
-            platforms.Add(rb);
-            platformItems[rb] = null;
-
-            TrySpawnItemOnPlatform(rb);
-
-            y += Random.Range(minGapY, maxGapY);
+            speedIncreaseAudioSource.playOnAwake = false;
+            speedIncreaseAudioSource.loop = false;
+            speedIncreaseAudioSource.spatialBlend = 0f;
         }
+
+        ResetRuntimeState();
+        ClearAllPlatforms();
+    }
+
+    private void Update()
+    {
+        if (!isRunning)
+            return;
+
+        HandleSpeedIncreaseTimer();
     }
 
     private void FixedUpdate()
     {
-        float dy = fallSpeed * Time.fixedDeltaTime;
+        if (!isRunning)
+            return;
+
+        float dy = currentFallSpeed * Time.fixedDeltaTime;
         float despawnY = GetDespawnY();
 
         for (int i = 0; i < platforms.Count; i++)
         {
             Rigidbody2D rb = platforms[i];
+            if (rb == null)
+                continue;
+
             Vector2 p = rb.position;
             p.y -= dy;
 
@@ -128,6 +141,127 @@ public class EndlessPlatformManager : MonoBehaviour
 
             UpdateItemPosition(rb);
         }
+    }
+
+    public void BeginRun()
+    {
+        StopRun();
+
+        ResetRuntimeState();
+        BuildPlatformPool();
+
+        isRunning = true;
+    }
+
+    public void StopRun()
+    {
+        isRunning = false;
+        ResetRuntimeState();
+        ClearAllPlatforms();
+    }
+
+    public void ResetSpeedProgression()
+    {
+        currentFallSpeed = startingFallSpeed;
+        speedIncreaseTimer = 0f;
+    }
+
+    public float GetCurrentFallSpeed()
+    {
+        return currentFallSpeed;
+    }
+
+    public void SetSpeedIncreaseVolume(float volume)
+    {
+        speedIncreaseVolume = Mathf.Clamp01(volume);
+    }
+
+    private void ResetRuntimeState()
+    {
+        currentFallSpeed = startingFallSpeed;
+        speedIncreaseTimer = 0f;
+        lastLaneIndex = -1;
+    }
+
+    private void BuildPlatformPool()
+    {
+        ClearAllPlatforms();
+
+        float spawnY = GetSpawnY();
+        float y = spawnY;
+
+        for (int i = 0; i < poolSize; i++)
+        {
+            GameObject go = Instantiate(platformPrefab, transform);
+
+            Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+            if (rb == null)
+            {
+                Debug.LogError("Platform prefab must have a Rigidbody2D.");
+                Destroy(go);
+                continue;
+            }
+
+            float x = GetNextLaneX();
+            rb.position = new Vector2(x, y);
+
+            platforms.Add(rb);
+            platformItems[rb] = null;
+
+            TrySpawnItemOnPlatform(rb);
+
+            y += Random.Range(minGapY, maxGapY);
+        }
+    }
+
+    private void ClearAllPlatforms()
+    {
+        for (int i = 0; i < platforms.Count; i++)
+        {
+            Rigidbody2D rb = platforms[i];
+            if (rb == null)
+                continue;
+
+            ClearItem(rb);
+            Destroy(rb.gameObject);
+        }
+
+        platforms.Clear();
+        platformItems.Clear();
+    }
+
+    private void HandleSpeedIncreaseTimer()
+    {
+        if (!enableSpeedIncrease)
+            return;
+
+        if (speedIncreaseInterval <= 0f)
+            return;
+
+        speedIncreaseTimer += Time.deltaTime;
+
+        if (speedIncreaseTimer >= speedIncreaseInterval)
+        {
+            speedIncreaseTimer -= speedIncreaseInterval;
+            IncreasePlatformSpeed();
+        }
+    }
+
+    private void IncreasePlatformSpeed()
+    {
+        float previousSpeed = currentFallSpeed;
+        currentFallSpeed = Mathf.Min(currentFallSpeed + speedIncreaseAmount, maxFallSpeed);
+
+        if (!Mathf.Approximately(previousSpeed, currentFallSpeed))
+            PlaySpeedIncreaseSfx();
+    }
+
+    private void PlaySpeedIncreaseSfx()
+    {
+        if (speedIncreaseAudioSource == null || speedIncreaseSfx == null)
+            return;
+
+        speedIncreaseAudioSource.PlayOneShot(speedIncreaseSfx, Mathf.Clamp01(speedIncreaseVolume));
     }
 
     private float GetNextLaneX()
@@ -233,13 +367,25 @@ public class EndlessPlatformManager : MonoBehaviour
 
     private float GetHighestPlatformY()
     {
+        if (platforms.Count == 0)
+            return GetSpawnY();
+
         float highest = float.NegativeInfinity;
+
         for (int i = 0; i < platforms.Count; i++)
         {
-            float y = platforms[i].position.y;
+            Rigidbody2D rb = platforms[i];
+            if (rb == null)
+                continue;
+
+            float y = rb.position.y;
             if (y > highest)
                 highest = y;
         }
+
+        if (float.IsNegativeInfinity(highest))
+            return GetSpawnY();
+
         return highest;
     }
 
