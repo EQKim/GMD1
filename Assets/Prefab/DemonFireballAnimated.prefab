@@ -197,4 +197,6 @@ MonoBehaviour:
   lifeTime: 5
   playerLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 520
+  bloodEffectPrefab: {fileID: 9203768844593803654, guid: 0654a82feadeb3a4db98a188162ffebb, type: 3}
+  bloodSpawnOffset: {x: 0, y: 0, z: 0}

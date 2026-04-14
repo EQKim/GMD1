@@ -10,6 +10,10 @@ public class FlyingDemonFireball : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask playerLayers;
 
+    [Header("Hit FX")]
+    [SerializeField] private ParticleSystem bloodEffectPrefab;
+    [SerializeField] private Vector3 bloodSpawnOffset = Vector3.zero;
+
     private Vector2 moveDirection;
     private Transform target;
 
@@ -47,7 +51,24 @@ public class FlyingDemonFireball : MonoBehaviour
         if (target != null && health.transform != target)
             return;
 
-        health.TakeDamage(damage);
+        bool didDamage = health.TakeDamage(damage);
+
+        if (didDamage)
+            SpawnBloodEffect(other);
+
         Destroy(gameObject);
+    }
+
+    private void SpawnBloodEffect(Collider2D other)
+    {
+        if (bloodEffectPrefab == null)
+            return;
+
+        Vector3 spawnPos = other.bounds.center + bloodSpawnOffset;
+
+        ParticleSystem fx = Instantiate(bloodEffectPrefab, spawnPos, Quaternion.identity);
+        fx.Play();
+
+        Destroy(fx.gameObject, 2f);
     }
 }

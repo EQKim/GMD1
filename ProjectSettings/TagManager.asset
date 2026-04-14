@@ -16,8 +16,8 @@ TagManager:
   - Ground
   - HitBox (Attack Colider)
   - EnemyProjectile
-  - 
-  - 
+  - Player
+  - Rideable
   - 
   - 
   - 
