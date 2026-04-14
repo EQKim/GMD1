@@ -397,7 +397,7 @@ MonoBehaviour:
   fireballShootVolume: 0.372
   hurtSfx: {fileID: 8300000, guid: 17fb137656e80034ea6c0150799cb628, type: 3}
   hurtVolume: 0.372
-  destroyDelayAfterDeath: 1.25
+  destroyDelayAfterDeath: 0.85
   playerLayers:
     serializedVersion: 2
     m_Bits: 512

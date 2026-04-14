@@ -233,8 +233,8 @@ MonoBehaviour:
   fireRate: 8
   quickAttackDamage: 20
   heavyAttackDamage: 35
-  enableKnockback: 0
-  knockbackForce: 0
+  enableKnockback: 1
+  knockbackForce: 15
   enableBleed: 1
   pickupSfx: {fileID: 8300000, guid: 975d92143ff58124eaa56c40d559b8aa, type: 3}
   pickupSfxVolume: 0.26

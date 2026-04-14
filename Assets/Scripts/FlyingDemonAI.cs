@@ -168,8 +168,25 @@ public class FlyingDemonAI : MonoBehaviour
     private bool HasPlayerRider()
     {
         Vector2 checkCenter = (Vector2)transform.position + riderCheckOffset;
-        Collider2D hit = Physics2D.OverlapBox(checkCenter, riderCheckBoxSize, 0f, playerLayers);
-        return hit != null;
+        Collider2D[] hits = Physics2D.OverlapBoxAll(checkCenter, riderCheckBoxSize, 0f, playerLayers);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Collider2D hit = hits[i];
+
+            if (hit == null)
+                continue;
+
+            // Ignore this demon's own colliders
+            if (hit.transform == transform || hit.transform.IsChildOf(transform))
+                continue;
+
+            // Only count actual players
+            PlayerController2D player = hit.GetComponentInParent<PlayerController2D>();
+            if (player != null)
+                return true;
+        }
+        return false;
     }
 
     private Vector3 GetTargetPoint()
