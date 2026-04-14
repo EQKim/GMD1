@@ -1128,7 +1128,7 @@ GameObject:
   - component: {fileID: 363081362}
   - component: {fileID: 363081363}
   - component: {fileID: 363081364}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: GrafftiWoman
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1901,7 +1901,7 @@ GameObject:
   - component: {fileID: 647366006}
   - component: {fileID: 647366007}
   - component: {fileID: 647366008}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: HomelessMan
   m_TagString: Player
   m_Icon: {fileID: 0}
