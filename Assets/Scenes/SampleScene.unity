@@ -5715,8 +5715,8 @@ MonoBehaviour:
   pulseSpeed: 4
   pulseAmount: 0.08
   changeColor: 1
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  selectedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 0, g: 0, b: 0, a: 1}
+  selectedColor: {r: 0.627451, g: 0.1254902, b: 0.9411765, a: 1}
 --- !u!1 &1529018808
 GameObject:
   m_ObjectHideFlags: 0
@@ -7019,7 +7019,7 @@ MonoBehaviour:
   rockSpeedMultiplier: 1.5
   minRockFallSpeed: 4
   maxRockFallSpeed: 14
-  spawnInterval: 5
+  spawnInterval: 10
   fallSpeed: 4
   minX: -6
   maxX: 6
