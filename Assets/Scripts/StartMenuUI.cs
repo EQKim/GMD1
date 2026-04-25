@@ -51,6 +51,20 @@ public class StartMenuUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void QuitGame()
+    {
+        Debug.Log("Quit pressed");
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBGL
+    Debug.Log("Quit is not supported in WebGL.");
+    OpenMainMenu();
+#else
+    Application.Quit();
+#endif
+    }
+
     private void SelectWithDelay(Selectable target)
     {
         if (selectionRoutine != null)
