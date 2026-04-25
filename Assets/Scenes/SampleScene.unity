@@ -6720,8 +6720,15 @@ MonoBehaviour:
   spawnableObjects:
   - prefab: {fileID: 453545400435153037, guid: 98e7e5f3b37351e4ab9b77645bf33b1b, type: 3}
     weight: 1
+  warningPrefab: {fileID: 4142941760389732373, guid: 9b7c9affb80a0b9489d59107f0136219, type: 3}
+  warningDuration: 2
+  warningYOffsetFromTop: 0.5
   targetCamera: {fileID: 519420031}
-  spawnInterval: 4
+  platformManager: {fileID: 1553779630}
+  rockSpeedMultiplier: 1.5
+  minRockFallSpeed: 4
+  maxRockFallSpeed: 14
+  spawnInterval: 5
   fallSpeed: 4
   minX: -6
   maxX: 6
