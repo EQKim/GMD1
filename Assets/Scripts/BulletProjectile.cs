@@ -7,6 +7,11 @@ public class BulletProjectile : MonoBehaviour
     [SerializeField] private float lifetime = 3f;
     [SerializeField] private int damage = 10;
 
+    [Header("Knockback")]
+    [SerializeField] private float knockbackForce = 10f;
+    [SerializeField] private float upwardKnockback = 0.15f;
+    [SerializeField] private float knockbackLockDuration = 0.18f;
+
     [Header("Hit FX")]
     [SerializeField] private ParticleSystem bloodEffectPrefab;
     [SerializeField] private Vector3 bloodSpawnOffset = Vector3.zero;
@@ -41,9 +46,11 @@ public class BulletProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         FlyingDemonAI demon = other.GetComponentInParent<FlyingDemonAI>();
+
         if (demon != null)
         {
             demon.TakeDamage(damage);
+            ApplyKnockback(other);
             SpawnBloodEffect(other);
             Destroy(gameObject);
             return;
@@ -56,7 +63,10 @@ public class BulletProjectile : MonoBehaviour
             bool didDamage = target.TakeDamage(damage);
 
             if (didDamage)
+            {
+                ApplyKnockback(other);
                 SpawnBloodEffect(other);
+            }
 
             Destroy(gameObject);
             return;
@@ -64,6 +74,29 @@ public class BulletProjectile : MonoBehaviour
 
         if (!other.isTrigger)
             Destroy(gameObject);
+    }
+
+    private void ApplyKnockback(Collider2D other)
+    {
+        Rigidbody2D targetRb = other.GetComponentInParent<Rigidbody2D>();
+        PlayerController2D targetController = other.GetComponentInParent<PlayerController2D>();
+
+        if (targetRb == null)
+            return;
+
+        float xDirection = Mathf.Sign(direction.x);
+
+        if (xDirection == 0f)
+            xDirection = transform.localScale.x >= 0f ? 1f : -1f;
+
+        Vector2 knockbackDirection = new Vector2(xDirection, upwardKnockback).normalized;
+        Vector2 force = knockbackDirection * knockbackForce;
+
+        if (targetController != null)
+            targetController.ApplyKnockbackLock(knockbackLockDuration);
+
+        targetRb.linearVelocity = Vector2.zero;
+        targetRb.AddForce(force, ForceMode2D.Impulse);
     }
 
     private void SpawnBloodEffect(Collider2D other)
