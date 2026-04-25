@@ -172,8 +172,8 @@ MonoBehaviour:
   speed: 12
   lifetime: 3
   damage: 6
-  knockbackForce: 5
+  knockbackForce: 8
   upwardKnockback: 0
-  knockbackLockDuration: 0.06
+  knockbackLockDuration: 0.1
   bloodEffectPrefab: {fileID: 9203768844593803654, guid: 0654a82feadeb3a4db98a188162ffebb, type: 3}
   bloodSpawnOffset: {x: 0, y: 0, z: 0}

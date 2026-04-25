@@ -159,6 +159,10 @@ public class PlayerWeaponHolder : MonoBehaviour
         float attackSfxVolume
     )
     {
+        if (HasWeapon && currentWeaponIsRanged && isRangedWeapon)
+        {
+            return;
+        }
         StopRangedAttack();
         StopCurrentWeaponAudio();
         ClearCurrentWeaponVisual();
