@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
@@ -32,9 +31,10 @@ public class GameStartScreen : MonoBehaviour
     [Header("Enemies")]
     [SerializeField] private FlyingDemonSpawner flyingDemonSpawner;
 
-    [Header("Title")]
-    [SerializeField] private TMP_Text titleText;
-    [SerializeField] private string defaultTitle = "NutCracker";
+    [Header("Winner Images")]
+    [SerializeField] private Image winnerImage;
+    [SerializeField] private Sprite homelessManWinsSprite;
+    [SerializeField] private Sprite graffitiWomanWinsSprite;
 
     [Header("Music")]
     [SerializeField] private AudioSource musicSource;
@@ -72,6 +72,9 @@ public class GameStartScreen : MonoBehaviour
 
         if (startScreen != null)
             startScreen.SetActive(false);
+
+        if (winnerImage != null)
+            winnerImage.gameObject.SetActive(false);
 
         if (player1Health != null)
             player1Health.ResetPlayer();
@@ -111,8 +114,7 @@ public class GameStartScreen : MonoBehaviour
         if (volumeSettings != null)
             volumeSettings.SetActive(false);
 
-        if (titleText != null)
-            titleText.text = winnerName + " Wins";
+        ShowWinnerImage(winnerName);
 
         if (player1 != null)
             player1.SetControllable(false);
@@ -173,10 +175,28 @@ public class GameStartScreen : MonoBehaviour
         if (volumeSettings != null)
             volumeSettings.SetActive(false);
 
-        if (titleText != null)
-            titleText.text = defaultTitle;
+        if (winnerImage != null)
+            winnerImage.gameObject.SetActive(false);
 
         ReselectMainMenuButton();
+    }
+
+    private void ShowWinnerImage(string winnerName)
+    {
+        if (winnerImage == null)
+            return;
+
+        if (winnerName == "HomelessMan")
+            winnerImage.sprite = homelessManWinsSprite;
+        else if (winnerName == "GraffitiWoman")
+            winnerImage.sprite = graffitiWomanWinsSprite;
+        else
+        {
+            winnerImage.gameObject.SetActive(false);
+            return;
+        }
+
+        winnerImage.gameObject.SetActive(true);
     }
 
     private void PlayMusic(AudioClip clip)
