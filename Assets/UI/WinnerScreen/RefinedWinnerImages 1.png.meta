@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: be4c2603a3d8855428bfb39cbbba0994
+guid: 7f9927b2772820b458ef381881b52d3c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 723138903345569535
-    second: RefinedWinnerImages_0
+      213: -5262188605666564203
+    second: RefinedWinnerImages 1_0
   - first:
-      213: -7918758193133893769
-    second: RefinedWinnerImages_1
+      213: -1125480038336352226
+    second: RefinedWinnerImages 1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RefinedWinnerImages_0
+      name: RefinedWinnerImages 1_0
       rect:
         serializedVersion: 2
         x: 1
@@ -118,14 +118,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ffe9d21500b190a00800000000000000
-      internalID: 723138903345569535
+      spriteID: 597e22ae753f8f6b0800000000000000
+      internalID: -5262188605666564203
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RefinedWinnerImages_1
+      name: RefinedWinnerImages 1_1
       rect:
         serializedVersion: 2
         x: 0
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7774a04f06bea1290800000000000000
-      internalID: -7918758193133893769
+      spriteID: e103b214edd7160f0800000000000000
+      internalID: -1125480038336352226
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RefinedWinnerImages_0: 723138903345569535
-      RefinedWinnerImages_1: -7918758193133893769
+      RefinedWinnerImages 1_0: -5262188605666564203
+      RefinedWinnerImages 1_1: -1125480038336352226
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
