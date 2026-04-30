@@ -1006,8 +1006,8 @@ MonoBehaviour:
   endlessPlatformManager: {fileID: 1553779630}
   flyingDemonSpawner: {fileID: 1521933651}
   winnerImage: {fileID: 1607180471}
-  homelessManWinsSprite: {fileID: 723138903345569535, guid: be4c2603a3d8855428bfb39cbbba0994, type: 3}
-  graffitiWomanWinsSprite: {fileID: -7918758193133893769, guid: be4c2603a3d8855428bfb39cbbba0994, type: 3}
+  homelessManWinsSprite: {fileID: -5262188605666564203, guid: 7f9927b2772820b458ef381881b52d3c, type: 3}
+  graffitiWomanWinsSprite: {fileID: -1125480038336352226, guid: 7f9927b2772820b458ef381881b52d3c, type: 3}
   musicSource: {fileID: 1823092543}
   menuMusic: {fileID: 8300000, guid: b3361bd28064a334f98cae8e37c520a5, type: 3}
   matchMusic: {fileID: 8300000, guid: 984860adeed33b349969d49a1ec7ea2b, type: 3}
