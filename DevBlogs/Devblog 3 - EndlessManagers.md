@@ -23,6 +23,56 @@ This speed increase is then communicated to both the **"EndlessObjectFallingMana
   <img width="700" alt="Manager Diagram" src="https://github.com/user-attachments/assets/568d40d0-957a-44cb-b840-2ad716c3e671" />
 </p>
 
+### Platform and Weapon Spawning
+
+The **"EndlessPlatformManager"** builds a pool of platforms and places them in random lanes. When each platform is created, the script also attempts to spawn a weapon or item on top of it.
+
+```csharp
+private void BuildPlatformPool()
+{
+    ClearAllPlatforms();
+
+    float y = GetSpawnY();
+
+    for (int i = 0; i < poolSize; i++)
+    {
+        GameObject platformObject = Instantiate(platformPrefab, transform);
+        Rigidbody2D rb = platformObject.GetComponent<Rigidbody2D>();
+
+        float x = GetNextLaneX();
+        rb.position = new Vector2(x, y);
+
+        platforms.Add(rb);
+        platformItems[rb] = null;
+
+        TrySpawnItemOnPlatform(rb);
+
+        y += Random.Range(minGapY, maxGapY);
+    }
+}
+
+```
+
+### Speed Communication
+
+The **"EndlessPlatformManager"** also controls the shared speed progression. When the platform speed increases, it updates the linked managers.
+
+```csharp
+private void UpdateLinkedManagerSpeeds()
+{
+    if (backgroundManager != null)
+        backgroundManager.SetScrollSpeed(currentFallSpeed * backgroundSpeedMultiplier);
+
+    if (fallingObjectManager != null)
+    {
+        float fallingSpeed = currentFallSpeed * fallingObjectSpeedMultiplier;
+        fallingObjectManager.SetFallSpeed(fallingSpeed);
+    }
+}
+```
+
+This shows how **"EndlessPlatformManager"** acts as the central manager by controlling platform spawning, item spawning, and speed progression.
+
 ---
 
 ## Supporting Managers
