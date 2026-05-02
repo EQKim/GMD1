@@ -37,7 +37,11 @@ public class EndlessPlatformManager : MonoBehaviour
 
     [Header("Linked Managers")]
     [SerializeField] private EndlessBackgroundManager backgroundManager;
+    [SerializeField] private FallingObjectSpawnerManager fallingObjectManager;
+
+    [Header("Linked Speed Multipliers")]
     [SerializeField] private float backgroundSpeedMultiplier = 0.6f;
+    [SerializeField] private float fallingObjectSpeedMultiplier = 1.5f;
 
     [Header("Camera-based bounds")]
     [SerializeField] private Camera targetCamera;
@@ -120,27 +124,29 @@ public class EndlessPlatformManager : MonoBehaviour
         for (int i = 0; i < platforms.Count; i++)
         {
             Rigidbody2D rb = platforms[i];
+
             if (rb == null)
                 continue;
 
-            Vector2 p = rb.position;
-            p.y -= dy;
+            Vector2 position = rb.position;
+            position.y -= dy;
 
-            if (p.y < despawnY)
+            if (position.y < despawnY)
             {
                 ClearItem(rb);
 
                 float highestY = GetHighestPlatformY();
                 float newY = highestY + Random.Range(minGapY, maxGapY);
                 float newX = GetNextLaneX();
-                p = new Vector2(newX, newY);
 
-                rb.position = p;
+                position = new Vector2(newX, newY);
+                rb.position = position;
+
                 TrySpawnItemOnPlatform(rb);
             }
             else
             {
-                rb.MovePosition(p);
+                rb.MovePosition(position);
             }
 
             UpdateItemPosition(rb);
@@ -168,12 +174,22 @@ public class EndlessPlatformManager : MonoBehaviour
     {
         currentFallSpeed = startingFallSpeed;
         speedIncreaseTimer = 0f;
-        UpdateBackgroundSpeed();
+        UpdateLinkedManagerSpeeds();
     }
 
     public float GetCurrentFallSpeed()
     {
         return currentFallSpeed;
+    }
+
+    public FallingObjectSpawnerManager GetFallingObjectManager()
+    {
+        return fallingObjectManager;
+    }
+
+    public EndlessBackgroundManager GetBackgroundManager()
+    {
+        return backgroundManager;
     }
 
     public void SetSpeedIncreaseVolume(float volume)
@@ -186,25 +202,25 @@ public class EndlessPlatformManager : MonoBehaviour
         currentFallSpeed = startingFallSpeed;
         speedIncreaseTimer = 0f;
         lastLaneIndex = -1;
-        UpdateBackgroundSpeed();
+        UpdateLinkedManagerSpeeds();
     }
 
     private void BuildPlatformPool()
     {
         ClearAllPlatforms();
 
-        float spawnY = GetSpawnY();
-        float y = spawnY;
+        float y = GetSpawnY();
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject go = Instantiate(platformPrefab, transform);
+            GameObject platformObject = Instantiate(platformPrefab, transform);
 
-            Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = platformObject.GetComponent<Rigidbody2D>();
+
             if (rb == null)
             {
                 Debug.LogError("Platform prefab must have a Rigidbody2D.");
-                Destroy(go);
+                Destroy(platformObject);
                 continue;
             }
 
@@ -225,6 +241,7 @@ public class EndlessPlatformManager : MonoBehaviour
         for (int i = 0; i < platforms.Count; i++)
         {
             Rigidbody2D rb = platforms[i];
+
             if (rb == null)
                 continue;
 
@@ -238,10 +255,7 @@ public class EndlessPlatformManager : MonoBehaviour
 
     private void HandleSpeedIncreaseTimer()
     {
-        if (!enableSpeedIncrease)
-            return;
-
-        if (speedIncreaseInterval <= 0f)
+        if (!enableSpeedIncrease || speedIncreaseInterval <= 0f)
             return;
 
         speedIncreaseTimer += Time.deltaTime;
@@ -258,19 +272,23 @@ public class EndlessPlatformManager : MonoBehaviour
         float previousSpeed = currentFallSpeed;
         currentFallSpeed = Mathf.Min(currentFallSpeed + speedIncreaseAmount, maxFallSpeed);
 
-        if (!Mathf.Approximately(previousSpeed, currentFallSpeed))
-        {
-            UpdateBackgroundSpeed();
-            PlaySpeedIncreaseSfx();
-        }
-    }
-
-    private void UpdateBackgroundSpeed()
-    {
-        if (backgroundManager == null)
+        if (Mathf.Approximately(previousSpeed, currentFallSpeed))
             return;
 
-        backgroundManager.SetScrollSpeed(currentFallSpeed * backgroundSpeedMultiplier);
+        UpdateLinkedManagerSpeeds();
+        PlaySpeedIncreaseSfx();
+    }
+
+    private void UpdateLinkedManagerSpeeds()
+    {
+        if (backgroundManager != null)
+            backgroundManager.SetScrollSpeed(currentFallSpeed * backgroundSpeedMultiplier);
+
+        if (fallingObjectManager != null)
+        {
+            float fallingSpeed = currentFallSpeed * fallingObjectSpeedMultiplier;
+            fallingObjectManager.SetFallSpeed(fallingSpeed);
+        }
     }
 
     private void PlaySpeedIncreaseSfx()
@@ -307,6 +325,7 @@ public class EndlessPlatformManager : MonoBehaviour
             return;
 
         GameObject prefabToSpawn = GetRandomWeightedItem();
+
         if (prefabToSpawn == null)
             return;
 
@@ -355,16 +374,18 @@ public class EndlessPlatformManager : MonoBehaviour
             return null;
 
         float roll = Random.Range(0f, totalWeight);
-        float current = 0f;
+        float currentWeight = 0f;
 
         for (int i = 0; i < spawnableItems.Count; i++)
         {
             SpawnableItem item = spawnableItems[i];
+
             if (item.prefab == null)
                 continue;
 
-            current += item.weight;
-            if (roll <= current)
+            currentWeight += item.weight;
+
+            if (roll <= currentWeight)
                 return item.prefab;
         }
 
@@ -392,12 +413,12 @@ public class EndlessPlatformManager : MonoBehaviour
         for (int i = 0; i < platforms.Count; i++)
         {
             Rigidbody2D rb = platforms[i];
+
             if (rb == null)
                 continue;
 
-            float y = rb.position.y;
-            if (y > highest)
-                highest = y;
+            if (rb.position.y > highest)
+                highest = rb.position.y;
         }
 
         if (float.IsNegativeInfinity(highest))

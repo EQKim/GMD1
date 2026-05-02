@@ -22,17 +22,13 @@ public class FallingObjectSpawnerManager : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Camera targetCamera;
 
-    [Header("Linked Speed Source")]
-    [SerializeField] private EndlessPlatformManager platformManager;
-    [SerializeField] private float rockSpeedMultiplier = 1.5f;
-    [SerializeField] private float minRockFallSpeed = 4f;
-    [SerializeField] private float maxRockFallSpeed = 14f;
-
     [Header("Spawn Timing")]
     [SerializeField] private float spawnInterval = 1.5f;
 
-    [Header("Fallback Fall Speed")]
-    [SerializeField] private float fallSpeed = 3f;
+    [Header("Fall Speed")]
+    [SerializeField] private float fallSpeed = 4f;
+    [SerializeField] private float minFallingObjectSpeed = 4f;
+    [SerializeField] private float maxFallingObjectSpeed = 14f;
 
     [Header("Spawn Range")]
     [SerializeField] private float minX = -4f;
@@ -65,9 +61,6 @@ public class FallingObjectSpawnerManager : MonoBehaviour
 
         if (warningPrefab == null)
             Debug.LogWarning("No warning prefab assigned. Rocks will spawn without warning.");
-
-        if (platformManager == null)
-            Debug.LogWarning("No Platform Manager assigned. Using fallback Fall Speed.");
     }
 
     private void Update()
@@ -81,9 +74,16 @@ public class FallingObjectSpawnerManager : MonoBehaviour
         }
     }
 
+    public void SetFallSpeed(float newFallSpeed)
+    {
+        fallSpeed = Mathf.Clamp(newFallSpeed, minFallingObjectSpeed, maxFallingObjectSpeed);
+    }
+
+
     private IEnumerator SpawnObjectWithWarning()
     {
         GameObject prefab = GetRandomWeightedObject();
+
         if (prefab == null)
             yield break;
 
@@ -115,13 +115,13 @@ public class FallingObjectSpawnerManager : MonoBehaviour
                        + targetCamera.orthographicSize
                        + spawnYOffset;
 
-        GameObject go = Instantiate(
+        GameObject spawnedObject = Instantiate(
             prefab,
             new Vector3(x, spawnY, 0f),
             Quaternion.identity
         );
 
-        FallingObject fallingObject = go.GetComponent<FallingObject>();
+        FallingObject fallingObject = spawnedObject.GetComponent<FallingObject>();
 
         if (fallingObject != null)
             fallingObject.Initialize(GetCurrentRockFallSpeed(), GetDespawnY());
@@ -129,11 +129,7 @@ public class FallingObjectSpawnerManager : MonoBehaviour
 
     private float GetCurrentRockFallSpeed()
     {
-        if (platformManager == null)
-            return fallSpeed;
-
-        float speed = platformManager.GetCurrentFallSpeed() * rockSpeedMultiplier;
-        return Mathf.Clamp(speed, minRockFallSpeed, maxRockFallSpeed);
+        return fallSpeed;
     }
 
     private float GetDespawnY()
@@ -157,17 +153,19 @@ public class FallingObjectSpawnerManager : MonoBehaviour
             return null;
 
         float roll = Random.Range(0f, totalWeight);
-        float current = 0f;
+        float currentWeight = 0f;
 
         for (int i = 0; i < spawnableObjects.Count; i++)
         {
-            if (spawnableObjects[i].prefab == null)
+            SpawnableObject spawnableObject = spawnableObjects[i];
+
+            if (spawnableObject.prefab == null)
                 continue;
 
-            current += spawnableObjects[i].weight;
+            currentWeight += spawnableObject.weight;
 
-            if (roll <= current)
-                return spawnableObjects[i].prefab;
+            if (roll <= currentWeight)
+                return spawnableObject.prefab;
         }
 
         return null;
