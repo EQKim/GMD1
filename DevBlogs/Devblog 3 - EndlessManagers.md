@@ -1,1 +1,4 @@
-<img width="1141" height="662" alt="ManagerDiagramdrawio" src="https://github.com/user-attachments/assets/88334962-8f8c-41e4-8f4b-fc7df56d2a12" />
+# Managers
+
+<img width="1141" height="665" alt="BetterManagerDiagram drawio" src="https://github.com/user-attachments/assets/568d40d0-957a-44cb-b840-2ad716c3e671" />
+
