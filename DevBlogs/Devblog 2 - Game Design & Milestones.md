@@ -2,11 +2,9 @@
 
 ## Introduction
 
-The game I'm planning to make takes inspiration from an old game I used to play as a kid called **“Icy-Tower”**, which was a popular platform game released on December 22, 2001, making the game 24 years old to this date.  
+The game I'm planning to make takes inspiration from an old game I used to play as a kid called **“Icy-Tower”**, which was a popular platform game released on December 22, 2001, making the game 24 years old today.  
 
 Within this game, the only objective was to climb the tower while the speed increased over time, making it more difficult to keep platforming upwards, and eventually the player would slip up and fall to their death.
-
-I chose this game as my inspiration because I feel like it fits well for an arcade setup. It requires minimal player input, such as **“W, A, S, D”** for movement, **“SPACE”** for jumping, and an additional input for attacking.
 
 I chose this game as my inspiration because I feel like it fits well for an arcade setup. It requires minimal player input, such as **“W, A, S, D”** for movement, **“SPACE”** for jumping, and an additional input for attacking.
 
@@ -21,14 +19,13 @@ I chose this game as my inspiration because I feel like it fits well for an arca
   </tr>
 </table>
 
-
 ---
 
 ## Game Design
 
 I’m trying to mimic **“Icy-Tower”**, but with a twist. I will still implement the endless upward tower mechanic, but instead of it being a solo experience where you fall to your death, it will be a **two-player game**.
 
-The objective is to manage your own character while also trying to outlive your opponent, whether that is by actively attacking them or avoiding them in hopes of surviving longer.
+The objective is to manage your own character while also trying to outlive your opponent, whether that is by actively attacking your opponent or avoiding them to outlive them.
 
 ---
 
@@ -64,3 +61,9 @@ Within this section, I’ll outline the requirements I would like to implement i
 
 - **Platform Speed Increase**:  
   Implement a system where platforms speed up over time or in bursts to increase difficulty and stress for the players  
+
+---
+
+## Reflection
+
+Overall, I believe this design creates a simple but competitive experience. By combining the core idea of Icy-Tower with multiplayer and combat elements, the game becomes more engaging and replayable.
