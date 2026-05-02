@@ -108,3 +108,11 @@ Once this setup is in place, any additional background images added to the "Endl
 <p align="center">
 <img width="768" height="220" alt="image" src="https://github.com/user-attachments/assets/27a37c53-16a5-4233-8cad-fbd6b0d74217" />
 </p>
+
+---
+
+## Challenges
+
+One challenge I faced was keeping the speed progression consistent between the platforms, background, and falling hazard objects. I solved this by making "EndlessPlatformManager" control the shared speed progression and then communicate the updated speed to the other managers.
+
+Another challenge was making the background loop smoothly, because the images needed to match in resolution and align correctly to avoid visible gaps while scrolling.
