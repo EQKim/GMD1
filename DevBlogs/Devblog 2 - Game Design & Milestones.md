@@ -63,7 +63,3 @@ Within this section, I’ll outline the requirements I would like to implement i
   Implement a system where platforms speed up over time or in bursts to increase difficulty and stress for the players  
 
 ---
-
-## Reflection
-
-Overall, I believe this design creates a simple but competitive experience. By combining the core idea of Icy-Tower with multiplayer and combat elements, the game becomes more engaging and replayable.
