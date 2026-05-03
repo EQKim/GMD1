@@ -5,8 +5,7 @@ using System.Collections.Generic;
 public class PlayerAttackHitbox : MonoBehaviour
 {
     [Header("Damage")]
-    [SerializeField] private int quickAttackDamage = 10;
-    [SerializeField] private int heavyAttackDamage = 20;
+    [SerializeField] private int damage = 10;
 
     [Header("Weapon Effects")]
     [SerializeField] private float knockbackForce = 8f;
@@ -25,7 +24,6 @@ public class PlayerAttackHitbox : MonoBehaviour
 
     private Collider2D hitboxCollider;
     private PlayerHealth ownerHealth;
-    private int currentDamage;
     private bool attackActive;
 
     private Transform ownerVisual;
@@ -53,10 +51,9 @@ public class PlayerAttackHitbox : MonoBehaviour
         }
     }
 
-    public void SetDamageValues(int quickDamage, int heavyDamage)
+    public void SetDamageValue(int newDamage)
     {
-        quickAttackDamage = quickDamage;
-        heavyAttackDamage = heavyDamage;
+        damage = newDamage;
     }
 
     public void SetWeaponEffects(float knockbackForceAmount, bool bleedEnabled)
@@ -70,24 +67,10 @@ public class PlayerAttackHitbox : MonoBehaviour
         SetWeaponEffects(knockbackEnabled ? knockbackAmount : 0f, bleedEnabled);
     }
 
-    public int GetQuickDamage() => quickAttackDamage;
-    public int GetHeavyDamage() => heavyAttackDamage;
+    public int GetDamage() => damage;
 
-    public void EnableQuickAttack()
+    public void EnableAttack()
     {
-        currentDamage = quickAttackDamage;
-        attackActive = true;
-        hitTargets.Clear();
-        hitboxCollider.enabled = true;
-
-        PlayerWeaponHolder holder = GetComponentInParent<PlayerWeaponHolder>();
-        if (holder != null)
-            holder.ResetAttackSfxGate();
-    }
-
-    public void EnableHeavyAttack()
-    {
-        currentDamage = heavyAttackDamage;
         attackActive = true;
         hitTargets.Clear();
         hitboxCollider.enabled = true;
@@ -118,7 +101,7 @@ public class PlayerAttackHitbox : MonoBehaviour
         FlyingDemonAI demon = other.GetComponentInParent<FlyingDemonAI>();
         if (demon != null)
         {
-            demon.TakeDamage(currentDamage);
+            demon.TakeDamage(damage);
 
             PlayerWeaponHolder holder = GetComponentInParent<PlayerWeaponHolder>();
             if (holder != null)
@@ -143,7 +126,7 @@ public class PlayerAttackHitbox : MonoBehaviour
         if (targetHealth.transform == ownerRoot || targetHealth.transform.IsChildOf(ownerRoot))
             return;
 
-        bool didDamage = targetHealth.TakeDamage(currentDamage);
+        bool didDamage = targetHealth.TakeDamage(damage);
         if (!didDamage)
             return;
 

@@ -16,8 +16,7 @@ public class WeaponPickup : MonoBehaviour
     [SerializeField] private float fireRate = 8f;
 
     [Header("Damage")]
-    [SerializeField] private int quickAttackDamage = 20;
-    [SerializeField] private int heavyAttackDamage = 35;
+    [SerializeField] private int damage = 20;
 
     [Header("Weapon Effects")]
     [Tooltip("If unchecked, knockback force will be treated as 0.")]
@@ -79,8 +78,7 @@ public class WeaponPickup : MonoBehaviour
             duration,
             isRangedWeapon,
             fireRate,
-            quickAttackDamage,
-            heavyAttackDamage,
+            damage,
             knockbackForce,
             enableBleed,
             pickupSfx,

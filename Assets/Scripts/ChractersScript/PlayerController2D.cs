@@ -48,11 +48,8 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private float stickDeadzone = 0.2f;
 
     [Header("Attack")]
-    [SerializeField] private float heavyAttackHoldTime = 0.35f;
-    [SerializeField] private string quickAttackTriggerName = "QuickAttack";
-    [SerializeField] private string heavyAttackTriggerName = "HeavyAttack";
-    [SerializeField] private float weaponQuickAttackActiveTime = 0.12f;
-    [SerializeField] private float weaponHeavyAttackActiveTime = 0.18f;
+    [SerializeField] private string attackTriggerName = "QuickAttack";
+    [SerializeField] private float weaponAttackActiveTime = 0.12f;
 
     [Header("Knockback")]
     [Tooltip("When >0, horizontal movement input won't overwrite X velocity for this duration after being knocked.")]
@@ -312,64 +309,29 @@ public class PlayerController2D : MonoBehaviour
 
     private void HandleMeleeAttack(bool pressedThisFrame, bool releasedThisFrame, bool isPressed, bool useWeaponAttack)
     {
-        if (pressedThisFrame)
+        if (!pressedThisFrame)
+            return;
+
+        if (useWeaponAttack)
         {
-            attackHeld = true;
-            attackStartTime = Time.time;
-            attackHeldTime = 0f;
+            StartWeaponAttack();
         }
-
-        if (attackHeld && isPressed)
+        else
         {
-            attackHeldTime = Time.time - attackStartTime;
-        }
-
-        if (attackHeld && releasedThisFrame)
-        {
-            attackHeld = false;
-
-            if (useWeaponAttack)
-            {
-                if (attackHeldTime >= heavyAttackHoldTime)
-                    StartWeaponHeavyAttack();
-                else
-                    StartWeaponQuickAttack();
-            }
-            else
-            {
-                if (animator != null)
-                {
-                    if (attackHeldTime >= heavyAttackHoldTime)
-                        animator.SetTrigger(heavyAttackTriggerName);
-                    else
-                        animator.SetTrigger(quickAttackTriggerName);
-                }
-            }
-
-            attackHeldTime = 0f;
+            if (animator != null)
+                animator.SetTrigger(attackTriggerName);
         }
     }
 
-    private void StartWeaponQuickAttack()
+    private void StartWeaponAttack()
     {
         if (attackHitbox != null)
-            attackHitbox.EnableQuickAttack();
+            attackHitbox.EnableAttack();
 
         if (weaponHolder != null)
-            weaponHolder.PlayQuickWeaponSwing();
+            weaponHolder.PlayWeaponSwing();
 
-        RestartWeaponAttackRoutine(weaponQuickAttackActiveTime);
-    }
-
-    private void StartWeaponHeavyAttack()
-    {
-        if (attackHitbox != null)
-            attackHitbox.EnableHeavyAttack();
-
-        if (weaponHolder != null)
-            weaponHolder.PlayHeavyWeaponSwing();
-
-        RestartWeaponAttackRoutine(weaponHeavyAttackActiveTime);
+        RestartWeaponAttackRoutine(weaponAttackActiveTime);
     }
 
     private void RestartWeaponAttackRoutine(float activeTime)
@@ -403,22 +365,13 @@ public class PlayerController2D : MonoBehaviour
             weaponHolder.StopRangedAttack();
     }
 
-    public void AE_EnableQuickAttackHitbox()
+    public void AE_EnableAttackHitbox()
     {
         if (attackHitbox != null)
-            attackHitbox.EnableQuickAttack();
+            attackHitbox.EnableAttack();
 
         if (weaponHolder != null)
-            weaponHolder.PlayQuickWeaponSwing();
-    }
-
-    public void AE_EnableHeavyAttackHitbox()
-    {
-        if (attackHitbox != null)
-            attackHitbox.EnableHeavyAttack();
-
-        if (weaponHolder != null)
-            weaponHolder.PlayHeavyWeaponSwing();
+            weaponHolder.PlayWeaponSwing();
     }
 
     public void AE_DisableAttackHitbox()

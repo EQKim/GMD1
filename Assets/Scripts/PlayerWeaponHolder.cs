@@ -20,18 +20,14 @@ public class PlayerWeaponHolder : MonoBehaviour
     [SerializeField] private GameObject muzzleFlashPrefab;
 
     [Header("Default Attack Damage")]
-    [SerializeField] private int defaultQuickDamage = 10;
-    [SerializeField] private int defaultHeavyDamage = 20;
+    [SerializeField] private int defaultDamage = 10;
 
     [Header("Default Weapon Effects")]
-    [Tooltip("If enabled, this component will override the hitbox's knockback/bleed values on start and when the weapon expires.")]
     [SerializeField] private bool overrideHitboxDefaults = false;
-
     [SerializeField] private float defaultKnockbackForce = 0f;
     [SerializeField] private bool defaultEnableBleed = true;
 
     [Header("Hit SFX Protection")]
-    [Tooltip("Prevents the same hit sound from being triggered multiple times too quickly.")]
     [SerializeField] private float minAttackSfxInterval = 0.08f;
 
     private GameObject equippedWeaponVisualInstance;
@@ -55,8 +51,7 @@ public class PlayerWeaponHolder : MonoBehaviour
 
     private bool currentWeaponIsRanged;
     private float currentWeaponFireRate = 0f;
-    private int currentQuickDamage;
-    private int currentHeavyDamage;
+    private int currentDamage;
 
     public bool HasWeapon => equippedWeaponVisualInstance != null;
     public bool CurrentWeaponIsRanged => HasWeapon && currentWeaponIsRanged;
@@ -99,16 +94,15 @@ public class PlayerWeaponHolder : MonoBehaviour
                 AttackAudio = foundSources[1];
         }
 
+        currentDamage = defaultDamage;
+
         if (attackHitbox != null)
         {
-            attackHitbox.SetDamageValues(defaultQuickDamage, defaultHeavyDamage);
+            attackHitbox.SetDamageValue(defaultDamage);
 
             if (overrideHitboxDefaults)
                 attackHitbox.SetWeaponEffects(defaultKnockbackForce, defaultEnableBleed);
         }
-
-        currentQuickDamage = defaultQuickDamage;
-        currentHeavyDamage = defaultHeavyDamage;
 
         ConfigureAudioSource(PickupAudio);
         ConfigureAudioSource(AttackAudio);
@@ -149,8 +143,7 @@ public class PlayerWeaponHolder : MonoBehaviour
         float duration,
         bool isRangedWeapon,
         float fireRate,
-        int quickDamage,
-        int heavyDamage,
+        int damage,
         float knockbackForce,
         bool enableBleed,
         AudioClip pickupSfx,
@@ -160,17 +153,15 @@ public class PlayerWeaponHolder : MonoBehaviour
     )
     {
         if (HasWeapon && currentWeaponIsRanged && isRangedWeapon)
-        {
             return;
-        }
+
         StopRangedAttack();
         StopCurrentWeaponAudio();
         ClearCurrentWeaponVisual();
 
         currentWeaponIsRanged = isRangedWeapon;
         currentWeaponFireRate = Mathf.Max(0.1f, fireRate);
-        currentQuickDamage = quickDamage;
-        currentHeavyDamage = heavyDamage;
+        currentDamage = damage;
 
         muzzlePoint = null;
         muzzleFlashPoint = null;
@@ -218,7 +209,7 @@ public class PlayerWeaponHolder : MonoBehaviour
 
         if (attackHitbox != null)
         {
-            attackHitbox.SetDamageValues(quickDamage, heavyDamage);
+            attackHitbox.SetDamageValue(damage);
             attackHitbox.SetWeaponEffects(knockbackForce, enableBleed);
         }
 
@@ -292,16 +283,10 @@ public class PlayerWeaponHolder : MonoBehaviour
         lastAttackSfxTime = -999f;
     }
 
-    public void PlayQuickWeaponSwing()
+    public void PlayWeaponSwing()
     {
         if (equippedWeaponVisual != null)
             equippedWeaponVisual.PlayQuickSwing();
-    }
-
-    public void PlayHeavyWeaponSwing()
-    {
-        if (equippedWeaponVisual != null)
-            equippedWeaponVisual.PlayHeavySwing();
     }
 
     public void ReturnWeaponToIdle()
@@ -382,7 +367,7 @@ public class PlayerWeaponHolder : MonoBehaviour
 
     private void FireRangedShot()
     {
-        PlayQuickWeaponSwing();
+        PlayWeaponSwing();
         SpawnMuzzleFlash();
 
         if (bulletPrefab == null)
@@ -409,7 +394,7 @@ public class PlayerWeaponHolder : MonoBehaviour
         if (projectile != null)
         {
             PlayerHealth owner = GetComponent<PlayerHealth>();
-            projectile.Initialize(direction, currentQuickDamage, owner);
+            projectile.Initialize(direction, currentDamage, owner);
         }
     }
 
@@ -471,8 +456,7 @@ public class PlayerWeaponHolder : MonoBehaviour
 
         currentWeaponIsRanged = false;
         currentWeaponFireRate = 0f;
-        currentQuickDamage = defaultQuickDamage;
-        currentHeavyDamage = defaultHeavyDamage;
+        currentDamage = defaultDamage;
 
         muzzlePoint = null;
         muzzleFlashPoint = null;
@@ -480,7 +464,7 @@ public class PlayerWeaponHolder : MonoBehaviour
 
         if (attackHitbox != null)
         {
-            attackHitbox.SetDamageValues(defaultQuickDamage, defaultHeavyDamage);
+            attackHitbox.SetDamageValue(defaultDamage);
 
             if (overrideHitboxDefaults)
                 attackHitbox.SetWeaponEffects(defaultKnockbackForce, defaultEnableBleed);

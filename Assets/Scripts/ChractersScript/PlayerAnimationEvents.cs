@@ -10,16 +10,10 @@ public class PlayerAnimationEvents : MonoBehaviour
             playerController = GetComponentInParent<PlayerController2D>();
     }
 
-    public void AE_EnableQuickAttackHitbox()
+    public void AE_EnableAttackHitbox()
     {
         if (playerController != null)
-            playerController.AE_EnableQuickAttackHitbox();
-    }
-
-    public void AE_EnableHeavyAttackHitbox()
-    {
-        if (playerController != null)
-            playerController.AE_EnableHeavyAttackHitbox();
+            playerController.AE_EnableAttackHitbox();
     }
 
     public void AE_DisableAttackHitbox()
