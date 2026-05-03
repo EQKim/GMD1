@@ -58,9 +58,12 @@ public class PlayerController2D : MonoBehaviour
     [Tooltip("When >0, horizontal movement input won't overwrite X velocity for this duration after being knocked.")]
     [SerializeField] private float knockbackLockDuration = 0.12f;
 
+    [Header("Special Idle")]
+    [SerializeField] private float specialIdleDelay = 2f;
+
     private Rigidbody2D rb;
     private bool grounded;
-
+    private float idleTimer;
     private bool attackHeld;
     private float attackHeldTime;
     private float attackStartTime;
@@ -101,21 +104,8 @@ public class PlayerController2D : MonoBehaviour
 
     private void Update()
     {
-        if (!isControllable)
-        {
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-
-            if (animator != null)
-            {
-                animator.SetFloat("Speed", 0f);
-                animator.SetBool("Grounded", grounded);
-            }
-
-            ResetAttackInput();
-            return;
-        }
-
         grounded = false;
+
         if (groundCheck != null)
         {
             grounded = Physics2D.OverlapCircle(
@@ -125,7 +115,48 @@ public class PlayerController2D : MonoBehaviour
             );
         }
 
+        float resetTime = specialIdleDelay + 0.2f;
+
+        if (!isControllable)
+        {
+            if (grounded)
+            {
+                idleTimer += Time.deltaTime;
+
+                if (idleTimer > resetTime)
+                    idleTimer = 0f;
+            }
+            else
+            {
+                idleTimer = 0f;
+            }
+
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+            if (animator != null)
+            {
+                animator.SetFloat("Speed", 0f);
+                animator.SetBool("Grounded", grounded);
+                animator.SetFloat("IdleTime", idleTimer);
+            }
+
+            ResetAttackInput();
+            return;
+        }
+
         float moveX = ReadMoveInput();
+
+        if (grounded && Mathf.Abs(moveX) < 0.1f)
+        {
+            idleTimer += Time.deltaTime;
+
+            if (idleTimer > resetTime)
+                idleTimer = 0f;
+        }
+        else
+        {
+            idleTimer = 0f;
+        }
 
         HandleJump();
         HandleAttack();
@@ -146,6 +177,7 @@ public class PlayerController2D : MonoBehaviour
         {
             animator.SetFloat("Speed", Mathf.Abs(moveX));
             animator.SetBool("Grounded", grounded);
+            animator.SetFloat("IdleTime", idleTimer);
         }
     }
 
