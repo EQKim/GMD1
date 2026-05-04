@@ -13,13 +13,13 @@ GIMP was useful in removing the background and making it transparent. It was als
 ---
 
 ## Characters and Animation
-The characters were sourced from a website called craftpix.net. They offer a lot of free 2D character bundles ready for use. I was specifically looking for characters that resembled something from the game *Icy Tower*, which led me to choose the Homeless Man bundle and the Graffiti Artist bundle.
+The characters were sourced from a website called craftpix.net. They offer a lot of free 2D character bundles ready for use. I was specifically looking for characters that resembled something from the game Icy Tower, which led me to choose the Homeless Man bundle and the Graffiti Artist bundle.
 
 Rigging these characters was fairly simple. I began by creating the animations for idle, walking, and jumping. I achieved this by dragging the corresponding multi-sprite sheets into the scene and naming them according to their animation type.
 
-I gave more attention to the Homeless Man character by adding an additional special idle animation. I also wanted to give a special jump animation to the Graffiti character, but it took a lot of time to figure out, so I ended up scrapping the idea due to time constraints.  
+I gave more attention to the Homeless Man character by adding a timed idle variation. After a certain amount of time (x seconds), the character transitions into a drinking animation, where he drinks his beer. This required creating multiple Animation Clips to handle both the standard idle state and the timed behaviour.
 
-After a certain amount of time (x seconds), the character will play a drinking animation, where he drinks his beer. This resulted in creating multiple **Animation Clips**.
+I also wanted to give a special jump animation to the Graffiti character, but it took a lot of time to figure out, so I ended up scrapping the idea due to time constraints.
 
 Afterwards, I created an **Animator Controller** to control and transition between these animation clips for my characters. I did not implement **Blend Trees**, as I had already set up the transitions for both characters before being introduced to this feature, and I chose to stick with that approach.  
 
@@ -32,7 +32,6 @@ Perhaps if I had used Blend Trees, I could have achieved smoother transitions be
 
 ## Flying Demon (Enemy AI)
 For the enemies, this idea came later when I was brainstorming ways to spice up the combat and shift the player’s focus. This resulted in me implementing a flying enemy AI that interacts with and attacks the players.  
-
 The asset for this enemy was sourced for free from itch.io.
 
 <p align="center">
