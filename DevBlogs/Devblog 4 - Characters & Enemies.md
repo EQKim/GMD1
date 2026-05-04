@@ -32,7 +32,6 @@ Perhaps if I had used Blend Trees, I could have achieved smoother transitions be
 
 ## Flying Demon (Enemy AI)
 For the enemies, this idea came later when I was brainstorming ways to spice up the combat and shift the player’s focus. This resulted in me implementing a flying enemy AI that interacts with and attacks the players.  
-
 The asset for this enemy was sourced for free from itch.io.
 
 <p align="center">
