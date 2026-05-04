@@ -19,9 +19,8 @@ This class is responsible for:
 
 This speed increase is then communicated to both the **"EndlessObjectFallingManager"** and the **"EndlessBackgroundManager"**, causing the background to scroll faster and increasing the fall speed of hazard objects, such as the boulder.
 
-<p align="center">
-  <img width="700" alt="Manager Diagram" src="https://github.com/user-attachments/assets/568d40d0-957a-44cb-b840-2ad716c3e671" />
-</p>
+<img width="1751" height="1040" alt="download" src="https://github.com/user-attachments/assets/b1d16f55-8208-4218-98ff-8b355cd318b5" />
+
 
 ### Platform and Weapon Spawning
 
