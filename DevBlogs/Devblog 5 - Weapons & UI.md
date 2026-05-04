@@ -30,6 +30,7 @@ In addition, I implemented a fight HUD for each character, displaying their port
 The game includes four main menu categories: **Start**, **Settings**, **Controls**, and **Quit**. The **Start** option begins the game and enables player control. **Settings** allows the player to adjust the volume, while **Controls** displays the hardcoded keybindings for each character. The **Quit** option exits the game.  
 
 To structure the layout, I used Unity components such as **Vertical Layout Group** and **Horizontal Layout Group**, which helped maintain consistent spacing between UI elements, such as the start screen buttons and the lives displayed in the fight HUD.  
+
 <img width="1465" height="669" alt="UIShowCase" src="https://github.com/user-attachments/assets/862560c9-18a0-44c1-9c3f-0d651216b282" />
 
 
