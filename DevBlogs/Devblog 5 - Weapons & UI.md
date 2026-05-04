@@ -3,7 +3,8 @@
 The weapons are sourced as PNG assets from the internet. The system is designed so that players can pick up weapons from platforms and use them during gameplay. Once equipped, the weapons are anchored to the character, supporting both left and right facing directions.
 The logic behind this system is handled by three main scripts: **WeaponPickup**, **EquippedWeaponVisual**, and **PlayerWeaponHolder**.
 
-<img width="1280" height="1064" alt="download-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/98199375-1cd5-4b2a-87db-0d7155fae0a0" />
+<img width="1527" height="1291" alt="download" src="https://github.com/user-attachments/assets/f0e20b97-acfe-42ef-8158-565d74b55988" />
+
 
 
 <p align="center">
