@@ -3,15 +3,10 @@ using System.Collections;
 
 public class EquippedWeaponVisual : MonoBehaviour
 {
-    [Header("Quick Attack")]
-    [SerializeField] private float quickSwingZDelta = 20f;
-    [SerializeField] private float quickSwingDuration = 0.08f;
-    [SerializeField] private float quickReturnDuration = 0.12f;
-
-    [Header("Heavy Attack")]
-    [SerializeField] private float heavySwingZDelta = -40f;
-    [SerializeField] private float heavySwingDuration = 0.12f;
-    [SerializeField] private float heavyReturnDuration = 0.18f;
+    [Header("Swing")]
+    [SerializeField] private float swingZDelta = 20f;
+    [SerializeField] private float swingDuration = 0.08f;
+    [SerializeField] private float returnDuration = 0.12f;
 
     private Quaternion idleLocalRotation;
     private Coroutine swingRoutine;
@@ -26,14 +21,9 @@ public class EquippedWeaponVisual : MonoBehaviour
         idleLocalRotation = transform.localRotation;
     }
 
-    public void PlayQuickSwing()
+    public void PlaySwing()
     {
-        StartSwing(quickSwingZDelta, quickSwingDuration, quickReturnDuration);
-    }
-
-    public void PlayHeavySwing()
-    {
-        StartSwing(heavySwingZDelta, heavySwingDuration, heavyReturnDuration);
+        StartSwing(swingZDelta, swingDuration, returnDuration);
     }
 
     public void ReturnToIdle()

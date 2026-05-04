@@ -286,7 +286,7 @@ public class PlayerWeaponHolder : MonoBehaviour
     public void PlayWeaponSwing()
     {
         if (equippedWeaponVisual != null)
-            equippedWeaponVisual.PlayQuickSwing();
+            equippedWeaponVisual.PlaySwing();
     }
 
     public void ReturnWeaponToIdle()
