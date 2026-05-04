@@ -21,4 +21,27 @@ These values are then passed to the **PlayerWeaponHolder** script, which **overr
 
 ---
 
-# UI
+## UI
+
+For the UI of the game, I designed it to match the overall style and atmosphere. The start screen uses a transparent yellow tint, allowing the player to still see the characters and background elements behind it.  
+
+In addition, I implemented a fight HUD for each character, displaying their portrait, health bar, and remaining lives.  
+
+The game includes four main menu categories: **Start**, **Settings**, **Controls**, and **Quit**. The **Start** option begins the game and enables player control. **Settings** allows the player to adjust the volume, while **Controls** displays the hardcoded keybindings for each character. The **Quit** option exits the game.  
+
+To structure the layout, I used Unity components such as **Vertical Layout Group** and **Horizontal Layout Group**, which helped maintain consistent spacing between UI elements, such as the start screen buttons and the lives displayed in the fight HUD.  
+<img width="1465" height="669" alt="UIShowCase" src="https://github.com/user-attachments/assets/862560c9-18a0-44c1-9c3f-0d651216b282" />
+
+
+
+## UI Skinning
+
+After implementing the UI functionality, I began styling each UI element to better match the game’s visual theme.  
+
+For simpler elements such as buttons, this involved navigating to the **Image** component and replacing the source image with a custom sprite.  
+
+Sliders required a slightly more detailed setup. By expanding the slider hierarchy, I accessed elements such as **Background**, **Fill Area**, and **Handle Slide Area**. The **Fill Area** and **Handle Slide Area** contain child objects with their own **Image** components, which needed to be updated with new source images and scaled appropriately to fit the design.  
+
+This approach allowed me to fully customize the appearance of the UI while keeping the underlying functionality intact. The same concept was also applied to the fight HUD to maintain visual consistency across all UI elements.
+
+<img width="1215" height="450" alt="UIShowcase2" src="https://github.com/user-attachments/assets/534431e9-d4a3-47f8-b4c4-d30539df27cc" />
