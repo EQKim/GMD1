@@ -88,9 +88,8 @@ This manager is responsible for:
 - Defining where boulders can spawn within the camera view  
 - Allowing new hazard objects to be added easily through a list  
 
-<p align="center">
-  <img width="700" alt="Object Manager Diagram" src="https://github.com/user-attachments/assets/ee5bb632-7154-4d64-8f1f-6d124c278361" />
-</p>
+<img width="2602" height="662" alt="download (1)" src="https://github.com/user-attachments/assets/1f13721c-ece4-4c81-98d6-838caa432934" />
+
 
 ---
 
