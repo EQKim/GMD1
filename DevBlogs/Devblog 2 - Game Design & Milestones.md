@@ -63,3 +63,15 @@ Within this section, I’ll outline the requirements I would like to implement i
   Implement a system where platforms speed up over time or in bursts to increase difficulty and stress for the players  
 
 ---
+
+## Aesthetics
+
+When designing the game, I focused primarily on the aesthetics of **Challenge**, **Sensation**, and **Fellowship**.
+
+The game is heavily built around **Challenge**, since the player must continuously platform upwards while the game gradually increases in speed and pressure. Players are required to react quickly, manage movement carefully, and avoid both environmental dangers and the opposing player.
+
+The aesthetic of **Sensation** is created through the fast-paced arcade gameplay, visual effects, and sound design. Elements such as lava animations, weapon hit effects, blood particles, speed increases, and music are intended to make the game feel intense and chaotic during gameplay.
+
+I also incorporated aspects of **Fellowship**, as the game is designed around multiplayer. The experience is intended to create competitive interactions between players, where both players are trying to survive longer than the other while actively interfering with each other through combat and movement.
+
+Finally, there are smaller elements of **Fantasy** and **Expression** present through the exaggerated arcade violence, stylized characters, and different weapon choices that allow players to approach matches differently.
