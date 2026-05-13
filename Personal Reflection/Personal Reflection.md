@@ -27,7 +27,7 @@ I have also created draw.io diagrams to depict the more complicated parts of my 
 <table>
   <tr>
     <td align="center">
-      <img width="450" alt="draw.io diagram 1" src="https://github.com/user-attachments/assets/1f13721c-ece4-4c81-98d6-838caa432934" />
+      <img width="450" height="380" alt="download" src="https://github.com/user-attachments/assets/b1d16f55-8208-4218-98ff-8b355cd318b5" />
     </td>
     <td align="center">
       <img width="450" alt="draw.io diagram 2" src="https://github.com/user-attachments/assets/f0e20b97-acfe-42ef-8158-565d74b55988" />
