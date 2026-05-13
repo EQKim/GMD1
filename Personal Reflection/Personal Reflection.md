@@ -1,4 +1,4 @@
-# Personal Reflection work in progress
+# Personal Reflection
 
 I have learned many concepts related to 2D game development, and the work shown throughout my devblogs reflects my full contribution and overall learning experience. For me, there was not much friction during development, as there is a lot of accessible learning material available online. Because of this, I was able to research, test, and implement the different systems needed for my game.
 
@@ -61,15 +61,15 @@ Vector2 impulse = new Vector2(
 targetRb.AddForce(impulse, ForceMode2D.Impulse);
 ```
 
-The X value of the `Vector2` controls the horizontal knockback by multiplying the direction with `knockbackForce`. The Y value adds a smaller upward force using `knockbackUpwardMultiplier`, which helps make the hit feel more exaggerated and arcade-like. Finally, `AddForce` applies the impulse to the target’s `Rigidbody2D`. I used `ForceMode2D.Impulse` because the knockback should happen instantly when the attack connects, rather than gradually pushing the player over time.
+The X value of the `Vector2` controls the horizontal knockback by multiplying the direction with `knockbackForce`. The Y value adds a smaller upward force using `knockbackUpwardMultiplier`, which helps make the hit feel more exaggerated. Finally, `AddForce` applies the impulse to the target’s `Rigidbody2D`. I used `ForceMode2D.Impulse` because the knockback should happen instantly when the attack connects, rather than gradually pushing the player over time.
 
 This made the knockback feel more consistent and readable during combat, because the player was pushed in the correct direction while still receiving a small upward force.
 
 ## Game Feel and Iteration
 
-Another important learning experience was understanding how much small adjustments affect the overall game feel. Even when a feature technically worked, it still needed testing and refinement before it felt good during gameplay. This was especially clear with movement, jumping, attacks, knockback, platform speed, and sound effects.
+Another important learning experience was understanding how much small adjustments affect the overall game feel. Even when a feature technically worked, it still needed testing and refinement before it felt good during gameplay. This was especially clear with jump height, attack rotation values for weapons, knockback, platform speed, and the overall damage values for weapons and environmental elements.
 
-Since the game is meant to feel like a competitive arcade game, responsiveness was important. The player should quickly understand what is happening, whether they are attacking, taking damage, picking up weapons, losing lives, or being pushed away by knockback. This taught me that game development is not only about implementing features, but also about making sure those features feel satisfying and readable for the player.
+Since the game is meant to feel like a competitive game, responsiveness was important. The player should quickly understand what is happening, whether they are attacking, taking damage, picking up weapons, losing lives, or being pushed away by knockback. The UI, blood effects, and sound effects should help relay this information to the player. This taught me that game development is not only about implementing features, but also about making sure those features feel satisfying and readable for the player.
 
 ## Scope and Prioritization
 
@@ -79,6 +79,11 @@ For example, after the core gameplay was in place, I added more attention to det
 
 ## Conclusion
 
-Overall, I am satisfied with the outcome of the project. The game developed from a simple platform-climbing idea into a more complete 2D arcade game with movement, combat, weapons, enemies, UI, sound, and a WebGL build. I also feel that the project improved my understanding of Unity, C# scripting, animation, UI implementation, physics, and gameplay systems.
+Overall, I am satisfied with the outcome of the project. I take pride in what I have accomplished and managed to produce with other courses breathing down my neck. I also feel that my game’s identity has its own personality now compared to my original inspiration, *Icy Tower*.
+
+If I had more time, perhaps I could have added more enemy types, implemented double jump or parkour elements to enhance the immersion, added more environmental events, or introduced other weapon types, such as an RPG. However, I feel like I have learned the core components of Unity, including movement, combat, weapons, enemies, UI, sound, C# scripting, animation, physics, and gameplay systems.
+
+Overall, I am proud of what I have produced.
+
 
 If I had more time, I would continue polishing the game by adding more visual variety, improving balancing, refining animations, and expanding enemy behaviour. However, I believe the final result successfully represents my learning process and shows how the different systems I implemented work together to create a playable arcade experience.
