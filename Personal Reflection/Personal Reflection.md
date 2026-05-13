@@ -24,6 +24,17 @@ Throughout the project, I successfully implemented:
 
 I have also created draw.io diagrams to depict the more complicated parts of my scripts and how they communicate with each other. Since the devblogs are limited to only 3000 characters each, it was difficult to go into depth about certain scripts. Therefore, the diagrams helped provide a better understanding of how specific scripts are connected and how the different systems work together.
 
+<table>
+  <tr>
+    <td align="center">
+      <img width="450" alt="draw.io diagram 1" src="https://github.com/user-attachments/assets/1f13721c-ece4-4c81-98d6-838caa432934" />
+    </td>
+    <td align="center">
+      <img width="450" alt="draw.io diagram 2" src="https://github.com/user-attachments/assets/f0e20b97-acfe-42ef-8158-565d74b55988" />
+    </td>
+  </tr>
+</table>
+
 ## Technical Challenge: Knockback
 
 If I were to pick something that was difficult or time-consuming to implement, it would be getting the knockback effect to work cleanly as intended. In earlier iterations, the knockback was mostly applied upwards instead of being based on the direction the character was hit from. This made the combat feel less responsive, because the player was not pushed away naturally from the attack.
