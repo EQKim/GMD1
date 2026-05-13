@@ -84,6 +84,3 @@ Overall, I am satisfied with the outcome of the project. I take pride in what I 
 If I had more time, perhaps I could have added more enemy types, implemented double jump or parkour elements to enhance the immersion, added more environmental events, or introduced other weapon types, such as an RPG. However, I feel like I have learned the core components of Unity, including movement, combat, weapons, enemies, UI, sound, C# scripting, animation, physics, and gameplay systems.
 
 Overall, I am proud of what I have produced.
-
-
-If I had more time, I would continue polishing the game by adding more visual variety, improving balancing, refining animations, and expanding enemy behaviour. However, I believe the final result successfully represents my learning process and shows how the different systems I implemented work together to create a playable arcade experience.
