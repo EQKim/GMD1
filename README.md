@@ -71,6 +71,7 @@
   https://www.youtube.com/watch?v=lriKvOHFmrQ&list=RDlriKvOHFmrQ&start_radio=1
 
 #### Environment
+- **Platform**: https://cdn.vectorstock.com/i/500p/56/42/game-tile-textures-amp-materials-vector-7355642.jpg
 - **Boulder**: https://media.tenor.com/JEx-DI5WT54AAAAM/big-rock.gif
 - **Warning Sign**: https://pixyfantasystudios.itch.io/warning-sign
 - **Lava Pool**: https://es.pixilart.com/art/lava-bbebf04a358157e
