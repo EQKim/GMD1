@@ -1,6 +1,6 @@
 ### WebGL
-- WEBGL GAME : https://eqkim.github.io/GMD1-WEBGL
-- WEBGL REPO : https://github.com/EQKim/GMD1-WEBGL
+- WEBGL GAME: https://eqkim.github.io/GMD1-WEBGL
+- WEBGL REPO: https://github.com/EQKim/GMD1-WEBGL
 
 ## Documentation
 
@@ -14,7 +14,6 @@
 
 ### Personal Reflection
 - [Personal Reflection](Personal%20Reflection/Personal%20Reflection.md)
-
 
 ### Assets
 
@@ -30,6 +29,9 @@
 - **Baseball Bat**: https://media.sketchfab.com/models/ec6bb7453e544b699208771c02fd8a0c/thumbnails/2acd2880d5264a198273d1aede7f9918/d4cf0b61250843a694838c4cf5c9bfe8.jpeg
 
 #### Sound Effects
+
+> **Volume Warning:** Some sound effects may be loud when using headphones. Please lower your volume before listening or playing.
+
 ##### Flying Demon
 - **Fireball Shooting**: https://www.myinstants.com/en/instant/ghast-fireball-79137/
 - **Demon Death**: https://pixabay.com/sound-effects/film-special-effects-slap-hurt-pain-sound-effect-262618/
@@ -61,6 +63,7 @@
 - **Metal Bat Hit**: https://www.myinstants.com/en/instant/tf2-scout-metal-bat-96878/
 - **Knife Pickup**: https://www.myinstants.com/en/instant/knife-draw-64064/
 - **Knife Hit**: https://www.myinstants.com/en/instant/knife-stab-63455/
+
 #### Music
 - **Main Menu Music**: Ghost Fight - UNDERTALE Soundtrack  
   https://www.youtube.com/watch?v=C_5enfN8V8w&list=RDC_5enfN8V8w&start_radio=1
