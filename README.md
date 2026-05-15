@@ -30,8 +30,37 @@
 - **Baseball Bat**: https://media.sketchfab.com/models/ec6bb7453e544b699208771c02fd8a0c/thumbnails/2acd2880d5264a198273d1aede7f9918/d4cf0b61250843a694838c4cf5c9bfe8.jpeg
 
 #### Sound Effects
-- **Sound Effects**: https://www.myinstants.com/en/search/?name=meme
+##### Flying Demon
+- **Fireball Shooting**: https://www.myinstants.com/en/instant/ghast-fireball-79137/
+- **Demon Death**: https://pixabay.com/sound-effects/film-special-effects-slap-hurt-pain-sound-effect-262618/
 
+##### HomelessMan
+- **Hurt 1**: https://www.myinstants.com/en/instant/terraria-hurt-male-30782/
+- **Hurt 2**: https://www.myinstants.com/en/instant/minecraft-hurt/
+
+##### GraffitiWoman
+- **Hurt 1**: https://www.youtube.com/watch?v=2ACzpVI-K9I
+- **Hurt 2**: https://www.youtube.com/watch?v=NNIvYA8-aZc
+- **Hurt 3**: https://www.youtube.com/watch?v=ZHF1ge1F8r8
+
+##### Lava
+- **Lava Hiss**: https://www.myinstants.com/en/instant/lava-death-815/  
+  Clipped in Audacity.
+
+##### Boulder
+- **Boulder Crash**: https://pixabay.com/sound-effects/film-special-effects-punch-a-rock-161647/
+
+##### Platform
+- **Platform Speed Boost**: https://www.myinstants.com/en/instant/discord-speed-boost-20778/
+
+##### Weapons
+- **AK-47 Pickup**: https://www.myinstants.com/en/instant/pulls-out-a-ak47/  
+  Clipped in Audacity.
+- **AK-47 Shooting**: https://www.myinstants.com/en/instant/tiro-ak47-89584/
+- **Metal Bat Pickup**: https://pixabay.com/sound-effects/film-special-effects-item-equip-6904/
+- **Metal Bat Hit**: https://www.myinstants.com/en/instant/tf2-scout-metal-bat-96878/
+- **Knife Pickup**: https://www.myinstants.com/en/instant/knife-draw-64064/
+- **Knife Hit**: https://www.myinstants.com/en/instant/knife-stab-63455/
 #### Music
 - **Main Menu Music**: Ghost Fight - UNDERTALE Soundtrack  
   https://www.youtube.com/watch?v=C_5enfN8V8w&list=RDC_5enfN8V8w&start_radio=1
