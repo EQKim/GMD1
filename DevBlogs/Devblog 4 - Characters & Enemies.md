@@ -13,17 +13,14 @@ GIMP was useful in removing the background and making it transparent. It was als
 ---
 
 ## Characters and Animation
-The characters were sourced from a website called craftpix.net. They offer a lot of free 2D character bundles ready for use. I was specifically looking for characters that resembled something from the game Icy Tower, which led me to choose the Homeless Man bundle and the Graffiti Artist bundle.
+The characters were sourced from craftpix.net, which offers free 2D character bundles. I wanted characters that resembled the style of Icy Tower, which led me to choose the Homeless Man and Graffiti Artist bundles.
 
-Rigging these characters was fairly simple. I began by creating the animations for idle, walking, and jumping. I achieved this by dragging the corresponding multi-sprite sheets into the scene and naming them according to their animation type.
+The animation setup was fairly simple. I created idle, walking, and jumping animations by dragging the multi-sprite sheets into Unity and turning them into Animation Clips.
 
-I gave more attention to the Homeless Man character by adding a timed idle variation. After a certain amount of time (x seconds), the character transitions into a drinking animation, where he drinks his beer. This required creating multiple Animation Clips to handle both the standard idle state and the timed behaviour.
+I gave extra attention to the Homeless Man by adding a timed idle variation, where he transitions into a drinking animation after standing still for a while. I also wanted to create a special jump animation for the Graffiti character, but I scrapped it due to time constraints.
 
-I also wanted to give a special jump animation to the Graffiti character, but it took a lot of time to figure out, so I ended up scrapping the idea due to time constraints.
+Afterwards, I used an Animator Controller to manage the transitions between the animation clips. I did not use Blend Trees, since the transitions had already been set up manually, and for this project the existing setup was sufficient.
 
-Afterwards, I created an **Animator Controller** to control and transition between these animation clips for my characters. I did not implement **Blend Trees**, as I had already set up the transitions for both characters before being introduced to this feature, and I chose to stick with that approach.  
-
-Perhaps if I had used Blend Trees, I could have achieved smoother transitions between certain animations, such as movement states, but for this project the existing setup was sufficient.
 <p align="center">
 <img width="1142" height="441" alt="image2" src="https://github.com/user-attachments/assets/4a5ae827-18e9-4389-b759-9547fa9e0c27" />
 </p>
@@ -31,20 +28,118 @@ Perhaps if I had used Blend Trees, I could have achieved smoother transitions be
 ---
 
 ## Flying Demon (Enemy AI)
-For the enemies, this idea came later when I was brainstorming ways to spice up the combat and shift the player’s focus. This resulted in me implementing a flying enemy AI that interacts with and attacks the players.  
-The asset for this enemy was sourced for free from itch.io.
+For the enemies, this idea came later when I was brainstorming ways to spice up the combat and shift the player’s focus. This resulted in me implementing a flying enemy AI that attacks the players. The asset for this enemy was sourced for free from itch.io.
 
 <p align="center">
 <img width="474" height="384" alt="image1" src="https://github.com/user-attachments/assets/8c781086-c383-48a9-8ed2-4c7f60fe5c42" />
 </p>
 
-The current implementation is that two demons spawn every x amount of seconds, and the timer resets whenever that specific demon is killed. Additionally, the logic is set so that each player has an assigned demon, and only the assigned demon can damage its assigned character.
+The current implementation is that two demons spawn after a set amount of time. Each player has an assigned demon, and only that demon can damage its assigned character.
 
-The movement is handled through custom logic rather than using a NavMesh. The demon constantly checks its distance from the assigned player and adjusts its position accordingly, either moving closer, backing away, or hovering within a preferred range.  
+The movement is handled through custom logic rather than using a NavMesh. The demon checks its distance from the assigned player and either moves closer, backs away, or hovers within a preferred range.
 
-Additionally, if the player attempts to ride the demon, it will automatically lower itself slowly, preventing it from being abused to move upwards and bypass the platforming as intended.
+If the player attempts to ride the demon, it automatically lowers itself slowly, preventing it from being abused to move upwards and bypass the intended platforming.
 
-Naturally, I also imported a custom fireball asset that the demon can shoot and hooked it up to the demon’s animation rig.
+Additionally, I imported a custom fireball asset, refined it within GIMP, and hooked it up to the demon’s animation rig so the demon could shoot at the player.
+
+```csharp
+public void Initialize(Transform assignedTarget, FlyingDemonSpawner spawner)
+{
+    target = assignedTarget;
+    ownerSpawner = spawner;
+
+    if (target != null)
+        targetHealth = target.GetComponent<PlayerHealth>();
+
+    if (targetHealth == null && target != null)
+        targetHealth = target.GetComponentInParent<PlayerHealth>();
+}
+```
+
+The demon movement is handled through custom distance-based logic. If the demon is too far away, it moves closer. If it is too close, it backs away. Otherwise, it tries to hover around its preferred range.
+
+```csharp
+private void HandleMovement()
+{
+    if (isAttacking)
+        return;
+
+    Vector3 targetPoint = GetTargetPoint();
+    Vector3 toTarget = targetPoint - transform.position;
+    float distance = toTarget.magnitude;
+
+    Vector3 movement = Vector3.zero;
+
+    if (distance > maxRange)
+    {
+        movement = toTarget.normalized * moveSpeed * Time.deltaTime;
+    }
+    else if (distance < minRange)
+    {
+        movement = -toTarget.normalized * moveSpeed * Time.deltaTime;
+    }
+    else
+    {
+        Vector3 desiredPosition = targetPoint - toTarget.normalized * preferredRange;
+        Vector3 moveDir = desiredPosition - transform.position;
+
+        if (moveDir.magnitude > 0.15f)
+            movement = moveDir.normalized * moveSpeed * Time.deltaTime;
+    }
+
+    transform.position += movement;
+}
+```
+
+To prevent the demon from being used as a platform, I added a rider check. If a player is detected above the demon, it blocks upward movement and slowly pushes the demon downward.
+
+```csharp
+if (HasPlayerRider())
+{
+    if (blockUpwardMovementWhenRidden && movement.y > 0f)
+        movement.y = 0f;
+
+    movement.y -= riderPushDownSpeed * Time.deltaTime;
+}
+```
+
+The demon attack uses a cooldown, windup, and recovery system. This helped make the attack feel more intentional instead of spawning the fireball instantly.
+
+```csharp
+private IEnumerator AttackRoutine()
+{
+    isAttacking = true;
+    attackCooldownTimer = attackCooldown;
+
+    animator.SetTrigger(AttackHash);
+
+    yield return new WaitForSeconds(attackWindup);
+
+    ShootFireball();
+
+    yield return new WaitForSeconds(attackRecovery);
+
+    isAttacking = false;
+}
+```
+
+When the demon dies, it notifies the spawner before being destroyed. This allows the spawning system to know when that demon has been defeated.
+
+```csharp
+private void Die()
+{
+    if (isDead)
+        return;
+
+    isDead = true;
+    animator.SetBool(DeadHash, true);
+
+    if (ownerSpawner != null)
+        ownerSpawner.NotifyDemonDied(this);
+
+    Destroy(gameObject, destroyDelayAfterDeath);
+}
+```
 
 <p align="center">
 <img width="1014" height="242" alt="image6" src="https://github.com/user-attachments/assets/d0f94c0f-7926-41f2-b179-a73def73b2f3" />
@@ -60,5 +155,3 @@ Naturally, I also imported a custom fireball asset that the demon can shoot and 
     </td>
   </tr>
 </table>
-
-
