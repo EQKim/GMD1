@@ -1,9 +1,9 @@
 # Devblog 4
 
 ## Assets
-The asset I’ve used throughout my games, such as the characters, enemies, and weapons, was all sourced from the internet. Some were easy to incorporate, while others I had to refine within a program called GIMP.  
+The assets used throughout my game, including characters, enemies, and weapons, were sourced online. Some were easy to use, while others needed cleanup in GIMP.
 
-GIMP was useful in removing the background and making it transparent. It was also useful to refine other AI-prompted assets for the UI, which I’ll go into depth in the next Devblog.
+GIMP was mainly used to remove backgrounds, create transparency, and refine AI-prompted UI assets, which I will cover more in the next devblog.
 
 <div style="display: flex; gap: 10px;">
   <img width="48%" src="https://github.com/user-attachments/assets/6b14e593-04ad-4572-bc00-0729db7bccd0" />
@@ -17,13 +17,17 @@ The characters were sourced from craftpix.net, which offers free 2D character bu
 
 The animation setup was fairly simple. I created idle, walking, and jumping animations by dragging the multi-sprite sheets into Unity and turning them into Animation Clips.
 
-I gave extra attention to the Homeless Man by adding a timed idle variation, where he transitions into a drinking animation after standing still for a while. I also wanted to create a special jump animation for the Graffiti character, but I scrapped it due to time constraints.
+I gave extra attention to the Homeless Man by adding a timed idle variation, where he transitions into a drinking animation after standing still. I also wanted a special jump animation for the Graffiti character, but scrapped it due to time constraints.
 
-Afterwards, I used an Animator Controller to manage the transitions between the animation clips. I did not use Blend Trees, since the transitions had already been set up manually, and for this project the existing setup was sufficient.
+Afterwards, I used an Animator Controller to manage transitions between clips. I did not use Blend Trees, since the transitions were simple. The diagram below shows the playable character structure in Unity. The player object contains the Rigidbody2D, body collider, controller, health, and weapon scripts, while child objects handle visuals, ground detection, audio, weapon anchors, and the AttackPoint hitbox.
 
 <p align="center">
 <img width="1142" height="441" alt="image2" src="https://github.com/user-attachments/assets/4a5ae827-18e9-4389-b759-9547fa9e0c27" />
 </p>
+
+<p align="center">
+<img width="2692" height="1130" alt="PlayerCharator drawio" src="https://github.com/user-attachments/assets/fff25bae-3a46-47db-ae4f-03ffd13fb583" />
+</p>  
 
 ---
 
