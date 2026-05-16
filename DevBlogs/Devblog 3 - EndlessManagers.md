@@ -1,3 +1,4 @@
+# Devblog 3 - EndlessManagers
 # Managers
 
 Talking about the most important components, I have three empty GameObjects in the root of my Unity scene that define the core functionality. I classify them as **"Endless" managers** because their class names all start with "Endless":
