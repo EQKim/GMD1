@@ -38,12 +38,12 @@ To structure the layout, I used Unity components such as **Vertical Layout Group
 
 ## UI Skinning
 
-After implementing the UI functionality, I began styling each UI element to better match the game’s visual theme.  
+After implementing the UI functionality, I styled each element to better match the game’s visual theme.
 
-For simpler elements such as buttons, this involved navigating to the **Image** component and replacing the source image with a custom sprite.  
+For simple elements like buttons, this meant replacing the **Image** component’s source image with a custom sprite.
 
-Sliders required a slightly more detailed setup. By expanding the slider hierarchy, I accessed elements such as **Background**, **Fill Area**, and **Handle Slide Area**. The **Fill Area** and **Handle Slide Area** contain child objects with their own **Image** components, which needed to be updated with new source images and scaled appropriately to fit the design.  
+Sliders required more setup. I expanded the slider hierarchy and edited elements such as **Background**, **Fill Area**, and **Handle Slide Area**, replacing their child **Image** components with custom sprites and scaling them to fit the design.
 
-This approach allowed me to fully customize the appearance of the UI while keeping the underlying functionality intact. The same concept was also applied to the fight HUD to maintain visual consistency across all UI elements.
+This allowed me to customize the UI while keeping the functionality intact. I also applied the same approach to the fight HUD to maintain visual consistency.
 
 <img width="1215" height="450" alt="UIShowcase2" src="https://github.com/user-attachments/assets/534431e9-d4a3-47f8-b4c4-d30539df27cc" />
