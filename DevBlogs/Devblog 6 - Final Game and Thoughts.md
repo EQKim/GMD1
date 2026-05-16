@@ -18,16 +18,16 @@ Players can utilize weapon pickups to their advantage while also trying to overc
 
 
 ## Game Aesthetics Achieved
-I believe that I have also achieved my desired aesthetics, where I capture the essence of competitiveness, sensation, and fellowship throughout the gameplay experience. Elements such as the random danger events enhance the sensation by forcing the players to stay hyper-aware and react quickly, otherwise they will be punished for failing to do so.  
 
-This also works well with the competitive aspect of the game, where the main objective is to outlive your opponent. Players are not forced to directly fight each other, but they can choose to become aggressive if they feel like they are at a disadvantage, for example by comparing health bars and remaining lives, which gives them an avenue for taking action and attempting to turn the situation around.  
+I believe I achieved the desired aesthetics of competitiveness, sensation, and fellowship throughout the gameplay experience. Random danger events enhance the sensation by forcing players to stay alert and react quickly, or risk being punished.
 
-In addition, I feel that I have also achieved the arcade-styled aesthetics I was aiming for. The UI was custom-tailored to match the game’s overall visual style through the use of Gemini Image Generation, combined with manually refining and touching up the assets within GIMP. This helped improve the immersion and overall feel of the game world.  
+This also supports the competitive aspect, where the main objective is to outlive the opponent. Players are not forced to fight directly, but can choose to play aggressively if they are behind, for example by comparing health bars and remaining lives.
 
-Lastly, I’m pleased that I gave extra attention to detail with my characters and weapons, particularly the “HomelessMan” character and the AK weapon. The HomelessMan character has a special idle effect where, after a certain amount of time without player input, he will play a drinking animation. The AK weapon also includes a muzzle flash PNG whenever it is fired, in addition to a smoking barrel effect after shooting.  
+I also achieved the arcade style I was aiming for. The UI was customized to match the game’s visual style using Gemini Image Generation, followed by manual cleanup and refinement in GIMP. This helped improve the immersion and overall feel of the game.
 
-I also spent time fine-tuning the HomelessMan jumping animation, particularly the sliding movement that occurs when landing on platforms. This was achieved by adjusting the speed of the jumping animation to give the character more life and create the feeling that he is parkouring through the environment.
+Lastly, I gave extra attention to characters and weapons, especially HomelessMan and the AK. HomelessMan has a timed idle drinking animation, while the AK includes muzzle flash and smoke effects when fired.
 
+I also fine-tuned the HomelessMan jump animation, especially the sliding movement when landing on platforms. By adjusting the animation speed, the character felt more alive and parkour-like.
 
 ## Future
 If I were to add new elements in the future, I would consider adding more variants to the background scroller to create greater visual variety throughout gameplay. I would also consider adding another gamemode within the game, such as a dungeon crawler mode, where players work together instead of fighting each other. In this mode, players would climb the tower cooperatively in order to reach and defeat a boss at the top.
