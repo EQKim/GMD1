@@ -1,4 +1,5 @@
-# Weapons
+# Devblog 5 - Weapons & UI
+## Weapons
 
 The weapons are sourced as PNG assets from the internet. The system is designed so that players can pick up weapons from platforms and use them during gameplay. Once equipped, the weapons are anchored to the character, supporting both left and right facing directions.
 The logic behind this system is handled by three main scripts: **WeaponPickup**, **EquippedWeaponVisual**, and **PlayerWeaponHolder**.
