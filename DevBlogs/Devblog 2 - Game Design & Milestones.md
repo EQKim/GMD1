@@ -2,11 +2,9 @@
 
 ## Introduction
 
-The game I'm planning to make takes inspiration from an old game I used to play as a kid called **“Icy-Tower”**, which was a popular platform game released on December 22, 2001, making the game 24 years old today.  
+The game I planned to make was inspired by **Icy Tower**, an old platform game I used to play as a kid. In Icy Tower, the objective is to climb upwards while the game gradually increases in speed, making it harder to stay on the platforms.
 
-Within this game, the only objective was to climb the tower while the speed increased over time, making it more difficult to keep platforming upwards, and eventually the player would slip up and fall to their death.
-
-I chose this game as my inspiration because I feel like it fits well for an arcade setup. It requires minimal player input, such as **“W, A, S, D”** for movement, **“SPACE”** for jumping, and an additional input for attacking.
+I chose this game as inspiration because it fits well with an arcade setup. It uses minimal inputs, such as **W, A, S, D** for movement, **SPACE** for jumping, and an additional input for attacking.
 
 <table align="center">
   <tr>
@@ -66,12 +64,10 @@ Within this section, I’ll outline the requirements I would like to implement i
 
 ## Aesthetics
 
-When designing the game, I focused primarily on the aesthetics of **Challenge**, **Sensation**, and **Fellowship**.
+When designing the game, I focused mainly on **Challenge**, **Sensation**, and **Fellowship**.
 
-The game is heavily built around **Challenge**, since the player must continuously platform upwards while the game gradually increases in speed and pressure. Players are required to react quickly, manage movement carefully, and avoid both environmental dangers and the opposing player.
+The game is built around **Challenge**, as players must continuously platform upwards while the speed and pressure increase. This requires quick reactions, careful movement, and awareness of both environmental dangers and the opposing player.
 
-The aesthetic of **Sensation** is created through the fast-paced arcade gameplay, visual effects, and sound design. Elements such as lava animations, weapon hit effects, blood particles, speed increases, and music are intended to make the game feel intense and chaotic during gameplay.
+**Sensation** is created through the fast-paced arcade gameplay, visual effects, and sound design. Lava animations, hit effects, blood particles, speed increases, and music help make the game feel intense and chaotic.
 
-I also incorporated aspects of **Fellowship**, as the game is designed around multiplayer. The experience is intended to create competitive interactions between players, where both players are trying to survive longer than the other while actively interfering with each other through combat and movement.
-
-Finally, there are smaller elements of **Fantasy** and **Expression** present through the exaggerated arcade violence, stylized characters, and different weapon choices that allow players to approach matches differently.
+I also used **Fellowship**, since the game is multiplayer and encourages competitive interactions. Both players try to survive longer than the other while interfering through combat and movement.
