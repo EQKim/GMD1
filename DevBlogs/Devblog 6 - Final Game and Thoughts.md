@@ -1,3 +1,4 @@
+# Devblog 6 - Final Game and Thoughts
 ## Final State Preview
 I've achived all my milestones and the game status is very polished.
 <p align="center">
