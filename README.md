@@ -21,6 +21,7 @@
 - **GraffitiWoman**: https://craftpix.net/freebies/free-graffiti-artist-sprite-sheet-pixel-art-pack/
 - **HomelessMan**: https://craftpix.net/freebies/free-homeless-character-sprite-sheets-pixel-art/?num=1&count=2&sq=homeless&pos=0
 - **Flying Demon**: https://xzany.itch.io/flying-demon-2d-pixel-art
+- **Flying Demon FireBall**: https://dk.pinterest.com/pin/6685099432351915/
 
 #### Weapons
 - **AK-47**: https://pngimg.com/uploads/ak47/ak47_PNG15462.png
