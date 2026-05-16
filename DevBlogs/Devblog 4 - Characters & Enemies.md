@@ -1,4 +1,4 @@
-# Devblog 4
+# Devblog 4 - Characters & Enemies
 
 ## Assets
 The assets used throughout my game, including characters, enemies, and weapons, were sourced online. Some were easy to use, while others needed cleanup in GIMP.
