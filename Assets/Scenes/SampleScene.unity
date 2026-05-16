@@ -1203,7 +1203,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2000
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1491,7 +1491,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2000
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1691,7 +1691,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 82ff5125cdf3d04479bdfe2d18fe9cb6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1725,7 +1725,7 @@ MonoBehaviour:
   animator: {fileID: 1769084655}
   visual: {fileID: 1769084653}
   attackHitbox: {fileID: 2139550324}
-  weaponHolder: {fileID: 0}
+  weaponHolder: {fileID: 363081364}
   startFacingRight: 0
   useKeyboard: 1
   moveLeftKey: 24
@@ -2474,10 +2474,10 @@ GameObject:
   m_Component:
   - component: {fileID: 647366002}
   - component: {fileID: 647366004}
+  - component: {fileID: 647366008}
   - component: {fileID: 647366005}
   - component: {fileID: 647366006}
   - component: {fileID: 647366007}
-  - component: {fileID: 647366008}
   m_Layer: 9
   m_Name: HomelessMan
   m_TagString: Player
@@ -2636,7 +2636,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 82ff5125cdf3d04479bdfe2d18fe9cb6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3427,8 +3427,8 @@ Transform:
   m_GameObject: {fileID: 822747833}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -5.6, z: 0}
-  m_LocalScale: {x: 0.6779078, y: 0.26625067, z: 1}
+  m_LocalPosition: {x: 0.0280046, y: -5.572441, z: 0}
+  m_LocalScale: {x: 0.67889905, y: 0.26286316, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4957,8 +4957,8 @@ Transform:
   m_GameObject: {fileID: 1118742158}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.14, y: -0, z: 0}
-  m_LocalScale: {x: 1.9, y: 1, z: 1}
+  m_LocalPosition: {x: -0.1533, y: 0.0041, z: 0}
+  m_LocalScale: {x: 1.8895186, y: 0.99950707, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 991029469}
@@ -5314,8 +5314,8 @@ Transform:
   m_GameObject: {fileID: 1333368983}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.14, y: 15.5, z: 0}
-  m_LocalScale: {x: 1.9, y: 1, z: 1}
+  m_LocalPosition: {x: -0.1533, y: 15.28, z: 0}
+  m_LocalScale: {x: 1.889519, y: 0.9995071, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 991029469}
@@ -6788,7 +6788,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 80
+  m_SortingOrder: 2000
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
