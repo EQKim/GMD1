@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using System.Collections;
 
 public class GameStartScreen : MonoBehaviour
 {
@@ -9,9 +10,14 @@ public class GameStartScreen : MonoBehaviour
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject volumeSettings;
+    [SerializeField] private GameObject pauseMenu;
 
     [Header("Menu Selection")]
     [SerializeField] private Selectable firstMainMenuSelection;
+    [SerializeField] private Selectable firstPauseMenuSelection;
+
+    [Header("Input")]
+    [SerializeField] private InputActionReference pauseAction;
 
     [Header("Players")]
     [SerializeField] private PlayerController2D player1;
@@ -45,9 +51,26 @@ public class GameStartScreen : MonoBehaviour
     [SerializeField] private float musicVolume = 0.5f;
 
     private Coroutine reselectionRoutine;
+    private bool matchStarted;
+    private bool isPaused;
+
+    private void OnEnable()
+    {
+        if (pauseAction != null)
+            pauseAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        if (pauseAction != null)
+            pauseAction.action.Disable();
+    }
 
     private void Start()
     {
+        matchStarted = false;
+        ClearPauseState();
+
         ShowMainMenuState();
         ForceResetRoundState();
 
@@ -66,8 +89,28 @@ public class GameStartScreen : MonoBehaviour
         PlayMusic(menuMusic);
     }
 
+    private void Update()
+    {
+        if (!matchStarted)
+            return;
+
+        if (pauseAction == null)
+            return;
+
+        if (pauseAction.action.WasPressedThisFrame())
+        {
+            if (isPaused)
+                ResumeGame();
+            else
+                PauseGame();
+        }
+    }
+
     public void StartGame()
     {
+        matchStarted = true;
+        ClearPauseState();
+
         ForceResetRoundState();
 
         if (startScreen != null)
@@ -103,8 +146,55 @@ public class GameStartScreen : MonoBehaviour
             flyingDemonSpawner.BeginMatch();
     }
 
+    public void PauseGame()
+    {
+        if (!matchStarted || isPaused)
+            return;
+
+        isPaused = true;
+        Time.timeScale = 0f;
+
+        if (pauseMenu != null)
+            pauseMenu.SetActive(true);
+
+        if (player1 != null)
+            player1.SetControllable(false);
+
+        if (player2 != null)
+            player2.SetControllable(false);
+
+        if (musicSource != null)
+            musicSource.Pause();
+
+        ReselectPauseMenuButton();
+    }
+
+    public void ResumeGame()
+    {
+        if (!isPaused)
+            return;
+
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
+
+        if (player1 != null)
+            player1.SetControllable(true);
+
+        if (player2 != null)
+            player2.SetControllable(true);
+
+        if (musicSource != null)
+            musicSource.UnPause();
+    }
+
     public void ShowWinnerScreen(string winnerName)
     {
+        matchStarted = false;
+        ClearPauseState();
+
         if (startScreen != null)
             startScreen.SetActive(true);
 
@@ -133,6 +223,9 @@ public class GameStartScreen : MonoBehaviour
 
     public void ReturnToStartScreen()
     {
+        matchStarted = false;
+        ClearPauseState();
+
         ForceResetRoundState();
 
         if (endlessPlatformManager != null)
@@ -175,6 +268,9 @@ public class GameStartScreen : MonoBehaviour
         if (volumeSettings != null)
             volumeSettings.SetActive(false);
 
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
+
         if (winnerImage != null)
             winnerImage.gameObject.SetActive(false);
 
@@ -211,6 +307,15 @@ public class GameStartScreen : MonoBehaviour
         musicSource.loop = loopMusic;
         musicSource.volume = Mathf.Clamp01(musicVolume);
         musicSource.Play();
+    }
+
+    private void ClearPauseState()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
     }
 
     private void DestroyAllBullets()
@@ -280,5 +385,14 @@ public class GameStartScreen : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstMainMenuSelection.gameObject);
 
         reselectionRoutine = null;
+    }
+
+    private void ReselectPauseMenuButton()
+    {
+        if (EventSystem.current == null || firstPauseMenuSelection == null)
+            return;
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstPauseMenuSelection.gameObject);
     }
 }
