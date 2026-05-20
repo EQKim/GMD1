@@ -4834,6 +4834,7 @@ GameObject:
   - component: {fileID: 1102699507}
   - component: {fileID: 1102699508}
   - component: {fileID: 1102699509}
+  - component: {fileID: 1102699510}
   m_Layer: 0
   m_Name: VolumeSlider
   m_TagString: Untagged
@@ -4927,6 +4928,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioSettingsUI
   volumeSlider: {fileID: 1102699508}
+--- !u!114 &1102699510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102699506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f05ed23b38bbd4daf94b1d2fbe7583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuPulseEffect
+  pulseSpeed: 4
+  pulseAmount: 0.08
 --- !u!1 &1105323412
 GameObject:
   m_ObjectHideFlags: 0
@@ -5736,6 +5751,7 @@ GameObject:
   - component: {fileID: 1442652273}
   - component: {fileID: 1442652272}
   - component: {fileID: 1442652271}
+  - component: {fileID: 1442652274}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -5857,6 +5873,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1442652269}
   m_CullTransparentMesh: 1
+--- !u!114 &1442652274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442652269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f05ed23b38bbd4daf94b1d2fbe7583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuPulseEffect
+  pulseSpeed: 4
+  pulseAmount: 0.08
 --- !u!1 &1469243197
 GameObject:
   m_ObjectHideFlags: 0
@@ -7688,6 +7718,7 @@ GameObject:
   - component: {fileID: 1856946318}
   - component: {fileID: 1856946317}
   - component: {fileID: 1856946316}
+  - component: {fileID: 1856946319}
   m_Layer: 5
   m_Name: ReturnToMenuButton
   m_TagString: Untagged
@@ -7809,6 +7840,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1856946314}
   m_CullTransparentMesh: 1
+--- !u!114 &1856946319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856946314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f05ed23b38bbd4daf94b1d2fbe7583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuPulseEffect
+  pulseSpeed: 4
+  pulseAmount: 0.08
 --- !u!1 &1877135594
 GameObject:
   m_ObjectHideFlags: 0
