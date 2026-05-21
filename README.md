@@ -15,6 +15,9 @@
 ### Personal Reflection
 - [Personal Reflection](Personal%20Reflection/Personal%20Reflection.md)
 
+### Youtube Preview
+- https://youtu.be/UqHaE_vjFlY
+
 ### Assets
 
 #### Characters and Enemies
