@@ -1,14 +1,9 @@
 # Devblog 6 - Final Game and Thoughts
 ## Final State Preview
 I've achived all my milestones and the game status is very polished.
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=-cGKbwskKYI">
-    <img src="https://img.youtube.com/vi/-cGKbwskKYI/maxresdefault.jpg" width="800" alt="Final game state video">
-  </a>
-</p>
 
 <p align="center">
-  <em>Click the image to watch the final state video.</em>
+  <img width="900" height="400" alt="NutCrackerMP4-ezgif com-optimize" src="https://github.com/user-attachments/assets/e2b894ef-55dc-41aa-88d7-3ba24bccaebb" />
 </p>
 
 ## Game Loop
@@ -35,3 +30,6 @@ If I were to add new elements in the future, I would consider adding more varian
 ## Conclusion
 
 Overall, I am very satisfied with both myself and the outcome of the game. Perhaps without the constraints from my other courses, I could have added even more elements and features that I have not yet thought of. I also believe that this game could serve as a strong example for future students to take inspiration from, as I feel it stands out as one of the stronger projects developed for the arcade machine.
+<p align="center">
+<img width="1208" height="452" alt="nutcrackerSteam" src="https://github.com/user-attachments/assets/d45e0468-238e-4fe5-94a9-83713b17f2cb" />
+</p>
