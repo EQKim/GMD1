@@ -16,6 +16,7 @@ Throughout the project, I successfully implemented:
 - Weapon pickups
 - Melee and ranged weapons, including bullets
 - Main menu UI
+- Pause menu UI
 - Character portrait UI
 - Health, lives, and winner text UI
 - Sound effects and music
