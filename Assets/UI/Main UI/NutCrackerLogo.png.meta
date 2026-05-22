@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 05b411d74f7d4c1479b6856a07388f18
+guid: b99def58cf606204683b3f38ebf67a0c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4239310821644987636
-    second: ControlsInput_0
+      213: -2202515380567548586
+    second: NutCrackerLogo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ControlsInput_0
+      name: NutCrackerLogo_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1000
-        height: 301
+        width: 2681
+        height: 1142
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c03916fb441fa25c0800000000000000
-      internalID: -4239310821644987636
+      spriteID: 65ddfe84ee71f61e0800000000000000
+      internalID: -2202515380567548586
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ControlsInput_0: -4239310821644987636
+      NutCrackerLogo_0: -2202515380567548586
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

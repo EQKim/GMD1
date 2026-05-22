@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e6e1a9376fc44514b864243249aa9e0b
+guid: 2d6e38bead6e6aa40b88120c3d931285
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4214874209979498031
-    second: MuzzleFlash_0
+      213: 4955540286050926351
+    second: PLatform_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MuzzleFlash_0
+      name: PLatform_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 398
-        height: 300
+        width: 390
+        height: 122
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1d18735cc32c185c0800000000000000
-      internalID: -4214874209979498031
+      spriteID: f0ff33472ad95c440800000000000000
+      internalID: 4955540286050926351
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MuzzleFlash_0: -4214874209979498031
+      PLatform_0: 4955540286050926351
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
