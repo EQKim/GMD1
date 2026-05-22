@@ -16,7 +16,7 @@
 - [Personal Reflection](Personal%20Reflection/Personal%20Reflection.md)
 
 ### Youtube Preview
-- https://youtu.be/UqHaE_vjFlY
+- http://youtube.com/watch?v=wWtc-4avNx4
 
 ### Assets
 
